@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Birthday Notifier</string>
+    <string name="open_json">Open JSON</string>
+    <string name="test_app">Test app</string>
+</resources>

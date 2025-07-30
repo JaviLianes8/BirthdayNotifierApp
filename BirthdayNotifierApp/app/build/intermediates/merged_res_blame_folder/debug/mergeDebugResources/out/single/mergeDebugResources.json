@@ -1,0 +1,6 @@
+[
+    {
+        "merged": "com.example.birthdaynotifier.app-debug-23:/raw_birthdays.json.flat",
+        "source": "com.example.birthdaynotifier.app-main-25:/raw/birthdays.json"
+    }
+]

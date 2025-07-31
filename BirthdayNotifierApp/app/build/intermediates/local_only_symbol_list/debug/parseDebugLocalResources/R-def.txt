@@ -2,5 +2,12 @@ R_DEF: Internal format may change without notice
 local
 raw birthdays
 string app_name
+string default_web_client_id
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
 string open_json
+string project_id
 string test_app

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.birthdaynotifier.app-mergeDebugResources-21:/values-v16/values-v16.xml",
+            "outputFile": "com.example.birthdaynotifier.app-mergeDebugResources-26:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Havie\\.gradle\\caches\\transforms-4\\f53b239fce2b8415f04e9e3c794fa56c\\transformed\\appcompat-1.7.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Havie\\.gradle\\caches\\transforms-4\\80696415089aafc1e2b401df57269f51\\transformed\\appcompat-1.7.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

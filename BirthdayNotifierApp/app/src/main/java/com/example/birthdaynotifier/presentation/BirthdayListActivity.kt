@@ -1,5 +1,6 @@
 package com.example.birthdaynotifier.presentation
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.ViewGroup
@@ -9,7 +10,10 @@ import com.example.birthdaynotifier.framework.file.BirthdayFileHelper
 import org.json.JSONObject
 
 /**
- * Activity to show and manage the list of birthdays.
+ * Activity that displays and manages a list of birthdays.
+ *
+ * Allows the user to add, edit, or delete birthday entries.
+ * All changes are saved locally and synced with Firestore.
  */
 class BirthdayListActivity : AppCompatActivity() {
 
@@ -17,6 +21,10 @@ class BirthdayListActivity : AppCompatActivity() {
     private lateinit var adapter: ArrayAdapter<String>
     private val helper by lazy { BirthdayFileHelper(this) }
 
+    /**
+     * Initializes the UI and loads the birthday list.
+     */
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,6 +58,9 @@ class BirthdayListActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Refreshes the birthday list view by reloading all items.
+     */
     private fun refreshList() {
         adapter.clear()
         helper.getAll().forEach {
@@ -57,6 +68,12 @@ class BirthdayListActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Displays a dialog to add or edit a birthday entry.
+     *
+     * @param index The position of the item in the list, or -1 for new entries.
+     * @param obj The existing birthday JSON object, or null if creating a new one.
+     */
     private fun showEditDialog(index: Int, obj: JSONObject?) {
         val nameInput = EditText(this).apply { hint = "Name" }
         val dateInput = EditText(this).apply { hint = "Date (dd-mm)" }

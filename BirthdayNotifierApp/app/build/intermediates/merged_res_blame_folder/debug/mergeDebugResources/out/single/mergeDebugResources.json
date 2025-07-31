@@ -1,6 +1,10 @@
 [
     {
-        "merged": "com.example.birthdaynotifier.app-debug-23:/raw_birthdays.json.flat",
-        "source": "com.example.birthdaynotifier.app-main-25:/raw/birthdays.json"
+        "merged": "C:\\Users\\Havie\\.gradle\\daemon\\8.7\\com.example.birthdaynotifier.app-debug-28:\\raw_birthdays.json.flat",
+        "source": "C:\\Users\\Havie\\.gradle\\daemon\\8.7\\com.example.birthdaynotifier.app-main-30:\\raw\\birthdays.json"
+    },
+    {
+        "merged": "com.example.birthdaynotifier.app-debug-28:/raw_birthdays.json.flat",
+        "source": "com.example.birthdaynotifier.app-main-30:/raw/birthdays.json"
     }
 ]

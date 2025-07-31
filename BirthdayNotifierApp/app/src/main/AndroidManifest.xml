@@ -13,18 +13,21 @@
         <!-- Birthday list editor UI -->
         <activity android:name=".presentation.BirthdayListActivity" />
 
-        <!-- Main entry point -->
-        <activity android:name=".presentation.MainActivity"
+        <!-- Main screen after login -->
+        <activity android:name=".presentation.MainActivity" />
+
+        <!-- Login screen -->
+        <activity android:name=".presentation.LoginActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <!-- Receiver for scheduled birthday notifications -->
         <receiver android:name=".framework.receiver.BirthdayReceiver"
             android:exported="false" />
-
     </application>
+
 </manifest>

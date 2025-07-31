@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Birthday Notifier</string>
+    <string name="default_web_client_id" translatable="false">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">793109226456</string>
+    <string name="google_api_key" translatable="false">AIzaSyCcMGFQT7hBJbvqokzvYInqBxeoRdH0XdY</string>
+    <string name="google_app_id" translatable="false">1:793109226456:android:5f1f49df633a93afb9c8ad</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCcMGFQT7hBJbvqokzvYInqBxeoRdH0XdY</string>
+    <string name="google_storage_bucket" translatable="false">birthdaynotifierapp-df9d9.firebasestorage.app</string>
     <string name="open_json">Open JSON</string>
+    <string name="project_id" translatable="false">birthdaynotifierapp-df9d9</string>
     <string name="test_app">Test app</string>
 </resources>

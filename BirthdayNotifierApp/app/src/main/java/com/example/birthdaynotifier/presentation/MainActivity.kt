@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar as Toolbar)
 
-
-
         // Button to manually trigger birthday notifications
         binding.buttonTest.setOnClickListener {
             CheckTodaysBirthdaysUseCase(

@@ -2,5 +2,9 @@
     <string name="app_name">Birthday Notifier</string>
     <string name="test_app">Test app</string>
     <string name="open_json">Open JSON</string>
+    <string name="logout">Logout</string>
+    <string name="add_birthday">Add Birthday</string>
+    <string name="birthday_list_title">Birthdays</string>
+    <string name="login">Login</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
 </resources>

@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.birthdaynotifier.R
+import com.example.birthdaynotifier.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
@@ -23,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivityLoginBinding
 
     /**
      * Handles the result from the Google Sign-In intent.
@@ -61,7 +63,14 @@ class LoginActivity : AppCompatActivity() {
 
         @Suppress("DEPRECATION")
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        signInLauncher.launch(googleSignInClient.signInIntent)
+
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+        binding.signInButton.setOnClickListener {
+            signInLauncher.launch(googleSignInClient.signInIntent)
+        }
     }
 
     /**

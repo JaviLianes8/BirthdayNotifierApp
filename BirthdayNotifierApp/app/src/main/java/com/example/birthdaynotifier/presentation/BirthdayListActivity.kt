@@ -3,10 +3,10 @@ package com.example.birthdaynotifier.presentation
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.birthdaynotifier.framework.file.BirthdayFileHelper
+import com.example.birthdaynotifier.databinding.ActivityBirthdayListBinding
 import org.json.JSONObject
 
 /**
@@ -17,7 +17,7 @@ import org.json.JSONObject
  */
 class BirthdayListActivity : AppCompatActivity() {
 
-    private lateinit var listView: ListView
+    private lateinit var binding: ActivityBirthdayListBinding
     private lateinit var adapter: ArrayAdapter<String>
     private val helper by lazy { BirthdayFileHelper(this) }
 
@@ -28,32 +28,21 @@ class BirthdayListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(16, 16, 16, 16)
-        }
+        binding = ActivityBirthdayListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        listView = ListView(this)
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
-        listView.adapter = adapter
-
-        val buttonAdd = Button(this).apply { text = "Add Birthday" }
-
-        layout.addView(listView, LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f
-        ))
-        layout.addView(buttonAdd)
-
-        setContentView(layout)
+        binding.listView.adapter = adapter
 
         helper.load()
         refreshList()
 
-        listView.setOnItemClickListener { _, _, pos, _ ->
+        binding.listView.setOnItemClickListener { _, _, pos, _ ->
             showEditDialog(pos, helper.get(pos))
         }
 
-        buttonAdd.setOnClickListener {
+        binding.fab.setOnClickListener {
             showEditDialog(-1, null)
         }
     }

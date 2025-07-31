@@ -5,7 +5,7 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.content.*
 import android.os.*
-import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.util.*
+import com.example.birthdaynotifier.databinding.ActivityMainBinding
 
 /**
  * Main screen of the application.
@@ -32,6 +33,8 @@ import java.util.*
  */
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     /**
      * Sets up the UI, handles click listeners, and performs initial sync.
      */
@@ -40,54 +43,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(16, 16, 16, 16)
-        }
-
-        val buttonTest = Button(this).apply {
-            text = getString(R.string.test_app)
-            textSize = 24f
-            setPadding(40, 40, 40, 40)
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                0,
-                1f
-            )
-        }
-
-        val buttonOpen = Button(this).apply {
-            text = getString(R.string.open_json)
-            textSize = 24f
-            setPadding(40, 40, 40, 40)
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                0,
-                1f
-            )
-        }
-
-        val buttonLogout = Button(this).apply {
-            text = "Logout"
-            textSize = 24f
-            setPadding(40, 40, 40, 40)
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                0,
-                1f
-            )
-        }
-
-        layout.addView(buttonTest)
-        layout.addView(buttonOpen)
-        layout.addView(buttonLogout)
-
-        setContentView(layout)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar as Toolbar)
 
 
 
         // Button to manually trigger birthday notifications
-        buttonTest.setOnClickListener {
+        binding.buttonTest.setOnClickListener {
             CheckTodaysBirthdaysUseCase(
                 BirthdayRepositoryImpl(),
                 WhatsAppBirthdayNotifier()
@@ -95,11 +58,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Button to open birthday list editor
-        buttonOpen.setOnClickListener {
+        binding.buttonOpen.setOnClickListener {
             startActivity(Intent(this, BirthdayListActivity::class.java))
         }
 
-        buttonLogout.setOnClickListener {
+        binding.buttonLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
 
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

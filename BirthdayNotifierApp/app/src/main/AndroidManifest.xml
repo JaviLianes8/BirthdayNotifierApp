@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:label="Birthday Notifier"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.BirthdayNotifier">
 
         <!-- Birthday list editor UI -->
         <activity android:name=".presentation.BirthdayListActivity" />

@@ -3,21 +3,28 @@
     package="com.example.birthdaynotifier">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:label="Birthday Notifier"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <activity android:name=".BirthdayListActivity" />
+        <!-- Birthday list editor UI -->
+        <activity android:name=".presentation.BirthdayListActivity" />
 
-        <activity android:name=".MainActivity"
+        <!-- Main entry point -->
+        <activity android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".BirthdayReceiver" android:exported="false" />
+
+        <!-- Receiver for scheduled birthday notifications -->
+        <receiver android:name=".framework.receiver.BirthdayReceiver"
+            android:exported="false" />
+
     </application>
 </manifest>

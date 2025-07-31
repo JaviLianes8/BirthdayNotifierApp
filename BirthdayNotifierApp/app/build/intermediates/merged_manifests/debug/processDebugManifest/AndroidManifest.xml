@@ -25,9 +25,13 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-        <activity android:name="com.example.birthdaynotifier.BirthdayListActivity" />
+
+        <!-- Birthday list editor UI -->
+        <activity android:name="com.example.birthdaynotifier.presentation.BirthdayListActivity" />
+
+        <!-- Main entry point -->
         <activity
-            android:name="com.example.birthdaynotifier.MainActivity"
+            android:name="com.example.birthdaynotifier.presentation.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +39,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Receiver for scheduled birthday notifications -->
+        <receiver
+            android:name="com.example.birthdaynotifier.framework.receiver.BirthdayReceiver"
+            android:exported="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

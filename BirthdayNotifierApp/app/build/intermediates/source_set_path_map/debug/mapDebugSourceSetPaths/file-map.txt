@@ -17,10 +17,10 @@ com.example.birthdaynotifier.app-lifecycle-livedata-2.6.2-15 C:\Users\Havie\.gra
 com.example.birthdaynotifier.app-lifecycle-viewmodel-2.6.2-16 C:\Users\Havie\.gradle\caches\transforms-4\eb56891b456832eebd98363040508e76\transformed\lifecycle-viewmodel-2.6.2\res
 com.example.birthdaynotifier.app-appcompat-1.7.1-17 C:\Users\Havie\.gradle\caches\transforms-4\f53b239fce2b8415f04e9e3c794fa56c\transformed\appcompat-1.7.1\res
 com.example.birthdaynotifier.app-lifecycle-process-2.6.2-18 C:\Users\Havie\.gradle\caches\transforms-4\fed7ed6a18edac8e61a6c0ef5a36660e\transformed\lifecycle-process-2.6.2\res
-com.example.birthdaynotifier.app-pngs-19 C:\workspace_android\BirthdayNotifierAppGUI\app\build\generated\res\pngs\debug
-com.example.birthdaynotifier.app-resValues-20 C:\workspace_android\BirthdayNotifierAppGUI\app\build\generated\res\resValues\debug
-com.example.birthdaynotifier.app-packageDebugResources-21 C:\workspace_android\BirthdayNotifierAppGUI\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.example.birthdaynotifier.app-packageDebugResources-22 C:\workspace_android\BirthdayNotifierAppGUI\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.example.birthdaynotifier.app-debug-23 C:\workspace_android\BirthdayNotifierAppGUI\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.example.birthdaynotifier.app-debug-24 C:\workspace_android\BirthdayNotifierAppGUI\app\src\debug\res
-com.example.birthdaynotifier.app-main-25 C:\workspace_android\BirthdayNotifierAppGUI\app\src\main\res
+com.example.birthdaynotifier.app-pngs-19 C:\workspace_android\BirthdayNotifierApp\app\build\generated\res\pngs\debug
+com.example.birthdaynotifier.app-resValues-20 C:\workspace_android\BirthdayNotifierApp\app\build\generated\res\resValues\debug
+com.example.birthdaynotifier.app-packageDebugResources-21 C:\workspace_android\BirthdayNotifierApp\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.birthdaynotifier.app-packageDebugResources-22 C:\workspace_android\BirthdayNotifierApp\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.birthdaynotifier.app-debug-23 C:\workspace_android\BirthdayNotifierApp\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.birthdaynotifier.app-debug-24 C:\workspace_android\BirthdayNotifierApp\app\src\debug\res
+com.example.birthdaynotifier.app-main-25 C:\workspace_android\BirthdayNotifierApp\app\src\main\res

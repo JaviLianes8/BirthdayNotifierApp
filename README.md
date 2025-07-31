@@ -6,7 +6,7 @@ Birthday Notifier is a simple Kotlin Android application used to send WhatsApp b
 
 - Google Sign-In using Firebase Authentication.
 - Birthdays stored in Firestore for the logged user.
-- Daily check via `AlarmManager` and `BroadcastReceiver` at 09:00.
+- Daily check via `AlarmManager` and `BroadcastReceiver` at a user configurable time.
 - Sends a notification that opens WhatsApp with a pre‑filled message.
 - Simple editor to add, edit or delete birthday entries.
 - Manual trigger button for testing birthday notifications.
@@ -28,5 +28,5 @@ The project is a standard Gradle Android application. To build you need the Andr
 
 ## Running
 
-After installing the debug APK on a device, sign in with Google. Use the **Test** button to send notifications immediately or open the birthday list to manage your entries. The app will automatically run every day at 9 AM to send WhatsApp messages to matching birthdays.
+After installing the debug APK on a device, sign in with Google. Use the **Test** button to send notifications immediately or open the birthday list to manage your entries. The app will automatically run each day at the configured time (9 AM by default) to send WhatsApp messages to matching birthdays. The time can be changed from the Settings screen.
 

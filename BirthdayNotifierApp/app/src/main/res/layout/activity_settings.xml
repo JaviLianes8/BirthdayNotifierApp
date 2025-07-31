@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,17 +11,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
-        android:title="@string/app_name"
+        android:title="@string/settings"
         android:titleTextColor="@color/md_theme_light_onPrimary" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signInButton"
+        android:id="@+id/buttonSetTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login"
+        android:text="@string/set_time"
         style="?attr/materialButtonStyle"
         android:backgroundTint="@color/md_theme_light_primary"
         android:textColor="@color/md_theme_light_onPrimary"
-        android:layout_marginTop="48dp" />
+        android:layout_marginTop="24dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        style="?attr/materialButtonStyle"
+        android:backgroundTint="@color/md_theme_light_primary"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:layout_marginTop="16dp" />
 
 </LinearLayout>

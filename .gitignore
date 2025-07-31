@@ -68,4 +68,3 @@ app/.externalNativeBuild/
 *.json
 
 # Uncomment if you store assets/templates you want tracked
-#!app/src/main/res/raw/birthdays.json

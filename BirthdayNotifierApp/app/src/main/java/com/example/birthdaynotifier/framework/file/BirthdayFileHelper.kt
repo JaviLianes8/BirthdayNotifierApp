@@ -3,38 +3,31 @@ package com.example.birthdaynotifier.framework.file
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.framework.cloud.BirthdayFirestoreStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
 
 /**
  * Helper class to manage reading and writing birthday data
- * from internal storage (as JSON) and syncing with Firestore.
+ * stored in Firebase Firestore.
  *
  * @param context Application context, used for file access and resource loading.
  */
 class BirthdayFileHelper(private val context: Context) {
 
-    private val file = File(context.filesDir, "birthdays.json")
     private var data = JSONArray()
 
     /**
-     * Loads the birthday data from internal storage.
-     * If the file doesn't exist, it initializes it using the embedded `birthdays.json` resource.
+     * Loads the birthday data from Firestore.
      */
     fun load() {
-        if (!file.exists()) {
-            context.resources.openRawResource(R.raw.birthdays).use {
-                file.writeBytes(it.readBytes())
-            }
-        }
-        data = JSONArray(file.readText())
+        val remote = runBlocking { BirthdayFirestoreStorage.downloadJson() }
+        data = if (remote != null) JSONArray(remote) else JSONArray()
     }
 
     /**
@@ -62,7 +55,6 @@ class BirthdayFileHelper(private val context: Context) {
     fun save(index: Int, obj: JSONObject) {
         if (index >= 0) data.put(index, obj)
         else data.put(obj)
-        persist()
         saveAllRemotely(context)
     }
 
@@ -78,15 +70,7 @@ class BirthdayFileHelper(private val context: Context) {
                 if (i != index) put(this@BirthdayFileHelper.data.getJSONObject(i))
             }
         }
-        persist()
         saveAllRemotely(context)
-    }
-
-    /**
-     * Persists the current JSON array to internal storage.
-     */
-    private fun persist() {
-        file.writeText(data.toString())
     }
 
     /**

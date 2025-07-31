@@ -12,14 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.domain.usecase.CheckTodaysBirthdaysUseCase
 import com.example.birthdaynotifier.data.repository.BirthdayRepositoryImpl
-import com.example.birthdaynotifier.framework.cloud.BirthdayFirestoreStorage
 import com.example.birthdaynotifier.framework.notification.WhatsAppBirthdayNotifier
 import com.example.birthdaynotifier.framework.receiver.BirthdayReceiver
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import java.io.File
 import java.util.*
 
 /**
@@ -30,8 +28,7 @@ import java.util.*
  * - One to open the birthday list editor.
  * - One to logout the current user.
  *
- * On first launch, it syncs birthday data with Firestore.
- * Also schedules a daily alarm at 09:00 to check birthdays.
+ * Schedules a daily alarm at 09:00 to check birthdays.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -87,21 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(layout)
 
-        // Sync JSON from Firestore on first run
-        lifecycleScope.launch {
-            val localFile = File(filesDir, "birthdays.json")
 
-            if (!localFile.exists()) {
-                val remoteJson = BirthdayFirestoreStorage.downloadJson()
-                if (remoteJson != null) {
-                    localFile.writeText(remoteJson)
-                } else {
-                    val empty = "[]"
-                    localFile.writeText(empty)
-                    BirthdayFirestoreStorage.uploadJson(empty)
-                }
-            }
-        }
 
         // Button to manually trigger birthday notifications
         buttonTest.setOnClickListener {

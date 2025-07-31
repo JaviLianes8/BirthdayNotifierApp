@@ -1,0 +1,71 @@
+# Gradle
+.gradle/
+build/
+*/build/
+!gradle/wrapper/gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Kotlin/Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Android
+captures/
+*.apk
+*.ap_
+*.dex
+*.log
+*.so
+*.hprof
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Local configuration
+local.properties
+*.keystore
+*.jks
+
+# Auto-generated files
+generated/
+navigation.xml
+output.json
+
+# Test reports
+test-results/
+test-output/
+*.ec
+
+# Packaging
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# App-specific
+app/release/
+app/debug/
+app/.cxx/
+app/.externalNativeBuild/
+
+# Others
+*.orig
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Ignore JSONs if they’re runtime only
+*.json
+
+# Uncomment if you store assets/templates you want tracked
+#!app/src/main/res/raw/birthdays.json

@@ -13,6 +13,9 @@
         <!-- Birthday list editor UI -->
         <activity android:name=".presentation.BirthdayListActivity" />
 
+        <!-- Settings screen -->
+        <activity android:name=".presentation.SettingsActivity" />
+
         <!-- Main screen after login -->
         <activity android:name=".presentation.MainActivity" />
 

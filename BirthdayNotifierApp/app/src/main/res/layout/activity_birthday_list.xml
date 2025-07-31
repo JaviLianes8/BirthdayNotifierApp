@@ -26,6 +26,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/md_theme_light_primary" />
 
 </RelativeLayout>

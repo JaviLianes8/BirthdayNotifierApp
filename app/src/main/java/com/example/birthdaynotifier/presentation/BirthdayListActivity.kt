@@ -30,14 +30,31 @@ class BirthdayListActivity : AppCompatActivity() {
     private var contactCallback: ((String, String) -> Unit)? = null
     private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
         uri ?: return@registerForActivityResult
-        val projection = arrayOf(
-            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-            ContactsContract.CommonDataKinds.Phone.NUMBER
+
+        // The URI returned by the picker points to Contacts.CONTENT_URI which
+        // does not include phone columns. We must first resolve the contact ID
+        // then query the Phone table for the number.
+
+        val idProjection = arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME)
+        val contactId: String
+        val name: String
+        contentResolver.query(uri, idProjection, null, null, null)?.use { c ->
+            if (!c.moveToFirst()) return@registerForActivityResult
+            contactId = c.getString(0)
+            name = c.getString(1)
+        } ?: return@registerForActivityResult
+
+        val phoneProjection = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER)
+        val phoneCursor = contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            phoneProjection,
+            "${ContactsContract.CommonDataKinds.Phone.CONTACT_ID} = ?",
+            arrayOf(contactId),
+            null
         )
-        contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val name = cursor.getString(0)
-                val phone = cursor.getString(1)
+        phoneCursor?.use { pc ->
+            if (pc.moveToFirst()) {
+                val phone = pc.getString(0)
                 contactCallback?.invoke(name, phone)
             }
         }
@@ -107,19 +124,21 @@ class BirthdayListActivity : AppCompatActivity() {
         val dialogLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(50, 40, 50, 10)
-            addView(importButton)
+            if (obj == null) addView(importButton)
             addView(nameInput)
             addView(dateInput)
             addView(phoneInput)
             addView(messageInput)
         }
 
-        importButton.setOnClickListener {
-            contactCallback = { name, phone ->
-                nameInput.setText(name)
-                phoneInput.setText(phone)
+        if (obj == null) {
+            importButton.setOnClickListener {
+                contactCallback = { name, phone ->
+                    nameInput.setText(name)
+                    phoneInput.setText(phone)
+                }
+                contactPicker.launch(null)
             }
-            contactPicker.launch(null)
         }
 
         AlertDialog.Builder(this)

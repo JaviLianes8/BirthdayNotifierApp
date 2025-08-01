@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.birthdaynotifier'
+    namespace 'com.jlianes.birthdaynotifier'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.birthdaynotifier"
+        applicationId "com.jlianes.birthdaynotifier"
         minSdk 24
         targetSdk 34
         versionCode 1

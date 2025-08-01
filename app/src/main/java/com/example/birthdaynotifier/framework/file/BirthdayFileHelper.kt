@@ -28,6 +28,7 @@ class BirthdayFileHelper(private val context: Context) {
     fun load() {
         val remote = runBlocking { BirthdayFirestoreStorage.downloadJson() }
         data = if (remote != null) JSONArray(remote) else JSONArray()
+        sortData()
     }
 
     /**
@@ -55,6 +56,7 @@ class BirthdayFileHelper(private val context: Context) {
     fun save(index: Int, obj: JSONObject) {
         if (index >= 0) data.put(index, obj)
         else data.put(obj)
+        sortData()
         saveAllRemotely(context)
     }
 
@@ -70,6 +72,7 @@ class BirthdayFileHelper(private val context: Context) {
                 if (i != index) put(this@BirthdayFileHelper.data.getJSONObject(i))
             }
         }
+        sortData()
         saveAllRemotely(context)
     }
 
@@ -99,5 +102,23 @@ class BirthdayFileHelper(private val context: Context) {
     @OptIn(DelicateCoroutinesApi::class)
     private fun lifecycleScopeOrGlobal(context: Context): CoroutineScope {
         return (context as? AppCompatActivity)?.lifecycleScope ?: GlobalScope
+    }
+
+    /**
+     * Sorts the internal JSONArray by birthday date (month/day).
+     * This keeps local and remote data consistently ordered.
+     */
+    private fun sortData() {
+        val sorted = (0 until data.length()).map { data.getJSONObject(it) }
+            .sortedBy { sortKey(it.getString("date")) }
+        data = JSONArray(sorted)
+    }
+
+    /** Parses a date in "dd-MM" or "dd/MM" format into an integer key. */
+    private fun sortKey(date: String): Int {
+        val parts = date.replace("/", "-").split("-")
+        val day = parts.getOrNull(0)?.toIntOrNull() ?: 0
+        val month = parts.getOrNull(1)?.toIntOrNull() ?: 0
+        return month * 100 + day
     }
 }

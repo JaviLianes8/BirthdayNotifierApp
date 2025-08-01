@@ -2,7 +2,6 @@ package com.example.birthdaynotifier.presentation
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.*
 import android.content.*
 import android.os.*
 import android.net.Uri
@@ -10,14 +9,12 @@ import android.view.View
 import java.util.Calendar
 import androidx.appcompat.widget.Toolbar
 import androidx.annotation.RequiresApi
-import com.example.birthdaynotifier.presentation.BaseActivity
 import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.domain.usecase.CheckTodaysBirthdaysUseCase
 import com.example.birthdaynotifier.data.repository.BirthdayRepositoryImpl
 import com.example.birthdaynotifier.framework.notification.WhatsAppBirthdayNotifier
 import com.example.birthdaynotifier.framework.receiver.AlarmScheduler
 import com.example.birthdaynotifier.databinding.ActivityMainBinding
-import com.example.birthdaynotifier.presentation.LocaleHelper
 import androidx.core.text.HtmlCompat
 
 /**
@@ -34,6 +31,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val handler = Handler(Looper.getMainLooper())
+    @SuppressLint("SetTextI18n")
     private val clearStatus = Runnable { binding.textStatus.text = "" }
 
     /**
@@ -109,6 +107,7 @@ class MainActivity : BaseActivity() {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStop() {
         super.onStop()
         handler.removeCallbacks(clearStatus)

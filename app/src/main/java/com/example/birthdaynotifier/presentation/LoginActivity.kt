@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.birthdaynotifier.presentation.BaseActivity
 import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.*
@@ -12,7 +11,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.example.birthdaynotifier.presentation.LocaleHelper
 
 /**
  * Activity responsible for handling Google Sign-In and Firebase authentication.

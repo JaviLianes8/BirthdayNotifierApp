@@ -3,7 +3,6 @@ package com.example.birthdaynotifier.presentation
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import com.example.birthdaynotifier.presentation.BaseActivity
 import android.app.AlertDialog
 import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.databinding.ActivitySettingsBinding
@@ -11,7 +10,6 @@ import com.example.birthdaynotifier.framework.receiver.AlarmScheduler
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.example.birthdaynotifier.presentation.LocaleHelper
 
 /**
  * Activity that allows configuring app settings like the notification time
@@ -37,7 +35,7 @@ class SettingsActivity : BaseActivity() {
     private fun performLogout() {
         FirebaseAuth.getInstance().signOut()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(com.example.birthdaynotifier.R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         val client = GoogleSignIn.getClient(this, gso)

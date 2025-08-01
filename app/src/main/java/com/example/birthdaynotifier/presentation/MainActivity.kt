@@ -64,8 +64,9 @@ class MainActivity : BaseActivity() {
                 getString(R.string.no_birthdays)
             } else {
                 val listItems = names.joinToString("<br>") { "- <u><big>$it</big></u>" }
+                val resId = if (names.size == 1) R.string.birthday_today else R.string.birthdays_today
                 HtmlCompat.fromHtml(
-                    getString(R.string.birthdays_today, listItems),
+                    getString(resId, listItems),
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
             }

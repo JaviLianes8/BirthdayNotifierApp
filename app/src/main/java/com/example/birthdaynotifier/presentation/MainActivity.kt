@@ -63,9 +63,9 @@ class MainActivity : BaseActivity() {
             binding.textStatus.text = if (names.isEmpty()) {
                 getString(R.string.no_birthdays)
             } else {
-                val namesHtml = names.joinToString(", ") { "<u><big>$it</big></u>" }
+                val listItems = names.joinToString("<br>") { "- <u><big>$it</big></u>" }
                 HtmlCompat.fromHtml(
-                    getString(R.string.birthdays_today, namesHtml),
+                    getString(R.string.birthdays_today, listItems),
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
             }

@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
         android:title="@string/birthday_list_title"
+        app:titleCentered="true"
+        app:logo="@drawable/ic_cake"
         app:titleTextColor="@color/md_theme_light_onBackground" />
 
     <ListView

@@ -17,7 +17,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSetTime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:text="@string/set_time"
         style="?attr/materialButtonStyle"
         android:backgroundTint="@color/md_theme_light_primary"
@@ -27,8 +27,18 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:text="@string/logout"
+        style="?attr/materialButtonStyle"
+        android:backgroundTint="@color/md_theme_light_primary"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:layout_marginTop="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:text="@string/language"
         style="?attr/materialButtonStyle"
         android:backgroundTint="@color/md_theme_light_primary"
         android:textColor="@color/md_theme_light_onPrimary"

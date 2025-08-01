@@ -2,6 +2,7 @@ package com.example.birthdaynotifier.domain.usecase
 
 import android.content.Context
 import android.util.Log
+import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.domain.repository.BirthdayRepository
 import com.example.birthdaynotifier.domain.service.BirthdayNotifier
 import java.util.*
@@ -34,7 +35,7 @@ class CheckTodaysBirthdaysUseCase(
             .filter { it.date.replace("/", "-").trim() == today }
             .forEach {
                 Log.d("BirthdayTest", "Sending to ${it.name}")
-                val msg = it.message.ifBlank { "Felicidadeeeeees!!!!, ${'$'}{it.name}! 🎉🥳" }
+                val msg = it.message.ifBlank { context.getString(R.string.default_message, it.name) }
                 notifier.notify(context, it.name, msg, it.phone)
             }
 
@@ -45,7 +46,7 @@ class CheckTodaysBirthdaysUseCase(
 
         list.filter { it.date == today }.forEach {
             Log.d("BirthdayTest", "Sending to ${it.name}")
-            val msg = it.message.ifBlank { "Felicidadeeeeees!!!!, ${'$'}{it.name}! 🎉🥳" }
+            val msg = it.message.ifBlank { context.getString(R.string.default_message, it.name) }
             notifier.notify(context, it.name, msg, it.phone)
         }
     }

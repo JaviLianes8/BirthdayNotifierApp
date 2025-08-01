@@ -1,5 +1,6 @@
 package com.example.birthdaynotifier.presentation
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.example.birthdaynotifier.presentation.LocaleHelper
 
 /**
  * Activity responsible for handling Google Sign-In and Firebase authentication.
@@ -20,6 +22,10 @@ import com.google.firebase.ktx.Firebase
  * Otherwise, it triggers the Google Sign-In flow.
  */
 class LoginActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
+    }
 
     @Suppress("DEPRECATION")
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -38,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             val account = task.getResult(ApiException::class.java)
             firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
-            Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.login_failed, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -85,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     goToMain()
                 } else {
-                    Toast.makeText(this, "Auth failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.auth_failed, task.exception?.message), Toast.LENGTH_SHORT).show()
                 }
             }
     }

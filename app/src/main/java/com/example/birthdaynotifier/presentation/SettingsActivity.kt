@@ -1,20 +1,27 @@
 package com.example.birthdaynotifier.presentation
 
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.app.AlertDialog
 import com.example.birthdaynotifier.databinding.ActivitySettingsBinding
 import com.example.birthdaynotifier.framework.receiver.AlarmScheduler
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.example.birthdaynotifier.presentation.LocaleHelper
 
 /**
  * Activity that allows configuring app settings like the notification time
  * and logging out of the current user.
  */
 class SettingsActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
+    }
 
     private lateinit var binding: ActivitySettingsBinding
 
@@ -26,6 +33,7 @@ class SettingsActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         binding.buttonSetTime.setOnClickListener { showTimePicker() }
+        binding.buttonLanguage.setOnClickListener { showLanguageDialog() }
         binding.buttonLogout.setOnClickListener { performLogout() }
     }
 
@@ -50,5 +58,21 @@ class SettingsActivity : AppCompatActivity() {
             prefs.edit().putInt("hour", h).putInt("minute", m).apply()
             AlarmScheduler.schedule(this)
         }, hour, minute, true).show()
+    }
+
+    private fun showLanguageDialog() {
+        val languages = arrayOf(getString(R.string.english), getString(R.string.spanish))
+        val codes = arrayOf("en", "es")
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val current = prefs.getString("language", "en")
+        val checked = if (current == "es") 1 else 0
+        AlertDialog.Builder(this)
+            .setTitle(R.string.language)
+            .setSingleChoiceItems(languages, checked) { dialog, which ->
+                LocaleHelper.setLocale(this, codes[which])
+                dialog.dismiss()
+                recreate()
+            }
+            .show()
     }
 }

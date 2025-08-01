@@ -137,7 +137,7 @@ class BirthdayListActivity : AppCompatActivity() {
                     nameInput.setText(name)
                     phoneInput.setText(phone)
                 }
-                contactPicker.launch(null)
+                importContactWithPermission()
             }
         }
 
@@ -189,5 +189,37 @@ class BirthdayListActivity : AppCompatActivity() {
 
         dialog.datePicker.findViewById<View>(resources.getIdentifier("year", "id", "android"))?.visibility = View.GONE
         dialog.show()
+    }
+
+    /**
+     * Handles the result of a permission request to read contacts.
+     * If granted, launches the contact picker. Otherwise, shows a warning toast.
+     */
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                contactPicker.launch(null)
+            } else {
+                Toast.makeText(this, "Permission required to import contact", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    /**
+     * Requests the READ_CONTACTS permission if not already granted.
+     * If permission is granted, launches the contact picker.
+     * If rationale should be shown, shows it before requesting.
+     */
+    private fun importContactWithPermission() {
+        when {
+            checkSelfPermission(android.Manifest.permission.READ_CONTACTS) == android.content.pm.PackageManager.PERMISSION_GRANTED -> {
+                contactPicker.launch(null)
+            }
+            shouldShowRequestPermissionRationale(android.Manifest.permission.READ_CONTACTS) -> {
+                permissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
+            }
+            else -> {
+                permissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
+            }
+        }
     }
 }

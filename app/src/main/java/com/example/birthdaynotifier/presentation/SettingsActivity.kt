@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.app.AlertDialog
+import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.databinding.ActivitySettingsBinding
 import com.example.birthdaynotifier.framework.receiver.AlarmScheduler
 import com.google.android.gms.auth.api.signin.GoogleSignIn

@@ -73,6 +73,7 @@ class BirthdayListActivity : BaseActivity() {
         binding = ActivityBirthdayListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         helper.load()
         adapter = BirthdayAdapter(this, helper.getAll().toMutableList())

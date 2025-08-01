@@ -47,6 +47,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar as Toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // Button to manually trigger birthday notifications
         binding.buttonTest.setOnClickListener {

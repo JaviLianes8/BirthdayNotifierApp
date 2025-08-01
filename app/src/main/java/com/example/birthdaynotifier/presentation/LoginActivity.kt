@@ -68,6 +68,7 @@ class LoginActivity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.signInButton.setOnClickListener {
             signInLauncher.launch(googleSignInClient.signInIntent)

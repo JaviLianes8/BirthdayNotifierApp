@@ -27,6 +27,7 @@ class SettingsActivity : BaseActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.buttonSetTime.setOnClickListener { showTimePicker() }
         binding.buttonLanguage.setOnClickListener { showLanguageDialog() }

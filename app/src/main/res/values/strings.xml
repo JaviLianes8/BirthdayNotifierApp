@@ -11,8 +11,8 @@
     <string name="linkedin">Mi LinkedIn</string>
     <string name="buy_me_coffee">Buy me a coffee</string>
     <string name="repo">Este repositorio</string>
-    <string name="no_birthdays">No birthdays today</string>
-    <string name="birthdays_today">Birthdays of %1$s today. Check notifications</string>
+    <string name="no_birthdays">\uD83D\uDD6F No birthdays today</string>
+    <string name="birthdays_today"><![CDATA[<b>Birthdays today:</b><br>%1$s<br>Check notifications]]></string>
     <string name="language">Language</string>
     <string name="english">English</string>
     <string name="spanish">Espa\u00f1ol</string>

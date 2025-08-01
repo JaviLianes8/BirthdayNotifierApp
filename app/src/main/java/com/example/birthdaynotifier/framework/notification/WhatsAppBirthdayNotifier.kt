@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.birthdaynotifier.domain.service.BirthdayNotifier
+import com.example.birthdaynotifier.R
 
 /**
  * Implementation of [BirthdayNotifier] that shows a local notification
@@ -45,7 +46,7 @@ class WhatsAppBirthdayNotifier : BirthdayNotifier {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "bday_channel",
-                "Birthdays",
+                context.getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             manager.createNotificationChannel(channel)
@@ -57,7 +58,7 @@ class WhatsAppBirthdayNotifier : BirthdayNotifier {
 
         val builder = NotificationCompat.Builder(context, "bday_channel")
             .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Birthday: $name")
+            .setContentTitle(context.getString(R.string.notification_title, name))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)

@@ -15,6 +15,7 @@ import com.example.birthdaynotifier.data.repository.BirthdayRepositoryImpl
 import com.example.birthdaynotifier.framework.notification.WhatsAppBirthdayNotifier
 import com.example.birthdaynotifier.framework.receiver.AlarmScheduler
 import com.example.birthdaynotifier.databinding.ActivityMainBinding
+import com.example.birthdaynotifier.presentation.LocaleHelper
 
 /**
  * Main screen of the application.
@@ -27,6 +28,10 @@ import com.example.birthdaynotifier.databinding.ActivityMainBinding
  * Schedules a daily alarm at the configured time to check birthdays.
  */
 class MainActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
+    }
 
     private lateinit var binding: ActivityMainBinding
 

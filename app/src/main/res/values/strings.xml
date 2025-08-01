@@ -12,5 +12,27 @@
     <string name="buy_me_coffee">Buy me a coffee</string>
     <string name="repo">Este repositorio</string>
     <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="spanish">Espa\u00f1ol</string>
+    <string name="login_failed">Login failed: %1$s</string>
+    <string name="auth_failed">Auth failed: %1$s</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_date">Date (dd-mm)</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_message">Felicitation</string>
+    <string name="import_contact">Import</string>
+    <string name="edit_birthday">Edit Birthday</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_delete">Confirm delete</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="permission_required">Permission required to import contact</string>
+    <string name="birthday_item">%1$s - %2$s</string>
+    <string name="default_message">Congratulations!!!!, %1$s! \uD83C\uDF89\uD83E\uDD73</string>
+    <string name="notification_channel_name">Birthdays</string>
+    <string name="notification_title">Birthday: %1$s</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
 </resources>

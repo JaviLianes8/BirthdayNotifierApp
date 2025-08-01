@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.content.Context
 import android.view.View
 import android.widget.*
 import android.net.Uri
@@ -14,6 +15,7 @@ import java.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.birthdaynotifier.framework.file.BirthdayFileHelper
 import com.example.birthdaynotifier.databinding.ActivityBirthdayListBinding
+import com.example.birthdaynotifier.presentation.LocaleHelper
 import org.json.JSONObject
 
 /**
@@ -23,6 +25,10 @@ import org.json.JSONObject
  * All changes are saved locally and synced with Firestore.
  */
 class BirthdayListActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
+    }
 
     private lateinit var binding: ActivityBirthdayListBinding
     private lateinit var adapter: ArrayAdapter<String>
@@ -92,7 +98,7 @@ class BirthdayListActivity : AppCompatActivity() {
     private fun refreshList() {
         adapter.clear()
         helper.getAll().forEach {
-            adapter.add("${it.getString("name")} - ${it.getString("date")}")
+            adapter.add(getString(R.string.birthday_item, it.getString("name"), it.getString("date")))
         }
     }
 
@@ -103,15 +109,15 @@ class BirthdayListActivity : AppCompatActivity() {
      * @param obj The existing birthday JSON object, or null if creating a new one.
      */
     private fun showEditDialog(index: Int, obj: JSONObject?) {
-        val nameInput = EditText(this).apply { hint = "Name" }
+        val nameInput = EditText(this).apply { hint = getString(R.string.hint_name) }
         val dateInput = EditText(this).apply {
-            hint = "Date (dd-mm)"
+            hint = getString(R.string.hint_date)
             isFocusable = false
             isClickable = true
         }
         dateInput.setOnClickListener { showDatePicker(dateInput) }
-        val phoneInput = EditText(this).apply { hint = "Phone" }
-        val messageInput = EditText(this).apply { hint = "Felicitation" }
+        val phoneInput = EditText(this).apply { hint = getString(R.string.hint_phone) }
+        val messageInput = EditText(this).apply { hint = getString(R.string.hint_message) }
 
         obj?.let {
             nameInput.setText(it.getString("name"))
@@ -120,7 +126,7 @@ class BirthdayListActivity : AppCompatActivity() {
             messageInput.setText(it.optString("message"))
         }
 
-        val importButton = Button(this).apply { text = "Import" }
+        val importButton = Button(this).apply { text = getString(R.string.import_contact) }
         val dialogLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(50, 40, 50, 10)
@@ -142,9 +148,9 @@ class BirthdayListActivity : AppCompatActivity() {
         }
 
         AlertDialog.Builder(this)
-            .setTitle(if (obj == null) "Add Birthday" else "Edit Birthday")
+            .setTitle(if (obj == null) getString(R.string.add_birthday) else getString(R.string.edit_birthday))
             .setView(dialogLayout)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton(R.string.save) { _, _ ->
                 val newObj = JSONObject().apply {
                     put("name", nameInput.text.toString())
                     put("date", dateInput.text.toString())
@@ -154,20 +160,20 @@ class BirthdayListActivity : AppCompatActivity() {
                 helper.save(index, newObj)
                 refreshList()
             }
-            .setNegativeButton("Delete") { _, _ ->
+            .setNegativeButton(R.string.delete) { _, _ ->
                 if (index >= 0) {
                     AlertDialog.Builder(this)
-                        .setTitle("Confirm delete")
-                        .setMessage("Are you sure?")
-                        .setPositiveButton("Yes") { _, _ ->
+                        .setTitle(R.string.confirm_delete)
+                        .setMessage(R.string.are_you_sure)
+                        .setPositiveButton(R.string.yes) { _, _ ->
                             helper.delete(index)
                             refreshList()
                         }
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(R.string.no, null)
                         .show()
                 }
             }
-            .setNeutralButton("Cancel", null)
+            .setNeutralButton(R.string.cancel, null)
             .show()
     }
 
@@ -200,7 +206,7 @@ class BirthdayListActivity : AppCompatActivity() {
             if (isGranted) {
                 contactPicker.launch(null)
             } else {
-                Toast.makeText(this, "Permission required to import contact", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.permission_required), Toast.LENGTH_SHORT).show()
             }
         }
 

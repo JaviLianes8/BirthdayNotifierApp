@@ -10,10 +10,16 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimary"
-        android:title="@string/settings"
-        app:titleCentered="true"
-        app:titleTextColor="@color/md_theme_light_onBackground" />
+        android:backgroundTint="?attr/colorPrimary">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_cake"
+            android:contentDescription="@string/app_name" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSetTime"

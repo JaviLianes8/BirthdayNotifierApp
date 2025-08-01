@@ -53,39 +53,51 @@
         android:layout_weight="1" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="32dp">
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:gravity="center"
+		android:layout_marginTop="32dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonLinkedin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="?attr/materialButtonStyle"
-            android:gravity="center"
-            app:icon="@drawable/ic_linkedin" />
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/buttonLinkedin"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text=""
+			style="?attr/materialButtonStyle"
+			android:gravity="center"
+			app:icon="@drawable/ic_linkedin"
+			app:iconGravity="textTop"
+			app:iconSize="32dp"
+			app:iconTint="@null" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonCoffee"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="?attr/materialButtonStyle"
-            android:gravity="center"
-            app:icon="@drawable/ic_buymeacoffee" />
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/buttonCoffee"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text=""
+			style="?attr/materialButtonStyle"
+			android:gravity="center"
+			app:icon="@drawable/ic_buymeacoffee"
+			app:iconGravity="textTop"
+			app:iconSize="32dp"
+			app:iconTint="@null" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonRepo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="?attr/materialButtonStyle"
-            android:gravity="center"
-            app:icon="@drawable/ic_github" />
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/buttonRepo"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text=""
+			style="?attr/materialButtonStyle"
+			android:gravity="center"
+			app:icon="@drawable/ic_github"
+			app:iconGravity="textTop"
+			app:iconSize="32dp"
+			app:iconTint="@null" />
 
-    </LinearLayout>
+	</LinearLayout>
 
 </LinearLayout>

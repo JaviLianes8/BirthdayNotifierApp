@@ -26,6 +26,7 @@ class BirthdayRepositoryImpl : BirthdayRepository {
             val obj = jsonArray.getJSONObject(i)
             Birthday(
                 name = obj.getString("name"),
+                message = obj.optString("message"),
                 date = obj.getString("date"),
                 phone = obj.getString("phone")
             )

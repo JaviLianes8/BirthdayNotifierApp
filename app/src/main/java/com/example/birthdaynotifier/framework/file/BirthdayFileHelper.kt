@@ -81,6 +81,7 @@ class BirthdayFileHelper(private val context: Context) {
         val list = getAll().map {
             mapOf(
                 "name" to it.getString("name"),
+                "message" to it.optString("message"),
                 "date" to it.getString("date"),
                 "phone" to it.getString("phone")
             )

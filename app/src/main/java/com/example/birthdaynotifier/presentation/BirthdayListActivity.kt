@@ -9,6 +9,7 @@ import android.widget.*
 import android.net.Uri
 import android.provider.ContactsContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
 import com.example.birthdaynotifier.R
 import java.util.Calendar
 import com.example.birthdaynotifier.presentation.BaseActivity
@@ -77,6 +78,28 @@ class BirthdayListActivity : BaseActivity() {
         adapter = BirthdayAdapter(this, helper.getAll().toMutableList())
         binding.listView.adapter = adapter
 
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.sort_options,
+            android.R.layout.simple_spinner_item
+        ).also { spinAdapter ->
+            spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerSort.adapter = spinAdapter
+        }
+
+        binding.spinnerSort.setSelection(0)
+        binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                applyFilters()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        binding.editFilter.addTextChangedListener {
+            applyFilters()
+        }
+
         binding.listView.setOnItemClickListener { _, _, pos, _ ->
             showEditDialog(pos, helper.get(pos))
         }
@@ -93,6 +116,36 @@ class BirthdayListActivity : BaseActivity() {
         adapter.clear()
         adapter.addAll(helper.getAll())
         adapter.notifyDataSetChanged()
+        applyFilters()
+    }
+
+    private fun applyFilters() {
+        val baseList = helper.getAll()
+        val sorted = when (binding.spinnerSort.selectedItemPosition) {
+            0 -> baseList.sortedBy { sortKey(it.getString("date")) }
+            1 -> baseList.sortedByDescending { sortKey(it.getString("date")) }
+            2 -> baseList.sortedBy { it.getString("name").lowercase() }
+            3 -> baseList.sortedByDescending { it.getString("name").lowercase() }
+            else -> baseList
+        }
+
+        val filterText = binding.editFilter.text.toString().lowercase()
+        val filtered = if (filterText.isNotEmpty()) {
+            sorted.filter { it.getString("name").lowercase().contains(filterText) }
+        } else {
+            sorted
+        }
+
+        adapter.clear()
+        adapter.addAll(filtered)
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun sortKey(date: String): Int {
+        val parts = date.replace("/", "-").split("-")
+        val day = parts.getOrNull(0)?.toIntOrNull() ?: 0
+        val month = parts.getOrNull(1)?.toIntOrNull() ?: 0
+        return month * 100 + day
     }
 
     /**

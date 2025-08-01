@@ -18,6 +18,7 @@ import com.example.birthdaynotifier.framework.notification.WhatsAppBirthdayNotif
 import com.example.birthdaynotifier.framework.receiver.AlarmScheduler
 import com.example.birthdaynotifier.databinding.ActivityMainBinding
 import com.example.birthdaynotifier.presentation.LocaleHelper
+import androidx.core.text.HtmlCompat
 
 /**
  * Main screen of the application.
@@ -62,7 +63,11 @@ class MainActivity : BaseActivity() {
             binding.textStatus.text = if (names.isEmpty()) {
                 getString(R.string.no_birthdays)
             } else {
-                getString(R.string.birthdays_today, names.joinToString(", "))
+                val namesHtml = names.joinToString(", ") { "<u><big>$it</big></u>" }
+                HtmlCompat.fromHtml(
+                    getString(R.string.birthdays_today, namesHtml),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
             }
 
             handler.removeCallbacks(clearStatus)

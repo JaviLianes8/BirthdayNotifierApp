@@ -23,6 +23,13 @@
     <string name="hint_phone">Phone</string>
     <string name="hint_message">Felicitation</string>
     <string name="import_contact">Import</string>
+    <string name="filter_name">Filter name</string>
+    <string-array name="sort_options">
+        <item>Date asc</item>
+        <item>Date desc</item>
+        <item>Name asc</item>
+        <item>Name desc</item>
+    </string-array>
     <string name="edit_birthday">Edit Birthday</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>

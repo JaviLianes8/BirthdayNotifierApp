@@ -1,70 +1,65 @@
-# Gradle
+# === Gradle ===
 .gradle/
-build/
-*/build/
+**/build/
 !gradle/wrapper/gradle-wrapper.properties
 !gradle/wrapper/gradle-wrapper.jar
 
-# IDEs
+# === Android Studio / IntelliJ ===
 .idea/
 *.iml
 *.iws
 *.ipr
+*.log
+local.properties
+.cxx/
+.externalNativeBuild/
 
-# Kotlin/Java
+# === Kotlin/Java Compilation ===
 *.class
 *.jar
 *.war
 *.ear
-
-# Android
-captures/
+*.dex
 *.apk
 *.ap_
-*.dex
-*.log
-*.so
-*.hprof
 
-# OS-specific
+# === OS-Specific ===
 .DS_Store
 Thumbs.db
 
-# Local configuration
-local.properties
-*.keystore
-*.jks
-
-# Auto-generated files
-generated/
-navigation.xml
-output.json
-
-# Test reports
-test-results/
-test-output/
-*.ec
-
-# Packaging
+# === Packaging / Backup / Temp ===
 *.zip
 *.tar
 *.tar.gz
 *.tgz
-
-# App-specific
-app/release/
-app/debug/
-app/.cxx/
-app/.externalNativeBuild/
-
-# Others
 *.orig
 *.swp
 *.swo
 *.bak
 *.tmp
 
-# Ignore JSONs if they’re runtime only
-*.json
+# === App-specific ===
+BirthdayNotifierApp/app/release/
+BirthdayNotifierApp/app/debug/
+BirthdayNotifierApp/google-services.json
+BirthdayNotifierApp/app/src/main/assets/*.json
+BirthdayNotifierApp/app/src/main/res/raw/*.json
 
-# Uncomment if you store assets/templates you want tracked
+# === Test / Reports ===
+test-results/
+test-output/
+*.ec
+*.hprof
+
+# === Run configs / IDE state ===
+.idea/runConfigurations/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+
+# === VSCode (por si usas también) ===
+.vscode/
+
+# === Firebase Emulator (por si se usa) ===
+.firebase/

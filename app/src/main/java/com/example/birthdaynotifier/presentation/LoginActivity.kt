@@ -1,11 +1,10 @@
 package com.example.birthdaynotifier.presentation
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import com.example.birthdaynotifier.presentation.BaseActivity
 import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.*
@@ -21,11 +20,7 @@ import com.example.birthdaynotifier.presentation.LocaleHelper
  * If the user is already authenticated, it redirects to the main activity.
  * Otherwise, it triggers the Google Sign-In flow.
  */
-class LoginActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
-    }
+class LoginActivity : BaseActivity() {
 
     @Suppress("DEPRECATION")
     private lateinit var googleSignInClient: GoogleSignInClient

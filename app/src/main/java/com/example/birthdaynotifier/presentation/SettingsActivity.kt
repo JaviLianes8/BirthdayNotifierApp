@@ -1,10 +1,9 @@
 package com.example.birthdaynotifier.presentation
 
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.example.birthdaynotifier.presentation.BaseActivity
 import android.app.AlertDialog
 import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.databinding.ActivitySettingsBinding
@@ -18,11 +17,7 @@ import com.example.birthdaynotifier.presentation.LocaleHelper
  * Activity that allows configuring app settings like the notification time
  * and logging out of the current user.
  */
-class SettingsActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
-    }
+class SettingsActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
 

@@ -8,7 +8,7 @@ import android.os.*
 import android.net.Uri
 import androidx.appcompat.widget.Toolbar
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
+import com.example.birthdaynotifier.presentation.BaseActivity
 import com.example.birthdaynotifier.R
 import com.example.birthdaynotifier.domain.usecase.CheckTodaysBirthdaysUseCase
 import com.example.birthdaynotifier.data.repository.BirthdayRepositoryImpl
@@ -27,11 +27,7 @@ import com.example.birthdaynotifier.presentation.LocaleHelper
  *
  * Schedules a daily alarm at the configured time to check birthdays.
  */
-class MainActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
-    }
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
 

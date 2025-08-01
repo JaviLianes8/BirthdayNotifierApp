@@ -6,6 +6,8 @@ import android.app.*
 import android.content.*
 import android.os.*
 import android.net.Uri
+import android.view.View
+import java.util.Calendar
 import androidx.appcompat.widget.Toolbar
 import androidx.annotation.RequiresApi
 import com.example.birthdaynotifier.presentation.BaseActivity
@@ -45,8 +47,24 @@ class MainActivity : BaseActivity() {
 
         // Button to manually trigger birthday notifications
         binding.buttonTest.setOnClickListener {
+            val repo = BirthdayRepositoryImpl()
+            val today = "%02d-%02d".format(
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+                Calendar.getInstance().get(Calendar.MONTH) + 1
+            )
+            val names = repo.getAll(this)
+                .filter { it.date.replace("/", "-").trim() == today }
+                .map { it.name }
+
+            binding.textStatus.visibility = View.VISIBLE
+            binding.textStatus.text = if (names.isEmpty()) {
+                getString(R.string.no_birthdays)
+            } else {
+                getString(R.string.birthdays_today, names.joinToString(", "))
+            }
+
             CheckTodaysBirthdaysUseCase(
-                BirthdayRepositoryImpl(),
+                repo,
                 WhatsAppBirthdayNotifier()
             ).execute(this)
         }
@@ -58,6 +76,10 @@ class MainActivity : BaseActivity() {
 
         // Open settings screen
         binding.buttonSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        binding.buttonSettingsIcon.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 

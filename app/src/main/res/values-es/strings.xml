@@ -11,6 +11,8 @@
     <string name="linkedin">Mi LinkedIn</string>
     <string name="buy_me_coffee">Cómprame un café</string>
     <string name="repo">Este repositorio</string>
+    <string name="no_birthdays">No hay cumpleaños hoy</string>
+    <string name="birthdays_today">Cumpleaños de %1$s hoy. Revisa las notificaciones</string>
     <string name="language">Idioma</string>
     <string name="english">Inglés</string>
     <string name="spanish">Español</string>

@@ -15,6 +15,7 @@ import com.example.birthdaynotifier.presentation.BaseActivity
 import com.example.birthdaynotifier.framework.file.BirthdayFileHelper
 import com.example.birthdaynotifier.databinding.ActivityBirthdayListBinding
 import com.example.birthdaynotifier.presentation.LocaleHelper
+import com.example.birthdaynotifier.presentation.BirthdayAdapter
 import org.json.JSONObject
 
 /**
@@ -26,7 +27,7 @@ import org.json.JSONObject
 class BirthdayListActivity : BaseActivity() {
 
     private lateinit var binding: ActivityBirthdayListBinding
-    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var adapter: BirthdayAdapter
     private val helper by lazy { BirthdayFileHelper(this) }
     private var contactCallback: ((String, String) -> Unit)? = null
     private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
@@ -72,11 +73,9 @@ class BirthdayListActivity : BaseActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        adapter = ArrayAdapter(this, R.layout.item_birthday)
-        binding.listView.adapter = adapter
-
         helper.load()
-        refreshList()
+        adapter = BirthdayAdapter(this, helper.getAll().toMutableList())
+        binding.listView.adapter = adapter
 
         binding.listView.setOnItemClickListener { _, _, pos, _ ->
             showEditDialog(pos, helper.get(pos))
@@ -92,9 +91,8 @@ class BirthdayListActivity : BaseActivity() {
      */
     private fun refreshList() {
         adapter.clear()
-        helper.getAll().forEach {
-            adapter.add(getString(R.string.birthday_item, it.getString("name"), it.getString("date")))
-        }
+        adapter.addAll(helper.getAll())
+        adapter.notifyDataSetChanged()
     }
 
     /**

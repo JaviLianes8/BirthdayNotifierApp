@@ -81,9 +81,9 @@ class BirthdayListActivity : BaseActivity() {
         ArrayAdapter.createFromResource(
             this,
             R.array.sort_options,
-            android.R.layout.simple_spinner_item
+            R.layout.spinner_item
         ).also { spinAdapter ->
-            spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinAdapter.setDropDownViewResource(R.layout.spinner_item)
             binding.spinnerSort.adapter = spinAdapter
         }
 

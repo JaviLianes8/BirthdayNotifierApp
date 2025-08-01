@@ -39,7 +39,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/filter_name" />
+            android:hint="@string/filter_name"
+            android:textColor="@android:color/black"
+            android:hintTextColor="@android:color/black" />
     </LinearLayout>
 
     <ListView

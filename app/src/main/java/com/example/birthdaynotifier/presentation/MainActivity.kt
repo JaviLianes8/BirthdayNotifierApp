@@ -32,6 +32,8 @@ import com.example.birthdaynotifier.presentation.LocaleHelper
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val handler = Handler(Looper.getMainLooper())
+    private val clearStatus = Runnable { binding.textStatus.text = "" }
 
     /**
      * Sets up the UI, handles click listeners, and performs initial sync.
@@ -62,6 +64,9 @@ class MainActivity : BaseActivity() {
             } else {
                 getString(R.string.birthdays_today, names.joinToString(", "))
             }
+
+            handler.removeCallbacks(clearStatus)
+            handler.postDelayed(clearStatus, 60_000)
 
             CheckTodaysBirthdaysUseCase(
                 repo,
@@ -95,6 +100,12 @@ class MainActivity : BaseActivity() {
     /** Opens a web URL in the browser. */
     private fun openUrl(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacks(clearStatus)
+        binding.textStatus.text = ""
     }
 
 }

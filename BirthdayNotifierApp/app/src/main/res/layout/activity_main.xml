@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="?attr/materialButtonStyle"
+            android:gravity="center"
             app:icon="@drawable/ic_linkedin" />
 
         <com.google.android.material.button.MaterialButton
@@ -73,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="?attr/materialButtonStyle"
+            android:gravity="center"
             app:icon="@drawable/ic_buymeacoffee" />
 
         <com.google.android.material.button.MaterialButton
@@ -81,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="?attr/materialButtonStyle"
+            android:gravity="center"
             app:icon="@drawable/ic_github" />
 
     </LinearLayout>

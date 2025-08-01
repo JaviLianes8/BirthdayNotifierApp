@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -32,6 +33,14 @@
         <!-- Receiver for scheduled birthday notifications -->
         <receiver android:name=".framework.receiver.BirthdayReceiver"
             android:exported="false" />
+
+        <!-- Reschedule alarm after device reboot -->
+        <receiver android:name=".framework.receiver.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -52,17 +52,20 @@
         android:layout_marginTop="16dp" />
 
 
-    <View
+    <TextView
+        android:id="@+id/textStatus"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/md_theme_light_primary" />
 
     <LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:gravity="center"
-		android:layout_marginTop="32dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="32dp">
 
                 <ImageButton
                         android:id="@+id/buttonLinkedin"
@@ -91,6 +94,15 @@
                         android:src="@drawable/ic_github"
                         android:contentDescription="@string/repo" />
 
-	</LinearLayout>
+                <ImageButton
+                        android:id="@+id/buttonSettingsIcon"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:src="@drawable/ic_settings"
+                        android:contentDescription="@string/settings" />
+
+        </LinearLayout>
 
 </LinearLayout>

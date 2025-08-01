@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
         android:title="@string/birthday_list_title"
-        android:titleTextColor="@color/md_theme_light_onPrimary" />
+        app:titleTextColor="@color/md_theme_light_onBackground" />
 
     <ListView
         android:id="@+id/listView"

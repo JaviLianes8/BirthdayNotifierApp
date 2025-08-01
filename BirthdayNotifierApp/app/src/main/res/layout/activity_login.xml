@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
         android:title="@string/app_name"
-        android:titleTextColor="@color/md_theme_light_onPrimary" />
+        app:titleTextColor="@color/md_theme_light_onBackground" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signInButton"

@@ -64,10 +64,12 @@ class MainActivity : BaseActivity() {
                 getString(R.string.no_birthdays)
             } else {
                 val listItems = names.joinToString("<br>") { "- <u><big>$it</big></u>" }
-                HtmlCompat.fromHtml(
-                    getString(R.string.birthdays_today, listItems),
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                val msg = resources.getQuantityString(
+                    R.plurals.birthdays_today,
+                    names.size,
+                    listItems
                 )
+                HtmlCompat.fromHtml(msg, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
 
             handler.removeCallbacks(clearStatus)

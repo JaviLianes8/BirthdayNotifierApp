@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.content.Context
 import android.view.View
 import android.widget.*
 import android.net.Uri
@@ -12,7 +11,7 @@ import android.provider.ContactsContract
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.birthdaynotifier.R
 import java.util.Calendar
-import androidx.appcompat.app.AppCompatActivity
+import com.example.birthdaynotifier.presentation.BaseActivity
 import com.example.birthdaynotifier.framework.file.BirthdayFileHelper
 import com.example.birthdaynotifier.databinding.ActivityBirthdayListBinding
 import com.example.birthdaynotifier.presentation.LocaleHelper
@@ -24,11 +23,7 @@ import org.json.JSONObject
  * Allows the user to add, edit, or delete birthday entries.
  * All changes are saved locally and synced with Firestore.
  */
-class BirthdayListActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleHelper.applyBaseContext(newBase))
-    }
+class BirthdayListActivity : BaseActivity() {
 
     private lateinit var binding: ActivityBirthdayListBinding
     private lateinit var adapter: ArrayAdapter<String>

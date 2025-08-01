@@ -12,12 +12,14 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
         android:title="@string/app_name"
+        app:titleCentered="true"
+        app:logo="@drawable/ic_cake"
         app:titleTextColor="@color/md_theme_light_onBackground" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonTest"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:text="@string/test_app"
         style="?attr/materialButtonStyle"
         android:backgroundTint="@color/md_theme_light_primary"
@@ -27,48 +29,60 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonOpen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:text="@string/open_json"
-        style="?attr/materialButtonStyle"
-        android:backgroundTint="@color/md_theme_light_primaryContainer"
-        android:textColor="@color/md_theme_light_onBackground"
-        android:layout_marginTop="16dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonSettings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings"
         style="?attr/materialButtonStyle"
         android:backgroundTint="@color/md_theme_light_primary"
         android:textColor="@color/md_theme_light_onPrimary"
         android:layout_marginTop="16dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonLinkedin"
+        android:id="@+id/buttonSettings"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/linkedin"
+        android:layout_height="96dp"
+        android:text="@string/settings"
         style="?attr/materialButtonStyle"
-        app:icon="@drawable/ic_linkedin"
-        android:layout_marginTop="32dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonCoffee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/buy_me_coffee"
-        style="?attr/materialButtonStyle"
-        app:icon="@drawable/ic_buymeacoffee"
+        android:backgroundTint="@color/md_theme_light_primary"
+        android:textColor="@color/md_theme_light_onPrimary"
         android:layout_marginTop="16dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonRepo"
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/repo"
-        style="?attr/materialButtonStyle"
-        app:icon="@drawable/ic_github"
-        android:layout_marginTop="16dp" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="32dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonLinkedin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="?attr/materialButtonStyle"
+            app:icon="@drawable/ic_linkedin" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCoffee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="?attr/materialButtonStyle"
+            app:icon="@drawable/ic_buymeacoffee" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonRepo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="?attr/materialButtonStyle"
+            app:icon="@drawable/ic_github" />
+
+    </LinearLayout>
 
 </LinearLayout>

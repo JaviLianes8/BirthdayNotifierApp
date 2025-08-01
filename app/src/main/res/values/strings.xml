@@ -8,11 +8,14 @@
     <string name="add_birthday">Add Birthday</string>
     <string name="birthday_list_title">Birthdays</string>
     <string name="login">Login</string>
-    <string name="linkedin">Mi LinkedIn</string>
+    <string name="linkedin">My LinkedIn</string>
     <string name="buy_me_coffee">Buy me a coffee</string>
-    <string name="repo">Este repositorio</string>
+    <string name="repo">This repository</string>
     <string name="no_birthdays">\uD83D\uDD6F No birthdays today</string>
-    <string name="birthdays_today"><![CDATA[<b>Birthdays today:</b><br>%1$s<br>Check notifications]]></string>
+    <plurals name="birthdays_today">
+        <item quantity="one"><![CDATA[<b>Birthday today:</b><br>%1$s<br>Check notifications]]></item>
+        <item quantity="other"><![CDATA[<b>Birthdays today:</b><br>%1$s<br>Check notifications]]></item>
+    </plurals>
     <string name="language">Language</string>
     <string name="english">English</string>
     <string name="spanish">Espa\u00f1ol</string>
@@ -21,7 +24,7 @@
     <string name="hint_name">Name</string>
     <string name="hint_date">Date (dd-mm)</string>
     <string name="hint_phone">Phone</string>
-    <string name="hint_message">Felicitation</string>
+    <string name="hint_message">Birthday greeting</string>
     <string name="import_contact">Import</string>
     <string name="filter_name">Filter name</string>
     <string-array name="sort_options">
@@ -40,7 +43,7 @@
     <string name="cancel">Cancel</string>
     <string name="permission_required">Permission required to import contact</string>
     <string name="birthday_item">%1$s - %2$s</string>
-    <string name="default_message">Congratulations!!!!, %1$s! \uD83C\uDF89\uD83E\uDD73</string>
+    <string name="default_message">Happy birthday, %1$s! \uD83C\uDF89\uD83E\uDD73</string>
     <string name="notification_channel_name">Birthdays</string>
     <string name="notification_title">Birthday: %1$s</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>

@@ -36,8 +36,8 @@ class BirthdayListActivity : AppCompatActivity() {
         // then query the Phone table for the number.
 
         val idProjection = arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME)
-        val contactId: String
-        val name: String
+        var contactId = ""
+        var name = ""
         contentResolver.query(uri, idProjection, null, null, null)?.use { c ->
             if (!c.moveToFirst()) return@registerForActivityResult
             contactId = c.getString(0)

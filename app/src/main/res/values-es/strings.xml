@@ -12,7 +12,10 @@
     <string name="buy_me_coffee">Cómprame un café</string>
     <string name="repo">Este repositorio</string>
     <string name="no_birthdays">\uD83D\uDD6F No hay cumpleaños hoy</string>
-    <string name="birthdays_today"><![CDATA[<b>Hoy cumplen años:</b><br>%1$s<br>Revisa las notificaciones]]></string>
+    <plurals name="birthdays_today">
+        <item quantity="one"><![CDATA[<b>Hoy cumple años:</b><br>%1$s<br>Revisa las notificaciones]]></item>
+        <item quantity="other"><![CDATA[<b>Hoy cumplen años:</b><br>%1$s<br>Revisa las notificaciones]]></item>
+    </plurals>
     <string name="language">Idioma</string>
     <string name="english">Inglés</string>
     <string name="spanish">Español</string>

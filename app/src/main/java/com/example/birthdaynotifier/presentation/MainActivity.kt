@@ -74,11 +74,7 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(this, BirthdayListActivity::class.java))
         }
 
-        // Open settings screen
-        binding.buttonSettings.setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
+        // Open settings screen using bottom icon
         binding.buttonSettingsIcon.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }

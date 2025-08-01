@@ -41,24 +41,15 @@
         android:textColor="@color/md_theme_light_onPrimary"
         android:layout_marginTop="16dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonSettings"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:text="@string/settings"
-        style="?attr/materialButtonStyle"
-        android:backgroundTint="@color/md_theme_light_primary"
-        android:textColor="@color/md_theme_light_onPrimary"
-        android:layout_marginTop="16dp" />
-
-
     <TextView
         android:id="@+id/textStatus"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/md_theme_light_primary" />
+        android:textColor="@color/md_theme_light_primary"
+        android:textStyle="bold"
+        android:textSize="24sp" />
 
     <LinearLayout
                 android:layout_width="match_parent"

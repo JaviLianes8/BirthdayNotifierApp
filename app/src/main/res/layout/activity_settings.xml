@@ -26,23 +26,23 @@
         android:layout_marginTop="24dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonLogout"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:text="@string/logout"
-        style="?attr/materialButtonStyle"
-        android:backgroundTint="@color/md_theme_light_primary"
-        android:textColor="@color/md_theme_light_onPrimary"
-        android:layout_marginTop="16dp" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLanguage"
+        style="?attr/materialButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="96dp"
-        android:text="@string/language"
-        style="?attr/materialButtonStyle"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/md_theme_light_primary"
-        android:textColor="@color/md_theme_light_onPrimary"
-        android:layout_marginTop="16dp" />
+        android:text="@string/language"
+        android:textColor="@color/md_theme_light_onPrimary" />
+		
+	<com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonLogout"
+        style="?attr/materialButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/md_theme_light_primary"
+        android:text="@string/logout"
+        android:textColor="@color/md_theme_light_onPrimary" />
 
 </LinearLayout>

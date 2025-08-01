@@ -44,4 +44,31 @@
         android:textColor="@color/md_theme_light_onPrimary"
         android:layout_marginTop="16dp" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonLinkedin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/linkedin"
+        style="?attr/materialButtonStyle"
+        app:icon="@drawable/ic_linkedin"
+        android:layout_marginTop="32dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonCoffee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/buy_me_coffee"
+        style="?attr/materialButtonStyle"
+        app:icon="@drawable/ic_buymeacoffee"
+        android:layout_marginTop="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonRepo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/repo"
+        style="?attr/materialButtonStyle"
+        app:icon="@drawable/ic_github"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>

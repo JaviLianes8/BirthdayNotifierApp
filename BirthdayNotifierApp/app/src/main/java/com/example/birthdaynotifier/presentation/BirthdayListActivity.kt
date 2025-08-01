@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.example.birthdaynotifier.R
 import java.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.birthdaynotifier.framework.file.BirthdayFileHelper
@@ -35,7 +36,7 @@ class BirthdayListActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
+        adapter = ArrayAdapter(this, R.layout.item_birthday)
         binding.listView.adapter = adapter
 
         helper.load()

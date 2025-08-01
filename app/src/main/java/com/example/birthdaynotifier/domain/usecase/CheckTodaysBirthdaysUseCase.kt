@@ -34,7 +34,7 @@ class CheckTodaysBirthdaysUseCase(
             .filter { it.date.replace("/", "-").trim() == today }
             .forEach {
                 Log.d("BirthdayTest", "Sending to ${it.name}")
-                val msg = "Felicidadeeeeees!!!!, ${it.name}! 🎉🥳"
+                val msg = it.message.ifBlank { "Felicidadeeeeees!!!!, ${'$'}{it.name}! 🎉🥳" }
                 notifier.notify(context, it.name, msg, it.phone)
             }
 
@@ -45,7 +45,7 @@ class CheckTodaysBirthdaysUseCase(
 
         list.filter { it.date == today }.forEach {
             Log.d("BirthdayTest", "Sending to ${it.name}")
-            val msg = "Felicidadeeeeees!!!!, ${it.name}! 🎉🥳"
+            val msg = it.message.ifBlank { "Felicidadeeeeees!!!!, ${'$'}{it.name}! 🎉🥳" }
             notifier.notify(context, it.name, msg, it.phone)
         }
     }

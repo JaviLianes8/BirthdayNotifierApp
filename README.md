@@ -9,6 +9,8 @@ Birthday Notifier is a simple Kotlin Android application used to send WhatsApp b
 - Daily check via `AlarmManager` and `BroadcastReceiver` at a user configurable time.
 - Sends a notification that opens WhatsApp with a pre‑filled message.
 - Simple editor to add, edit or delete birthday entries.
+- Personalized greeting per contact.
+- Option to import name and phone from your device contacts when adding a birthday.
 - Manual trigger button for testing birthday notifications.
 
 ## Building

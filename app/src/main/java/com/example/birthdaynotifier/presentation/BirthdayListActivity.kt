@@ -6,6 +6,9 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import android.net.Uri
+import android.provider.ContactsContract
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.birthdaynotifier.R
 import java.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +27,21 @@ class BirthdayListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBirthdayListBinding
     private lateinit var adapter: ArrayAdapter<String>
     private val helper by lazy { BirthdayFileHelper(this) }
+    private var contactCallback: ((String, String) -> Unit)? = null
+    private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
+        uri ?: return@registerForActivityResult
+        val projection = arrayOf(
+            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER
+        )
+        contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val name = cursor.getString(0)
+                val phone = cursor.getString(1)
+                contactCallback?.invoke(name, phone)
+            }
+        }
+    }
 
     /**
      * Initializes the UI and loads the birthday list.
@@ -76,19 +94,32 @@ class BirthdayListActivity : AppCompatActivity() {
         }
         dateInput.setOnClickListener { showDatePicker(dateInput) }
         val phoneInput = EditText(this).apply { hint = "Phone" }
+        val messageInput = EditText(this).apply { hint = "Felicitation" }
 
         obj?.let {
             nameInput.setText(it.getString("name"))
             dateInput.setText(it.getString("date"))
             phoneInput.setText(it.getString("phone"))
+            messageInput.setText(it.optString("message"))
         }
 
+        val importButton = Button(this).apply { text = "Import" }
         val dialogLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(50, 40, 50, 10)
+            addView(importButton)
             addView(nameInput)
             addView(dateInput)
             addView(phoneInput)
+            addView(messageInput)
+        }
+
+        importButton.setOnClickListener {
+            contactCallback = { name, phone ->
+                nameInput.setText(name)
+                phoneInput.setText(phone)
+            }
+            contactPicker.launch(null)
         }
 
         AlertDialog.Builder(this)
@@ -99,6 +130,7 @@ class BirthdayListActivity : AppCompatActivity() {
                     put("name", nameInput.text.toString())
                     put("date", dateInput.text.toString())
                     put("phone", phoneInput.text.toString())
+                    put("message", messageInput.text.toString())
                 }
                 helper.save(index, newObj)
                 refreshList()

@@ -2,8 +2,11 @@ package com.example.birthdaynotifier.presentation
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.View
 import android.widget.*
+import java.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.birthdaynotifier.framework.file.BirthdayFileHelper
 import com.example.birthdaynotifier.databinding.ActivityBirthdayListBinding
@@ -65,7 +68,12 @@ class BirthdayListActivity : AppCompatActivity() {
      */
     private fun showEditDialog(index: Int, obj: JSONObject?) {
         val nameInput = EditText(this).apply { hint = "Name" }
-        val dateInput = EditText(this).apply { hint = "Date (dd-mm)" }
+        val dateInput = EditText(this).apply {
+            hint = "Date (dd-mm)"
+            isFocusable = false
+            isClickable = true
+        }
+        dateInput.setOnClickListener { showDatePicker(dateInput) }
         val phoneInput = EditText(this).apply { hint = "Phone" }
 
         obj?.let {
@@ -109,5 +117,25 @@ class BirthdayListActivity : AppCompatActivity() {
             }
             .setNeutralButton("Cancel", null)
             .show()
+    }
+
+    /**
+     * Opens a date picker dialog and writes the selected day and month
+     * to the provided EditText in "dd-MM" format.
+     */
+    private fun showDatePicker(target: EditText) {
+        val cal = Calendar.getInstance()
+        val parts = target.text.toString().split("-", "/")
+        if (parts.size >= 2) {
+            parts[0].toIntOrNull()?.let { cal.set(Calendar.DAY_OF_MONTH, it) }
+            parts[1].toIntOrNull()?.let { cal.set(Calendar.MONTH, it - 1) }
+        }
+
+        val dialog = DatePickerDialog(this, { _, _, month, dayOfMonth ->
+            target.setText(String.format("%02d-%02d", dayOfMonth, month + 1))
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))
+
+        dialog.datePicker.findViewById<View>(resources.getIdentifier("year", "id", "android"))?.visibility = View.GONE
+        dialog.show()
     }
 }

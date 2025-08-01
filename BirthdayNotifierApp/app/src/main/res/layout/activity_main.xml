@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
         android:title="@string/app_name"
-        android:titleTextColor="@color/md_theme_light_onPrimary" />
+        app:titleTextColor="@color/md_theme_light_onBackground" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonTest"
@@ -30,8 +30,8 @@
         android:layout_height="wrap_content"
         android:text="@string/open_json"
         style="?attr/materialButtonStyle"
-        android:backgroundTint="@color/md_theme_light_primary"
-        android:textColor="@color/md_theme_light_onPrimary"
+        android:backgroundTint="@color/md_theme_light_primaryContainer"
+        android:textColor="@color/md_theme_light_onBackground"
         android:layout_marginTop="16dp" />
 
     <com.google.android.material.button.MaterialButton

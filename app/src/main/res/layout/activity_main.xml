@@ -59,44 +59,32 @@
 		android:gravity="center"
 		android:layout_marginTop="32dp">
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/buttonLinkedin"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text=""
-			style="?attr/materialButtonStyle"
-			android:gravity="center"
-			app:icon="@drawable/ic_linkedin"
-			app:iconGravity="textTop"
-			app:iconSize="32dp"
-			app:iconTint="@null" />
+                <ImageButton
+                        android:id="@+id/buttonLinkedin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:src="@drawable/ic_linkedin"
+                        android:contentDescription="@string/linkedin" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/buttonCoffee"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text=""
-			style="?attr/materialButtonStyle"
-			android:gravity="center"
-			app:icon="@drawable/ic_buymeacoffee"
-			app:iconGravity="textTop"
-			app:iconSize="32dp"
-			app:iconTint="@null" />
+                <ImageButton
+                        android:id="@+id/buttonCoffee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:src="@drawable/ic_buymeacoffee"
+                        android:contentDescription="@string/buy_me_coffee" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/buttonRepo"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text=""
-			style="?attr/materialButtonStyle"
-			android:gravity="center"
-			app:icon="@drawable/ic_github"
-			app:iconGravity="textTop"
-			app:iconSize="32dp"
-			app:iconTint="@null" />
+                <ImageButton
+                        android:id="@+id/buttonRepo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:src="@drawable/ic_github"
+                        android:contentDescription="@string/repo" />
 
 	</LinearLayout>
 

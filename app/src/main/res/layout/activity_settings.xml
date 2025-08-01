@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
         android:title="@string/settings"
+        app:titleCentered="true"
         app:titleTextColor="@color/md_theme_light_onBackground" />
 
     <com.google.android.material.button.MaterialButton

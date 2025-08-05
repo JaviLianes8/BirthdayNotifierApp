@@ -51,11 +51,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "793109226456-f2m9lhbhelr9d975g86i0rlh0np5qutn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jlianes.birthdaynotifier",
+            "certificate_hash": "45e0b4a35d05a77db4bcb256eeab847e0515eabf"
+          }
+        },
+        {
           "client_id": "793109226456-iv5v8ifiobvjr25gabk3r5o6bcoqii08.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jlianes.birthdaynotifier",
             "certificate_hash": "df95a6fd69c6ea66742fd2e4266db0eab28341c0"
+          }
+        },
+        {
+          "client_id": "793109226456-ni6arp8tmo4qqr2fh8s9b7f5eteaobj1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jlianes.birthdaynotifier",
+            "certificate_hash": "0ceadef55a5eec0c6a0cc0e556326ca50b90d7a0"
           }
         },
         {

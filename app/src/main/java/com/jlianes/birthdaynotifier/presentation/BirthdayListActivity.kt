@@ -31,6 +31,7 @@ class BirthdayListActivity : BaseActivity() {
     private lateinit var adapter: BirthdayAdapter
     private val helper by lazy { BirthdayFileHelper(this) }
     private var contactCallback: ((String, String) -> Unit)? = null
+    private var displayedIndices: List<Int> = emptyList()
     private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
         uri ?: return@registerForActivityResult
 
@@ -102,7 +103,8 @@ class BirthdayListActivity : BaseActivity() {
         }
 
         binding.listView.setOnItemClickListener { _, _, pos, _ ->
-            showEditDialog(pos, helper.get(pos))
+            val originalIndex = displayedIndices.getOrNull(pos) ?: pos
+            showEditDialog(originalIndex, helper.get(originalIndex))
         }
 
         binding.fab.setOnClickListener {
@@ -122,23 +124,25 @@ class BirthdayListActivity : BaseActivity() {
 
     private fun applyFilters() {
         val baseList = helper.getAll()
+        val indexed = baseList.mapIndexed { idx, obj -> idx to obj }
         val sorted = when (binding.spinnerSort.selectedItemPosition) {
-            0 -> baseList.sortedBy { sortKey(it.getString("date")) }
-            1 -> baseList.sortedByDescending { sortKey(it.getString("date")) }
-            2 -> baseList.sortedBy { it.getString("name").lowercase() }
-            3 -> baseList.sortedByDescending { it.getString("name").lowercase() }
-            else -> baseList
+            0 -> indexed.sortedBy { sortKey(it.second.getString("date")) }
+            1 -> indexed.sortedByDescending { sortKey(it.second.getString("date")) }
+            2 -> indexed.sortedBy { it.second.getString("name").lowercase() }
+            3 -> indexed.sortedByDescending { it.second.getString("name").lowercase() }
+            else -> indexed
         }
 
         val filterText = binding.editFilter.text.toString().lowercase()
         val filtered = if (filterText.isNotEmpty()) {
-            sorted.filter { it.getString("name").lowercase().contains(filterText) }
+            sorted.filter { it.second.getString("name").lowercase().contains(filterText) }
         } else {
             sorted
         }
 
+        displayedIndices = filtered.map { it.first }
         adapter.clear()
-        adapter.addAll(filtered)
+        adapter.addAll(filtered.map { it.second })
         adapter.notifyDataSetChanged()
     }
 

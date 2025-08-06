@@ -49,4 +49,10 @@
     <string name="notification_channel_name">Compleanni</string>
     <string name="notification_title">Compleanno di %1$s</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
+    <string name="delete_data">Elimina dati</string>
+    <string name="delete_data_confirm">Eliminare tutti i dati?</string>
+    <string name="delete_data_type_phrase">Digita "%1$s" per confermare:</string>
+    <string name="delete_data_phrase">confermo che voglio cancellare i miei dati</string>
+    <string name="delete_data_done">Tutti i dati sono stati eliminati</string>
+    <string name="delete_data_incorrect">Testo di conferma errato</string>
 </resources>

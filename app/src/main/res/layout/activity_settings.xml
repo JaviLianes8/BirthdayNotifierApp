@@ -5,7 +5,7 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_primaryContainer">
+    android:background="?attr/colorPrimaryContainer">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -28,8 +28,8 @@
         android:layout_height="96dp"
         android:text="@string/set_time"
         style="?attr/materialButtonStyle"
-        android:backgroundTint="@color/md_theme_light_primary"
-        android:textColor="@color/md_theme_light_onPrimary"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_marginTop="24dp" />
 
     <com.google.android.material.button.MaterialButton
@@ -38,9 +38,19 @@
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/md_theme_light_primary"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="@string/language"
-        android:textColor="@color/md_theme_light_onPrimary" />
+        android:textColor="?attr/colorOnPrimary" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonTheme"
+        style="?attr/materialButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:text="@string/theme"
+        android:textColor="?attr/colorOnPrimary" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonDeleteData"
@@ -48,9 +58,9 @@
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/md_theme_light_primary"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="@string/delete_data"
-        android:textColor="@color/md_theme_light_onPrimary" />
+        android:textColor="?attr/colorOnPrimary" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogout"
@@ -58,8 +68,9 @@
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/md_theme_light_primary"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="@string/logout"
-        android:textColor="@color/md_theme_light_onPrimary" />
+        android:textColor="?attr/colorOnPrimary" />
 
 </LinearLayout>
+

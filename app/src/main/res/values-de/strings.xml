@@ -55,4 +55,9 @@
     <string name="delete_data_phrase">Ich bestätige, dass ich meine Daten löschen möchte</string>
     <string name="delete_data_done">Alle Daten wurden gelöscht</string>
     <string name="delete_data_incorrect">Falscher Bestätigungstext</string>
+    <string name="theme">Thema</string>
+    <string name="light">Hell</string>
+    <string name="dark">Dunkel</string>
+    <string name="system_default">Systemstandard</string>
 </resources>
+

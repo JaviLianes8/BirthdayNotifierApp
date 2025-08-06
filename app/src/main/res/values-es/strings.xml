@@ -55,4 +55,9 @@
     <string name="delete_data_phrase">Confirmo que quiero borrar mis datos</string>
     <string name="delete_data_done">Todos los datos han sido borrados</string>
     <string name="delete_data_incorrect">Texto de confirmación incorrecto</string>
+    <string name="theme">Tema</string>
+    <string name="light">Claro</string>
+    <string name="dark">Oscuro</string>
+    <string name="system_default">Predeterminado del sistema</string>
 </resources>
+

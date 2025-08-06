@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatDelegate
 import com.jlianes.birthdaynotifier.R
 import com.jlianes.birthdaynotifier.databinding.ActivitySettingsBinding
 import com.jlianes.birthdaynotifier.framework.cloud.BirthdayFirestoreStorage
@@ -35,6 +36,7 @@ class SettingsActivity : BaseActivity() {
 
         binding.buttonSetTime.setOnClickListener { showTimePicker() }
         binding.buttonLanguage.setOnClickListener { showLanguageDialog() }
+        binding.buttonTheme.setOnClickListener { showThemeDialog() }
         binding.buttonDeleteData.setOnClickListener { confirmDeleteData() }
         binding.buttonLogout.setOnClickListener { performLogout() }
     }
@@ -84,6 +86,32 @@ class SettingsActivity : BaseActivity() {
             .show()
     }
 
+    private fun showThemeDialog() {
+        val themes = arrayOf(
+            getString(R.string.light),
+            getString(R.string.dark),
+            getString(R.string.system_default)
+        )
+        val codes = arrayOf("light", "dark", "system")
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val current = prefs.getString("theme", "system")
+        val checked = codes.indexOf(current).let { if (it >= 0) it else 2 }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.theme)
+            .setSingleChoiceItems(themes, checked) { dialog, which ->
+                prefs.edit().putString("theme", codes[which]).apply()
+                val mode = when (codes[which]) {
+                    "light" -> AppCompatDelegate.MODE_NIGHT_NO
+                    "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                }
+                AppCompatDelegate.setDefaultNightMode(mode)
+                dialog.dismiss()
+                recreate()
+            }
+            .show()
+    }
+
     private fun confirmDeleteData() {
         AlertDialog.Builder(this)
             .setTitle(R.string.delete_data)
@@ -120,3 +148,4 @@ class SettingsActivity : BaseActivity() {
             .show()
     }
 }
+

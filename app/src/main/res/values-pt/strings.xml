@@ -55,4 +55,9 @@
     <string name="delete_data_phrase">Confirmo que quero apagar meus dados</string>
     <string name="delete_data_done">Todos os dados foram apagados</string>
     <string name="delete_data_incorrect">Texto de confirmação incorreto</string>
+    <string name="theme">Tema</string>
+    <string name="light">Claro</string>
+    <string name="dark">Escuro</string>
+    <string name="system_default">Padrão do sistema</string>
 </resources>
+

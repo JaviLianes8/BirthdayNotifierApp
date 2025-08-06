@@ -51,7 +51,7 @@
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
     <string name="delete_data">Apagar dados</string>
     <string name="delete_data_confirm">Apagar todos os dados?</string>
-    <string name="delete_data_type_phrase">Digite "%1$s" para confirmar:</string>
+    <string name="delete_data_type_phrase">Digite "<b><u>%1$s</u></b>" para confirmar:</string>
     <string name="delete_data_phrase">confirmo que quero apagar meus dados</string>
     <string name="delete_data_done">Todos os dados foram apagados</string>
     <string name="delete_data_incorrect">Texto de confirmação incorreto</string>

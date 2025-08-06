@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Rappel Anniversaire</string>
+    <string name="test_app">Vérifier les anniversaires</string>
+    <string name="open_json">Modifier les anniversaires</string>
+    <string name="settings">Paramètres</string>
+    <string name="set_time">Définir l'heure de notification</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="add_birthday">Ajouter un anniversaire</string>
+    <string name="birthday_list_title">Anniversaires</string>
+    <string name="login">Se connecter</string>
+    <string name="linkedin">Mon LinkedIn</string>
+    <string name="buy_me_coffee">Offrez-moi un café</string>
+    <string name="repo">Ce dépôt</string>
+    <string name="no_birthdays">\uD83D\uDD6F Aucun anniversaire aujourd'hui</string>
+    <string name="birthdays_today"><![CDATA[<b>Anniversaires aujourd'hui :</b><br>%1$s<br>Vérifiez les notifications<br>]]></string>
+    <string name="birthday_today"><![CDATA[<b>Anniversaire aujourd'hui :</b><br>%1$s<br>Vérifiez les notifications<br>]]></string>
+    <string name="language">Langue</string>
+    <string name="english">Anglais</string>
+    <string name="spanish">Espagnol</string>
+    <string name="portuguese">Portugais</string>
+    <string name="italian">Italien</string>
+    <string name="german">Allemand</string>
+    <string name="french">Français</string>
+    <string name="login_failed">Échec de connexion : %1$s</string>
+    <string name="auth_failed">Échec d'authentification : %1$s</string>
+    <string name="hint_name">Nom</string>
+    <string name="hint_date">Date (jj-mm)</string>
+    <string name="hint_phone">Téléphone</string>
+    <string name="hint_message">Message d'anniversaire</string>
+    <string name="import_contact">Importer</string>
+    <string name="filter_name">Filtrer le nom</string>
+    <string-array name="sort_options">
+        <item>Date asc</item>
+        <item>Date desc</item>
+        <item>Nom asc</item>
+        <item>Nom desc</item>
+    </string-array>
+    <string name="edit_birthday">Modifier l'anniversaire</string>
+    <string name="save">Enregistrer</string>
+    <string name="delete">Supprimer</string>
+    <string name="confirm_delete">Confirmer la suppression</string>
+    <string name="are_you_sure">Vous êtes sûr ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="cancel">Annuler</string>
+    <string name="permission_required">Permission requise pour importer le contact</string>
+    <string name="birthday_item">%1$s - %2$s</string>
+    <string name="default_message">Joyeux anniversaire, %1$s ! 🎉🥳</string>
+    <string name="notification_channel_name">Anniversaires</string>
+    <string name="notification_title">Anniversaire de %1$s</string>
+    <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
+</resources>

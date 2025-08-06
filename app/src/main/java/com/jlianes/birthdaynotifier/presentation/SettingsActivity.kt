@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.lifecycleScope
 import com.jlianes.birthdaynotifier.R
 import com.jlianes.birthdaynotifier.databinding.ActivitySettingsBinding
@@ -97,7 +98,12 @@ class SettingsActivity : BaseActivity() {
         val input = EditText(this)
         AlertDialog.Builder(this)
             .setTitle(R.string.delete_data)
-            .setMessage(getString(R.string.delete_data_type_phrase, phrase))
+            .setMessage(
+                HtmlCompat.fromHtml(
+                    getString(R.string.delete_data_type_phrase, phrase),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            )
             .setView(input)
             .setPositiveButton(R.string.yes) { _, _ ->
                 if (input.text.toString() == phrase) {

@@ -9,11 +9,12 @@ object LocaleHelper {
      * Returns the currently saved language code from SharedPreferences.
      *
      * @param context Context used to access SharedPreferences.
-     * @return String Language code (e.g., "en", "es"). Defaults to "en" if not set.
+     * @return String Language code (e.g., "en", "es"). Defaults to system language if not set.
      */
     fun getLanguage(context: Context): String {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        return prefs.getString("language", "en") ?: "en"
+        val saved = prefs.getString("language", null)
+        return saved ?: Locale.getDefault().language
     }
 
     /**

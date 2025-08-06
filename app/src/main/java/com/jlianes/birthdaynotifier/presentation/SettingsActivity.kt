@@ -56,10 +56,17 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun showLanguageDialog() {
-        val languages = arrayOf(getString(R.string.english), getString(R.string.spanish))
-        val codes = arrayOf("en", "es")
+        val languages = arrayOf(
+            getString(R.string.english),
+            getString(R.string.spanish),
+            getString(R.string.portuguese),
+            getString(R.string.italian),
+            getString(R.string.german),
+            getString(R.string.french)
+        )
+        val codes = arrayOf("en", "es", "pt", "it", "de", "fr")
         val current = LocaleHelper.getLanguage(this)
-        val checked = if (current == "es") 1 else 0
+        val checked = codes.indexOf(current).let { if (it >= 0) it else 0 }
         AlertDialog.Builder(this)
             .setTitle(R.string.language)
             .setSingleChoiceItems(languages, checked) { dialog, which ->

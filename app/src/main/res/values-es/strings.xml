@@ -17,6 +17,10 @@
     <string name="language">Idioma</string>
     <string name="english">Inglés</string>
     <string name="spanish">Español</string>
+    <string name="portuguese">Portugués</string>
+    <string name="italian">Italiano</string>
+    <string name="german">Alemán</string>
+    <string name="french">Francés</string>
     <string name="login_failed">Error de inicio: %1$s</string>
     <string name="auth_failed">Autenticación fallida: %1$s</string>
     <string name="hint_name">Nombre</string>

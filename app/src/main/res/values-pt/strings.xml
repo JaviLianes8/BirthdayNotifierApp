@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Lembrete de Aniversário</string>
+    <string name="test_app">Verificar aniversários</string>
+    <string name="open_json">Alterar aniversários</string>
+    <string name="settings">Configurações</string>
+    <string name="set_time">Definir horário da notificação</string>
+    <string name="logout">Sair</string>
+    <string name="add_birthday">Adicionar aniversário</string>
+    <string name="birthday_list_title">Aniversários</string>
+    <string name="login">Entrar</string>
+    <string name="linkedin">Meu LinkedIn</string>
+    <string name="buy_me_coffee">Me pague um café</string>
+    <string name="repo">Este repositório</string>
+    <string name="no_birthdays">\uD83D\uDD6F Nenhum aniversário hoje</string>
+    <string name="birthdays_today"><![CDATA[<b>Aniversários hoje:</b><br>%1$s<br>Confira as notificações<br>]]></string>
+    <string name="birthday_today"><![CDATA[<b>Aniversário hoje:</b><br>%1$s<br>Confira as notificações<br>]]></string>
+    <string name="language">Idioma</string>
+    <string name="english">Inglês</string>
+    <string name="spanish">Espanhol</string>
+    <string name="portuguese">Português</string>
+    <string name="italian">Italiano</string>
+    <string name="german">Alemão</string>
+    <string name="french">Francês</string>
+    <string name="login_failed">Falha ao entrar: %1$s</string>
+    <string name="auth_failed">Falha de autenticação: %1$s</string>
+    <string name="hint_name">Nome</string>
+    <string name="hint_date">Data (dd-mm)</string>
+    <string name="hint_phone">Telefone</string>
+    <string name="hint_message">Mensagem de parabéns</string>
+    <string name="import_contact">Importar</string>
+    <string name="filter_name">Filtrar nome</string>
+    <string-array name="sort_options">
+        <item>Data asc</item>
+        <item>Data desc</item>
+        <item>Nome asc</item>
+        <item>Nome desc</item>
+    </string-array>
+    <string name="edit_birthday">Editar aniversário</string>
+    <string name="save">Salvar</string>
+    <string name="delete">Excluir</string>
+    <string name="confirm_delete">Confirmar exclusão</string>
+    <string name="are_you_sure">Tem certeza?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="cancel">Cancelar</string>
+    <string name="permission_required">Permissão necessária para importar contato</string>
+    <string name="birthday_item">%1$s - %2$s</string>
+    <string name="default_message">Parabéns, %1$s! 🎉🥳</string>
+    <string name="notification_channel_name">Aniversários</string>
+    <string name="notification_title">Aniversário de %1$s</string>
+    <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
+</resources>

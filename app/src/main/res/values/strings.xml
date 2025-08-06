@@ -49,4 +49,10 @@
     <string name="notification_channel_name">Birthdays</string>
     <string name="notification_title">Birthday: %1$s</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
+    <string name="delete_data">Delete data</string>
+    <string name="delete_data_confirm">Delete all data?</string>
+    <string name="delete_data_type_phrase">Type "%1$s" to confirm:</string>
+    <string name="delete_data_phrase">I confirm I want to delete my data</string>
+    <string name="delete_data_done">All data deleted</string>
+    <string name="delete_data_incorrect">Incorrect confirmation text</string>
 </resources>

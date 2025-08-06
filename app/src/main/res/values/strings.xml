@@ -55,4 +55,9 @@
     <string name="delete_data_phrase">I confirm I want to delete my data</string>
     <string name="delete_data_done">All data deleted</string>
     <string name="delete_data_incorrect">Incorrect confirmation text</string>
+    <string name="theme">Theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="system_default">System default</string>
 </resources>
+

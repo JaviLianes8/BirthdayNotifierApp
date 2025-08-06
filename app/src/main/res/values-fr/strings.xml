@@ -55,4 +55,9 @@
     <string name="delete_data_phrase">Je confirme que je souhaite supprimer mes données</string>
     <string name="delete_data_done">Toutes les données ont été supprimées</string>
     <string name="delete_data_incorrect">Texte de confirmation incorrect</string>
+    <string name="theme">Thème</string>
+    <string name="light">Clair</string>
+    <string name="dark">Sombre</string>
+    <string name="system_default">Par défaut du système</string>
 </resources>
+

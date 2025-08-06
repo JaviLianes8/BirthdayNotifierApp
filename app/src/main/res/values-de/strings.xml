@@ -51,7 +51,7 @@
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
     <string name="delete_data">Daten löschen</string>
     <string name="delete_data_confirm">Alle Daten löschen?</string>
-    <string name="delete_data_type_phrase">Gib "%1$s" ein, um zu bestätigen:</string>
+    <string name="delete_data_type_phrase"><![CDATA[Gib ein:<br><b><u>"%1$s"</u></b><br>um zu bestätigen:<br>]]></string>
     <string name="delete_data_phrase">Ich bestätige, dass ich meine Daten löschen möchte</string>
     <string name="delete_data_done">Alle Daten wurden gelöscht</string>
     <string name="delete_data_incorrect">Falscher Bestätigungstext</string>

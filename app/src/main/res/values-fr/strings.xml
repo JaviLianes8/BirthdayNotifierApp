@@ -3,7 +3,7 @@
     <string name="test_app">Vérifier les anniversaires</string>
     <string name="open_json">Modifier les anniversaires</string>
     <string name="settings">Paramètres</string>
-    <string name="set_time">Définir l'heure de notification</string>
+    <string name="set_time">Définir l\'heure de notification</string>
     <string name="logout">Se déconnecter</string>
     <string name="add_birthday">Ajouter un anniversaire</string>
     <string name="birthday_list_title">Anniversaires</string>
@@ -11,9 +11,9 @@
     <string name="linkedin">Mon LinkedIn</string>
     <string name="buy_me_coffee">Offrez-moi un café</string>
     <string name="repo">Ce dépôt</string>
-    <string name="no_birthdays">\uD83D\uDD6F Aucun anniversaire aujourd'hui</string>
-    <string name="birthdays_today"><![CDATA[<b>Anniversaires aujourd'hui :</b><br>%1$s<br>Vérifiez les notifications<br>]]></string>
-    <string name="birthday_today"><![CDATA[<b>Anniversaire aujourd'hui :</b><br>%1$s<br>Vérifiez les notifications<br>]]></string>
+    <string name="no_birthdays">Aucun anniversaire aujourd\'hui</string>
+    <string name="birthdays_today"><![CDATA[<b>Anniversaires aujourd\'hui :</b><br>%1$s<br>Vérifiez les notifications<br>]]></string>
+    <string name="birthday_today"><![CDATA[<b>Anniversaire aujourd\'hui :</b><br>%1$s<br>Vérifiez les notifications<br>]]></string>
     <string name="language">Langue</string>
     <string name="english">Anglais</string>
     <string name="spanish">Espagnol</string>
@@ -22,11 +22,11 @@
     <string name="german">Allemand</string>
     <string name="french">Français</string>
     <string name="login_failed">Échec de connexion : %1$s</string>
-    <string name="auth_failed">Échec d'authentification : %1$s</string>
+    <string name="auth_failed">Échec d\'authentification : %1$s</string>
     <string name="hint_name">Nom</string>
     <string name="hint_date">Date (jj-mm)</string>
     <string name="hint_phone">Téléphone</string>
-    <string name="hint_message">Message d'anniversaire</string>
+    <string name="hint_message">Message d\'anniversaire</string>
     <string name="import_contact">Importer</string>
     <string name="filter_name">Filtrer le nom</string>
     <string-array name="sort_options">
@@ -35,7 +35,7 @@
         <item>Nom asc</item>
         <item>Nom desc</item>
     </string-array>
-    <string name="edit_birthday">Modifier l'anniversaire</string>
+    <string name="edit_birthday">Modifier l\'anniversaire</string>
     <string name="save">Enregistrer</string>
     <string name="delete">Supprimer</string>
     <string name="confirm_delete">Confirmer la suppression</string>

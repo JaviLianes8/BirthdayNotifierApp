@@ -30,7 +30,8 @@
         style="?attr/materialButtonStyle"
         android:backgroundTint="@color/md_theme_light_primary"
         android:textColor="@color/md_theme_light_onPrimary"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        app:cornerRadius="0dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonOpen"
@@ -40,7 +41,8 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/md_theme_light_primary"
         android:text="@string/open_json"
-        android:textColor="@color/md_theme_light_onPrimary" />
+        android:textColor="@color/md_theme_light_onPrimary"
+        app:cornerRadius="0dp" />
 
     <TextView
         android:id="@+id/textStatus"

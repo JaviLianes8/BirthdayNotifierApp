@@ -111,7 +111,7 @@ class BirthdayListActivity : BaseActivity() {
             showEditDialog(originalIndex, helper.get(originalIndex))
         }
 
-        binding.fab.setOnClickListener {
+        binding.buttonAdd.setOnClickListener {
             showEditDialog(-1, null)
         }
     }

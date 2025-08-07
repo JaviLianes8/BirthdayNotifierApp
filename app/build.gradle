@@ -39,17 +39,17 @@ android {
         implementation 'androidx.appcompat:appcompat:1.7.1'
         implementation 'com.google.android.material:material:1.11.0'
 
-    implementation "com.google.android.gms:play-services-auth:21.2.0"
-    implementation("com.google.firebase:firebase-auth:22.3.0")
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
-    implementation 'com.google.firebase:firebase-storage-ktx:20.3.0'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.11.0'
+        implementation "com.google.android.gms:play-services-auth:21.2.0"
+        implementation("com.google.firebase:firebase-auth:22.3.0")
+        implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
+        implementation 'com.google.firebase:firebase-storage-ktx:20.3.0'
+        implementation 'com.google.firebase:firebase-firestore-ktx:24.11.0'
 
-    implementation 'androidx.core:core-ktx:1.12.0'
+        implementation 'androidx.core:core-ktx:1.12.0'
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.0")
-    implementation 'org.json:json:20230618'
-    implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.21'
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.0")
+        implementation 'org.json:json:20230618'
+        implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.21'
         implementation 'com.hbb20:ccp:2.7.3'
 
         implementation platform('androidx.compose:compose-bom:2024.04.01')

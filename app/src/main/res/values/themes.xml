@@ -11,5 +11,6 @@
         <item name="android:colorBackground">@color/md_theme_light_background</item>
         <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
         <item name="android:colorControlHighlight">@color/md_theme_light_primaryContainer</item>
+        <item name="android:windowBackground">@color/md_theme_light_background</item>
     </style>
 </resources>

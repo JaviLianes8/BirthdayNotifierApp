@@ -74,6 +74,7 @@ class WhatsAppBirthdayNotifier : BirthdayNotifier {
         val remoteInput = RemoteInput.Builder(SnoozeReceiver.KEY_SNOOZE_HOURS)
             .setLabel(context.getString(R.string.snooze_label))
             .setChoices(arrayOf("1", "2", "3", "4"))
+            .setAllowFreeFormInput(false)
             .build()
 
         val action = NotificationCompat.Action.Builder(

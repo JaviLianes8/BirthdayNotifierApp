@@ -11,15 +11,15 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary">
+        android:backgroundTint="?attr/colorPrimary">
 
         <ImageView
             android:layout_width="@dimen/logo_size"
             android:layout_height="@dimen/logo_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_cake"
-            android:tint="?attr/colorOnPrimary"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            app:tint="@android:color/white" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 

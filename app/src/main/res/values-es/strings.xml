@@ -64,5 +64,7 @@
     <string name="manual_check">Revisión manual</string>
     <string name="add_contact">Añadir contacto</string>
     <string name="calendar_icon_desc">Icono de calendario</string>
+    <string name="cake_icon_desc">Icono de tarta</string>
+    <string name="soon">Pronto...</string>
 </resources>
 

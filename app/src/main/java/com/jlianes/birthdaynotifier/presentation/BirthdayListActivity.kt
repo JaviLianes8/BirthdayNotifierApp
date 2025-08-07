@@ -117,6 +117,7 @@ class BirthdayListActivity : BaseActivity() {
         helper.load()
         adapter = BirthdayAdapter(this, helper.getAll().toMutableList())
         binding.listView.adapter = adapter
+        adapter.refreshIndicators()
 
         ArrayAdapter.createFromResource(
             this,
@@ -252,6 +253,7 @@ class BirthdayListActivity : BaseActivity() {
         displayedIndices = filtered.map { it.first }
         adapter.clear()
         adapter.addAll(filtered.map { it.second })
+        adapter.refreshIndicators()
         adapter.notifyDataSetChanged()
     }
 

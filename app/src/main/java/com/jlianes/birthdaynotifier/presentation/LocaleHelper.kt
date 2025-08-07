@@ -2,6 +2,8 @@ package com.jlianes.birthdaynotifier.presentation
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Build
+import android.os.LocaleList
 import java.util.Locale
 
 /**
@@ -30,8 +32,14 @@ object LocaleHelper {
         val code = getLanguage(context)
         val locale = Locale(code)
         Locale.setDefault(locale)
+
         val config = Configuration(context.resources.configuration)
-        config.setLocale(locale)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.setLocales(LocaleList(locale))
+        } else {
+            @Suppress("DEPRECATION")
+            config.setLocale(locale)
+        }
         return context.createConfigurationContext(config)
     }
 

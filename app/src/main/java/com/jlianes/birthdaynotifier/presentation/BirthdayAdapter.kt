@@ -32,8 +32,10 @@ class BirthdayAdapter(context: Context, items: MutableList<JSONObject>) :
     }
     private var nextKey: Int = -1
 
-    fun refreshIndicators() {
-        val keys = (0 until count).mapNotNull { getItem(it)?.getString("date")?.let { d -> sortKey(d) } }
+    fun refreshIndicators(allItems: List<JSONObject>) {
+        val keys = allItems.mapNotNull { obj ->
+            obj.optString("date").takeIf { it.isNotBlank() }?.let { d -> sortKey(d) }
+        }
         nextKey = keys.filter { it > todayKey }.minOrNull() ?: keys.minOrNull() ?: -1
     }
 

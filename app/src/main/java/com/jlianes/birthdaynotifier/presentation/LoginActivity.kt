@@ -94,7 +94,7 @@ class LoginActivity : BaseActivity() {
      * Navigates to the main activity and finishes the login screen.
      */
     private fun goToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, BirthdayListActivity::class.java))
         finish()
     }
 }

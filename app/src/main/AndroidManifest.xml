@@ -20,9 +20,6 @@
         <!-- Settings screen -->
         <activity android:name=".presentation.SettingsActivity" />
 
-        <!-- Main screen after login -->
-        <activity android:name=".presentation.MainActivity" />
-
         <!-- Login screen -->
         <activity android:name=".presentation.LoginActivity"
             android:exported="true">

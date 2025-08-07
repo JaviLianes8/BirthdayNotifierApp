@@ -11,32 +11,12 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary">
 
-        <ImageButton
-            android:id="@+id/buttonTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_check"
-            android:tint="@color/md_theme_light_onPrimary"
-            android:contentDescription="@string/test_app" />
-
         <ImageView
             android:layout_width="@dimen/logo_size"
             android:layout_height="@dimen/logo_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_cake"
             android:contentDescription="@string/app_name" />
-
-        <ImageButton
-            android:id="@+id/buttonAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_add"
-            android:tint="@color/md_theme_light_onPrimary"
-            android:contentDescription="@string/add_birthday" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -76,18 +56,26 @@
         android:id="@+id/textStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bottomBar"
+        android:layout_above="@id/floatingButtons"
         android:gravity="center"
         android:textColor="@color/md_theme_light_primary"
         android:textStyle="bold"
         android:textSize="24sp"
         android:visibility="gone" />
 
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/floatingButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomBar"
+        android:padding="8dp" />
+
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         android:gravity="center">
 
@@ -128,5 +116,21 @@
             android:contentDescription="@string/settings" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/checkOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_light_primaryContainer"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/checking_birthdays"
+            android:textColor="@color/md_theme_light_primary"
+            android:textSize="24sp" />
+    </FrameLayout>
 
 </RelativeLayout>

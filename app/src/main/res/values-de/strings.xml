@@ -59,5 +59,6 @@
     <string name="light">Hell</string>
     <string name="dark">Dunkel</string>
     <string name="system_default">Systemstandard</string>
+    <string name="checking_birthdays">Überprüfung…</string>
 </resources>
 

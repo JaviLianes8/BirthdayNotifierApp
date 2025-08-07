@@ -12,6 +12,7 @@ import android.content.Context
 import android.telephony.TelephonyManager
 import android.text.InputType
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.hbb20.CountryCodePicker
@@ -175,6 +176,12 @@ class BirthdayListActivity : BaseActivity() {
         dateInput.setOnClickListener { showDatePicker(dateInput) }
         val ccp = CountryCodePicker(this).apply {
             setCountryForNameCode(defaultCountryIso())
+            val textColor = ContextCompat.getColor(
+                this@BirthdayListActivity,
+                R.color.md_theme_light_onBackground
+            )
+            setContentColor(textColor)
+            setDialogTextColor(textColor)
         }
         val phoneInput = EditText(this).apply {
             hint = getString(R.string.hint_phone)

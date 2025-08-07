@@ -18,6 +18,7 @@
             android:layout_height="@dimen/logo_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_cake"
+            android:tint="@android:color/white"
             android:contentDescription="@string/app_name" />
 
     </com.google.android.material.appbar.MaterialToolbar>

@@ -70,6 +70,7 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_linkedin"
+                        android:tint="?attr/colorOnBackground"
                         android:contentDescription="@string/linkedin" />
 
                 <ImageButton
@@ -79,6 +80,7 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_buymeacoffee"
+                        android:tint="?attr/colorOnBackground"
                         android:contentDescription="@string/buy_me_coffee" />
 
                 <ImageButton
@@ -88,6 +90,7 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_github"
+                        android:tint="?attr/colorOnBackground"
                         android:contentDescription="@string/repo" />
 
                 <ImageButton
@@ -97,6 +100,7 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_settings"
+                        android:tint="?attr/colorOnBackground"
                         android:contentDescription="@string/settings" />
 
         </LinearLayout>

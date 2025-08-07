@@ -6,7 +6,7 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_primaryContainer">
+    android:background="?attr/colorBackground">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -29,10 +29,10 @@
         android:layout_height="wrap_content"
         android:text="@string/login"
         style="?attr/materialButtonStyle"
-        android:backgroundTint="@color/md_theme_light_primary"
-        android:textColor="@color/md_theme_light_onPrimary"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_marginTop="48dp"
-        app:cornerRadius="16dp"
-        app:rippleColor="@color/md_theme_light_primaryContainer" />
+        app:cornerRadius="0dp"
+        app:rippleColor="?attr/colorPrimaryContainer" />
 
 </LinearLayout>

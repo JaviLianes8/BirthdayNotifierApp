@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_primaryContainer">
+    android:background="?attr/colorBackground">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -31,8 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/filter_name"
-            android:textColor="@color/md_theme_light_onBackground"
-            android:textColorHint="@color/md_theme_light_onBackground" />
+            android:textColor="?attr/colorOnBackground"
+            android:textColorHint="?attr/colorOnBackground" />
     </LinearLayout>
 
     <ListView
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/floatingButtons"
         android:gravity="center"
-        android:textColor="@color/md_theme_light_primary"
+        android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
         android:textSize="24sp"
         android:visibility="gone" />
@@ -113,7 +113,7 @@
         android:id="@+id/checkOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_theme_light_primaryContainer"
+        android:background="?attr/colorPrimaryContainer"
         android:visibility="gone">
 
         <TextView
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/checking_birthdays"
-            android:textColor="@color/md_theme_light_primary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="24sp" />
     </FrameLayout>
 

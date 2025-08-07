@@ -62,7 +62,10 @@ class BirthdayListActivity : BaseActivity() {
     private var displayedIndices: List<Int> = emptyList()
     private val handler = Handler(Looper.getMainLooper())
     @SuppressLint("SetTextI18n")
-    private val clearStatus = Runnable { binding.textStatus.text = "" }
+    private val clearStatus = Runnable {
+        binding.textStatus.text = ""
+        binding.textStatus.visibility = View.GONE
+    }
     private val hideOverlay = Runnable { binding.checkOverlay.visibility = View.GONE }
     private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
         uri ?: return@registerForActivityResult
@@ -166,13 +169,14 @@ class BirthdayListActivity : BaseActivity() {
         handler.removeCallbacks(clearStatus)
         handler.removeCallbacks(hideOverlay)
         binding.textStatus.text = ""
+        binding.textStatus.visibility = View.GONE
         binding.checkOverlay.visibility = View.GONE
     }
 
     private fun manualCheck() {
         binding.checkOverlay.visibility = View.VISIBLE
         handler.removeCallbacks(hideOverlay)
-        handler.postDelayed(hideOverlay, 10_000)
+        handler.postDelayed(hideOverlay, 500)
 
         val repo = BirthdayRepositoryImpl()
         val today = "%02d-%02d".format(
@@ -196,7 +200,7 @@ class BirthdayListActivity : BaseActivity() {
         }
 
         handler.removeCallbacks(clearStatus)
-        handler.postDelayed(clearStatus, 60_000)
+        handler.postDelayed(clearStatus, 10_000)
 
         CheckTodaysBirthdaysUseCase(
             repo,

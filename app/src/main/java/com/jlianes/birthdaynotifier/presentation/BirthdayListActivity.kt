@@ -1,41 +1,37 @@
 package com.jlianes.birthdaynotifier.presentation
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.os.Bundle
-import android.view.View
-import android.widget.*
-import android.net.Uri
-import android.provider.ContactsContract
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.provider.ContactsContract
 import android.telephony.TelephonyManager
 import android.text.InputType
+import android.view.View
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.colorResource
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
+import com.google.android.material.button.MaterialButton
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.hbb20.CountryCodePicker
-import com.google.android.material.button.MaterialButton
 import com.jlianes.birthdaynotifier.R
+import com.jlianes.birthdaynotifier.data.repository.BirthdayRepositoryImpl
+import com.jlianes.birthdaynotifier.databinding.ActivityBirthdayListBinding
+import com.jlianes.birthdaynotifier.domain.usecase.CheckTodaysBirthdaysUseCase
+import com.jlianes.birthdaynotifier.framework.file.BirthdayFileHelper
+import com.jlianes.birthdaynotifier.framework.notification.WhatsAppBirthdayNotifier
+import com.jlianes.birthdaynotifier.framework.receiver.AlarmScheduler
 import java.util.Calendar
 import java.util.Locale
-import com.jlianes.birthdaynotifier.framework.file.BirthdayFileHelper
-import com.jlianes.birthdaynotifier.databinding.ActivityBirthdayListBinding
 import org.json.JSONObject
 
 /**
@@ -51,6 +47,9 @@ class BirthdayListActivity : BaseActivity() {
     private val helper by lazy { BirthdayFileHelper(this) }
     private var contactCallback: ((String, String) -> Unit)? = null
     private var displayedIndices: List<Int> = emptyList()
+    private val handler = Handler(Looper.getMainLooper())
+    @SuppressLint("SetTextI18n")
+    private val clearStatus = Runnable { binding.textStatus.text = "" }
     private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
         uri ?: return@registerForActivityResult
 
@@ -95,6 +94,11 @@ class BirthdayListActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
+        }
+        AlarmScheduler.schedule(this)
+
         helper.load()
         adapter = BirthdayAdapter(this, helper.getAll().toMutableList())
         binding.listView.adapter = adapter
@@ -126,28 +130,55 @@ class BirthdayListActivity : BaseActivity() {
             showEditDialog(originalIndex, helper.get(originalIndex))
         }
 
-        binding.buttonAdd.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                val interaction = remember { MutableInteractionSource() }
-                val pressed by interaction.collectIsPressedAsState()
-                val scale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "fabScale")
-                val container by animateColorAsState(
-                    targetValue = if (pressed) colorResource(R.color.md_theme_light_primaryContainer) else colorResource(R.color.md_theme_light_primary),
-                    label = "fabColor"
+        binding.buttonAdd.setOnClickListener { showEditDialog(-1, null) }
+
+        binding.buttonTest.setOnClickListener {
+            val repo = BirthdayRepositoryImpl()
+            val today = "%02d-%02d".format(
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+                Calendar.getInstance().get(Calendar.MONTH) + 1
+            )
+            val names = repo.getAll(this)
+                .filter { it.date.replace("/", "-").trim() == today }
+                .map { it.name }
+
+            binding.textStatus.visibility = View.VISIBLE
+            binding.textStatus.text = if (names.isEmpty()) {
+                getString(R.string.no_birthdays)
+            } else {
+                val listItems = names.joinToString("<br>") { "- <u><big>$it</big></u>" }
+                val resId = if (names.size == 1) R.string.birthday_today else R.string.birthdays_today
+                HtmlCompat.fromHtml(
+                    getString(resId, listItems),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
-                FloatingActionButton(
-                    onClick = { showEditDialog(-1, null) },
-                    containerColor = container,
-                    contentColor = colorResource(R.color.md_theme_light_onPrimary),
-                    interactionSource = interaction,
-                    modifier = Modifier.scale(scale)
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = getString(R.string.add_birthday))
-                }
             }
+
+            handler.removeCallbacks(clearStatus)
+            handler.postDelayed(clearStatus, 60_000)
+
+            CheckTodaysBirthdaysUseCase(
+                repo,
+                WhatsAppBirthdayNotifier()
+            ).execute(this)
         }
+
+        binding.buttonSettingsIcon.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        binding.buttonLinkedin.setOnClickListener { openUrl("https://www.linkedin.com/in/jlianes/") }
+        binding.buttonCoffee.setOnClickListener { openUrl("https://buymeacoffee.com/jlianesglrs") }
+        binding.buttonRepo.setOnClickListener { openUrl("https://github.com/JaviLianes8/BirthdayNotifierApp") }
     }
+
+    @SuppressLint("SetTextI18n")
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacks(clearStatus)
+        binding.textStatus.text = ""
+    }
+
 
     /**
      * Refreshes the birthday list view by reloading all items.
@@ -380,5 +411,9 @@ class BirthdayListActivity : BaseActivity() {
             ccp.setCountryForNameCode(defaultCountryIso())
             phoneInput.setText(phone)
         }
+    }
+
+    private fun openUrl(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 }

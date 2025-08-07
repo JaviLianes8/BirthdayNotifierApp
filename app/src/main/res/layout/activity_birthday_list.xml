@@ -11,12 +11,32 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary">
 
+        <ImageButton
+            android:id="@+id/buttonTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_check"
+            android:tint="@color/md_theme_light_onPrimary"
+            android:contentDescription="@string/test_app" />
+
         <ImageView
             android:layout_width="@dimen/logo_size"
             android:layout_height="@dimen/logo_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_cake"
             android:contentDescription="@string/app_name" />
+
+        <ImageButton
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add"
+            android:tint="@color/md_theme_light_onPrimary"
+            android:contentDescription="@string/add_birthday" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -49,15 +69,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/filterLayout"
-        android:layout_above="@id/buttonAdd"
+        android:layout_above="@id/textStatus"
         android:listSelector="?attr/selectableItemBackground" />
 
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/buttonAdd"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentEnd="true"
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomBar"
+        android:gravity="center"
+        android:textColor="@color/md_theme_light_primary"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp" />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/buttonLinkedin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_linkedin"
+            android:contentDescription="@string/linkedin" />
+
+        <ImageButton
+            android:id="@+id/buttonCoffee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_buymeacoffee"
+            android:contentDescription="@string/buy_me_coffee" />
+
+        <ImageButton
+            android:id="@+id/buttonRepo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_github"
+            android:contentDescription="@string/repo" />
+
+        <ImageButton
+            android:id="@+id/buttonSettingsIcon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_settings"
+            android:contentDescription="@string/settings" />
+
+    </LinearLayout>
 
 </RelativeLayout>

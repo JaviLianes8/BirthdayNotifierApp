@@ -19,11 +19,8 @@ import com.hbb20.CountryCodePicker
 import com.jlianes.birthdaynotifier.R
 import java.util.Calendar
 import java.util.Locale
-import com.jlianes.birthdaynotifier.presentation.BaseActivity
 import com.jlianes.birthdaynotifier.framework.file.BirthdayFileHelper
 import com.jlianes.birthdaynotifier.databinding.ActivityBirthdayListBinding
-import com.jlianes.birthdaynotifier.presentation.LocaleHelper
-import com.jlianes.birthdaynotifier.presentation.BirthdayAdapter
 import org.json.JSONObject
 
 /**
@@ -129,6 +126,12 @@ class BirthdayListActivity : BaseActivity() {
         applyFilters()
     }
 
+    /**
+     * Filters and sorts birthdays based on the current UI selections.
+     *
+     * Applies the chosen sort order and optional text filter, then updates the
+     * list adapter with the resulting items.
+     */
     private fun applyFilters() {
         val baseList = helper.getAll()
         val indexed = baseList.mapIndexed { idx, obj -> idx to obj }
@@ -153,6 +156,12 @@ class BirthdayListActivity : BaseActivity() {
         adapter.notifyDataSetChanged()
     }
 
+    /**
+     * Creates a sortable integer key from a date string.
+     *
+     * @param date Date formatted as "dd-MM" or "dd/MM".
+     * @return Integer representing the date as `month * 100 + day`.
+     */
     private fun sortKey(date: String): Int {
         val parts = date.replace("/", "-").split("-")
         val day = parts.getOrNull(0)?.toIntOrNull() ?: 0

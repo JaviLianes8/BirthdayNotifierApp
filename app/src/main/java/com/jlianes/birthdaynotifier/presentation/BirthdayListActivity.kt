@@ -460,7 +460,7 @@ private fun ClassicButton(@StringRes textRes: Int, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
-            .width(160.dp)
+            .widthIn(min = 160.dp)
             .height(48.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,

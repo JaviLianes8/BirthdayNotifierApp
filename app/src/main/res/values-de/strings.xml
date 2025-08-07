@@ -60,5 +60,7 @@
     <string name="dark">Dunkel</string>
     <string name="system_default">Systemstandard</string>
     <string name="checking_birthdays">Überprüfung…</string>
+    <string name="manual_check">Manuelle Prüfung</string>
+    <string name="add_contact">Kontakt hinzufügen</string>
 </resources>
 

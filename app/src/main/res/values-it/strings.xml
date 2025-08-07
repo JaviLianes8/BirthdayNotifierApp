@@ -60,5 +60,7 @@
     <string name="dark">Scuro</string>
     <string name="system_default">Predefinito di sistema</string>
     <string name="checking_birthdays">Verifica…</string>
+    <string name="manual_check">Controllo manuale</string>
+    <string name="add_contact">Aggiungi contatto</string>
 </resources>
 

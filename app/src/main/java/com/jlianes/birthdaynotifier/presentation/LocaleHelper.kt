@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.res.Configuration
 import java.util.Locale
 
+/**
+ * Utility object that handles reading and applying the app's preferred locale.
+ */
 object LocaleHelper {
     /**
      * Returns the currently saved language code from SharedPreferences.

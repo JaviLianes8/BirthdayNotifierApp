@@ -3,13 +3,30 @@ package com.jlianes.birthdaynotifier.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.jlianes.birthdaynotifier.databinding.ActivityLoginBinding
 import com.jlianes.birthdaynotifier.R
 
 /**
@@ -23,7 +40,6 @@ class LoginActivity : BaseActivity() {
     @Suppress("DEPRECATION")
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
-    private lateinit var binding: ActivityLoginBinding
 
     /**
      * Handles the result from the Google Sign-In intent.
@@ -63,13 +79,12 @@ class LoginActivity : BaseActivity() {
         @Suppress("DEPRECATION")
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        binding.signInButton.setOnClickListener {
-            signInLauncher.launch(googleSignInClient.signInIntent)
+        setContent {
+            MaterialTheme {
+                LoginScreen {
+                    signInLauncher.launch(googleSignInClient.signInIntent)
+                }
+            }
         }
     }
 
@@ -96,5 +111,39 @@ class LoginActivity : BaseActivity() {
     private fun goToMain() {
         startActivity(Intent(this, BirthdayListActivity::class.java))
         finish()
+    }
+
+    @Composable
+    private fun LoginScreen(onSignIn: () -> Unit) {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_cake),
+                            contentDescription = stringResource(R.string.app_name),
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
+                )
+            }
+        ) { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Button(
+                        onClick = onSignIn,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = stringResource(id = R.string.login))
+                    }
+                }
+            }
+        }
     }
 }

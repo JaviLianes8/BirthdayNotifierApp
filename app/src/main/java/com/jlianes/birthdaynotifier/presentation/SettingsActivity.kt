@@ -6,11 +6,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.appcompat.app.AppCompatDelegate
 import com.jlianes.birthdaynotifier.R
-import com.jlianes.birthdaynotifier.databinding.ActivitySettingsBinding
 import com.jlianes.birthdaynotifier.framework.cloud.BirthdayFirestoreStorage
 import com.jlianes.birthdaynotifier.framework.receiver.AlarmScheduler
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -24,21 +41,20 @@ import kotlinx.coroutines.launch
  */
 class SettingsActivity : BaseActivity() {
 
-    private lateinit var binding: ActivitySettingsBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        binding.buttonSetTime.setOnClickListener { showTimePicker() }
-        binding.buttonLanguage.setOnClickListener { showLanguageDialog() }
-        binding.buttonTheme.setOnClickListener { showThemeDialog() }
-        binding.buttonDeleteData.setOnClickListener { confirmDeleteData() }
-        binding.buttonLogout.setOnClickListener { performLogout() }
+        setContent {
+            MaterialTheme {
+                SettingsScreen(
+                    onSetTime = { showTimePicker() },
+                    onLanguage = { showLanguageDialog() },
+                    onTheme = { showThemeDialog() },
+                    onDeleteData = { confirmDeleteData() },
+                    onLogout = { performLogout() }
+                )
+            }
+        }
     }
 
     private fun performLogout() {
@@ -146,6 +162,54 @@ class SettingsActivity : BaseActivity() {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    @Composable
+    private fun SettingsScreen(
+        onSetTime: () -> Unit,
+        onLanguage: () -> Unit,
+        onTheme: () -> Unit,
+        onDeleteData: () -> Unit,
+        onLogout: () -> Unit
+    ) {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_cake),
+                            contentDescription = stringResource(R.string.app_name),
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
+                )
+            }
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(onClick = onSetTime, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(id = R.string.set_time))
+                }
+                Button(onClick = onLanguage, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(id = R.string.language))
+                }
+                Button(onClick = onTheme, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(id = R.string.theme))
+                }
+                Button(onClick = onDeleteData, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(id = R.string.delete_data))
+                }
+                Button(onClick = onLogout, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = stringResource(id = R.string.logout))
+                }
+            }
+        }
     }
 }
 

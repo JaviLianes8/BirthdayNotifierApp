@@ -60,5 +60,7 @@
     <string name="dark">Dark</string>
     <string name="system_default">System default</string>
     <string name="checking_birthdays">Checking…</string>
+    <string name="manual_check">Manual Check</string>
+    <string name="add_contact">Add Contact</string>
 </resources>
 

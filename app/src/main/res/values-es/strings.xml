@@ -60,5 +60,7 @@
     <string name="dark">Oscuro</string>
     <string name="system_default">Predeterminado del sistema</string>
     <string name="checking_birthdays">Comprobando…</string>
+    <string name="manual_check">Revisión manual</string>
+    <string name="add_contact">Añadir contacto</string>
 </resources>
 

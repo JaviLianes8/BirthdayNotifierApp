@@ -20,18 +20,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.android.material.button.MaterialButton
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -453,24 +454,26 @@ private fun FloatingButtonRow(onCheck: () -> Unit, onAdd: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        SquareIconButton(R.drawable.ic_check, R.string.test_app, onCheck)
-        SquareIconButton(R.drawable.ic_add, R.string.add_birthday, onAdd)
+        SquareTextButton(R.string.manual_check, onCheck)
+        SquareTextButton(R.string.add_contact, onAdd)
     }
 }
 
 @Composable
-private fun SquareIconButton(@DrawableRes icon: Int, @StringRes contentDesc: Int, onClick: () -> Unit) {
+private fun SquareTextButton(@StringRes textRes: Int, onClick: () -> Unit) {
+    val color = if (isSystemInDarkTheme()) Color.White else MaterialTheme.colorScheme.primary
     Box(
         modifier = Modifier
-            .size(60.dp)
-            .border(2.dp, MaterialTheme.colorScheme.primary)
+            .width(120.dp)
+            .height(60.dp)
+            .border(2.dp, color)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = stringResource(id = contentDesc),
-            tint = MaterialTheme.colorScheme.primary
+        Text(
+            text = stringResource(id = textRes),
+            color = color,
+            textAlign = TextAlign.Center
         )
     }
 }

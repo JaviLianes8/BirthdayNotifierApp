@@ -68,7 +68,7 @@ class WhatsAppBirthdayNotifier : BirthdayNotifier {
             context,
             name.hashCode(),
             snoozeIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
 
         val remoteInput = RemoteInput.Builder(SnoozeReceiver.KEY_SNOOZE_HOURS)

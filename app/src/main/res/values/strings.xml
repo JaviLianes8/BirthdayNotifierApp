@@ -64,5 +64,7 @@
     <string name="manual_check">Manual Check</string>
     <string name="add_contact">Add Contact</string>
     <string name="calendar_icon_desc">Calendar icon</string>
+    <string name="cake_icon_desc">Cake icon</string>
+    <string name="soon">Soon...</string>
 </resources>
 

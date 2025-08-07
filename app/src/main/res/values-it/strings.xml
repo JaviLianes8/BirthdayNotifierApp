@@ -59,5 +59,6 @@
     <string name="light">Chiaro</string>
     <string name="dark">Scuro</string>
     <string name="system_default">Predefinito di sistema</string>
+    <string name="checking_birthdays">Verifica…</string>
 </resources>
 

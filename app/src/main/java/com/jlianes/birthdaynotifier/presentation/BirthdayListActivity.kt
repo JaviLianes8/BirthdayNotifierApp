@@ -20,6 +20,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.google.android.material.button.MaterialButton
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.hbb20.CountryCodePicker
@@ -50,6 +63,7 @@ class BirthdayListActivity : BaseActivity() {
     private val handler = Handler(Looper.getMainLooper())
     @SuppressLint("SetTextI18n")
     private val clearStatus = Runnable { binding.textStatus.text = "" }
+    private val hideOverlay = Runnable { binding.checkOverlay.visibility = View.GONE }
     private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
         uri ?: return@registerForActivityResult
 
@@ -130,37 +144,11 @@ class BirthdayListActivity : BaseActivity() {
             showEditDialog(originalIndex, helper.get(originalIndex))
         }
 
-        binding.buttonAdd.setOnClickListener { showEditDialog(-1, null) }
-
-        binding.buttonTest.setOnClickListener {
-            val repo = BirthdayRepositoryImpl()
-            val today = "%02d-%02d".format(
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
-                Calendar.getInstance().get(Calendar.MONTH) + 1
+        binding.floatingButtons.setContent {
+            FloatingButtonRow(
+                onCheck = { manualCheck() },
+                onAdd = { showEditDialog(-1, null) }
             )
-            val names = repo.getAll(this)
-                .filter { it.date.replace("/", "-").trim() == today }
-                .map { it.name }
-
-            binding.textStatus.visibility = View.VISIBLE
-            binding.textStatus.text = if (names.isEmpty()) {
-                getString(R.string.no_birthdays)
-            } else {
-                val listItems = names.joinToString("<br>") { "- <u><big>$it</big></u>" }
-                val resId = if (names.size == 1) R.string.birthday_today else R.string.birthdays_today
-                HtmlCompat.fromHtml(
-                    getString(resId, listItems),
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
-            }
-
-            handler.removeCallbacks(clearStatus)
-            handler.postDelayed(clearStatus, 60_000)
-
-            CheckTodaysBirthdaysUseCase(
-                repo,
-                WhatsAppBirthdayNotifier()
-            ).execute(this)
         }
 
         binding.buttonSettingsIcon.setOnClickListener {
@@ -176,7 +164,44 @@ class BirthdayListActivity : BaseActivity() {
     override fun onStop() {
         super.onStop()
         handler.removeCallbacks(clearStatus)
+        handler.removeCallbacks(hideOverlay)
         binding.textStatus.text = ""
+        binding.checkOverlay.visibility = View.GONE
+    }
+
+    private fun manualCheck() {
+        binding.checkOverlay.visibility = View.VISIBLE
+        handler.removeCallbacks(hideOverlay)
+        handler.postDelayed(hideOverlay, 10_000)
+
+        val repo = BirthdayRepositoryImpl()
+        val today = "%02d-%02d".format(
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+            Calendar.getInstance().get(Calendar.MONTH) + 1
+        )
+        val names = repo.getAll(this)
+            .filter { it.date.replace("/", "-").trim() == today }
+            .map { it.name }
+
+        binding.textStatus.visibility = View.VISIBLE
+        binding.textStatus.text = if (names.isEmpty()) {
+            getString(R.string.no_birthdays)
+        } else {
+            val listItems = names.joinToString("<br>") { "- <u><big>$it</big></u>" }
+            val resId = if (names.size == 1) R.string.birthday_today else R.string.birthdays_today
+            HtmlCompat.fromHtml(
+                getString(resId, listItems),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
+        }
+
+        handler.removeCallbacks(clearStatus)
+        handler.postDelayed(clearStatus, 60_000)
+
+        CheckTodaysBirthdaysUseCase(
+            repo,
+            WhatsAppBirthdayNotifier()
+        ).execute(this)
     }
 
 
@@ -415,5 +440,33 @@ class BirthdayListActivity : BaseActivity() {
 
     private fun openUrl(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+}
+
+@Composable
+private fun FloatingButtonRow(onCheck: () -> Unit, onAdd: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        SquareIconButton(R.drawable.ic_check, R.string.test_app, onCheck)
+        SquareIconButton(R.drawable.ic_add, R.string.add_birthday, onAdd)
+    }
+}
+
+@Composable
+private fun SquareIconButton(@DrawableRes icon: Int, @StringRes contentDesc: Int, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(60.dp)
+            .border(2.dp, MaterialTheme.colorScheme.primary)
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = stringResource(id = contentDesc),
+            tint = MaterialTheme.colorScheme.primary
+        )
     }
 }

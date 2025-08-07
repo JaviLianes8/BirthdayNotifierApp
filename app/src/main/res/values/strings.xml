@@ -59,5 +59,6 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="system_default">System default</string>
+    <string name="checking_birthdays">Checking…</string>
 </resources>
 

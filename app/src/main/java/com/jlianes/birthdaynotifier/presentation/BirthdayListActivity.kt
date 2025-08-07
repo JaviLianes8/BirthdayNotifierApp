@@ -265,6 +265,7 @@ class BirthdayListActivity : BaseActivity() {
      * Opens a date picker dialog and writes the selected day and month
      * to the provided EditText in "dd-MM" format.
      */
+    @SuppressLint("DefaultLocale", "DiscouragedApi")
     private fun showDatePicker(target: EditText) {
         val cal = Calendar.getInstance()
         val parts = target.text.toString().split("-", "/")

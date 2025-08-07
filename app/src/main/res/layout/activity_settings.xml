@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_cake"
             android:contentDescription="@string/app_name"
-            app:tint="@android:color/white" />
+            app:tint="?attr/colorOnBackground" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 

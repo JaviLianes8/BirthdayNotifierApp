@@ -33,6 +33,14 @@
         <receiver android:name=".framework.receiver.BirthdayReceiver"
             android:exported="false" />
 
+        <!-- Receiver for snoozing notifications -->
+        <receiver android:name=".framework.receiver.SnoozeReceiver"
+            android:exported="false" />
+
+        <!-- Receiver to resend notifications after snooze -->
+        <receiver android:name=".framework.receiver.SnoozedNotificationReceiver"
+            android:exported="false" />
+
         <!-- Reschedule alarm after device reboot -->
         <receiver android:name=".framework.receiver.BootReceiver"
             android:exported="true">

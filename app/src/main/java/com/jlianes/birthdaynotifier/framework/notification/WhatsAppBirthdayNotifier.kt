@@ -9,8 +9,10 @@ import android.net.Uri
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
 import com.jlianes.birthdaynotifier.domain.service.BirthdayNotifier
 import com.jlianes.birthdaynotifier.R
+import com.jlianes.birthdaynotifier.framework.receiver.SnoozeReceiver
 
 /**
  * Implementation of [BirthdayNotifier] that shows a local notification
@@ -56,12 +58,37 @@ class WhatsAppBirthdayNotifier : BirthdayNotifier {
             return
         }
 
+        val snoozeIntent = Intent(context, SnoozeReceiver::class.java).apply {
+            putExtra(SnoozeReceiver.EXTRA_NAME, name)
+            putExtra(SnoozeReceiver.EXTRA_MESSAGE, message)
+            putExtra(SnoozeReceiver.EXTRA_PHONE, phone)
+        }
+
+        val snoozePendingIntent = PendingIntent.getBroadcast(
+            context,
+            name.hashCode(),
+            snoozeIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val remoteInput = RemoteInput.Builder(SnoozeReceiver.KEY_SNOOZE_HOURS)
+            .setLabel(context.getString(R.string.snooze_label))
+            .setChoices(arrayOf("1", "2", "3", "4"))
+            .build()
+
+        val action = NotificationCompat.Action.Builder(
+            android.R.drawable.ic_menu_recent_history,
+            context.getString(R.string.snooze_action),
+            snoozePendingIntent
+        ).addRemoteInput(remoteInput).build()
+
         val builder = NotificationCompat.Builder(context, "bday_channel")
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(context.getString(R.string.notification_title, name))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
+            .addAction(action)
             .setAutoCancel(true)
 
         NotificationManagerCompat.from(context).notify(name.hashCode(), builder.build())

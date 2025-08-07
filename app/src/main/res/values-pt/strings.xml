@@ -48,6 +48,8 @@
     <string name="default_message">Parabéns, %1$s! 🎉🥳</string>
     <string name="notification_channel_name">Aniversários</string>
     <string name="notification_title">Aniversário de %1$s</string>
+    <string name="snooze_action">Adiar</string>
+    <string name="snooze_label">Horas (1-4)</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
     <string name="delete_data">Apagar dados</string>
     <string name="delete_data_confirm">Apagar todos os dados?</string>

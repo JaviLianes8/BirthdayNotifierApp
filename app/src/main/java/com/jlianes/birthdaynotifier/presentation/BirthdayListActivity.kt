@@ -176,7 +176,7 @@ class BirthdayListActivity : BaseActivity() {
     private fun manualCheck() {
         binding.checkOverlay.visibility = View.VISIBLE
         handler.removeCallbacks(hideOverlay)
-        handler.postDelayed(hideOverlay, 500)
+        handler.postDelayed(hideOverlay, 3000)
 
         val repo = BirthdayRepositoryImpl()
         val today = "%02d-%02d".format(

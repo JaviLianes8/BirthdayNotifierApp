@@ -40,6 +40,8 @@ open class BaseActivity : AppCompatActivity() {
         }
         AppCompatDelegate.setDefaultNightMode(mode)
         super.onCreate(savedInstanceState)
+        // Apply a fade transition when activities start
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     /**
@@ -52,5 +54,11 @@ open class BaseActivity : AppCompatActivity() {
             currentLanguage = lang
             recreate()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        // Apply the same fade transition when finishing
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

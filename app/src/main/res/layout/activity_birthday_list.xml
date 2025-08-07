@@ -49,17 +49,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/filterLayout"
-        android:layout_above="@id/fab" />
+        android:layout_above="@id/buttonAdd" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAdd"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@color/md_theme_light_onPrimary"
-        app:backgroundTint="@color/md_theme_light_primary" />
+        style="?attr/materialButtonStyle"
+        android:backgroundTint="@color/md_theme_light_primary"
+        app:icon="@android:drawable/ic_input_add"
+        app:iconTint="@color/md_theme_light_onPrimary"
+        app:cornerRadius="0dp"
+        android:padding="0dp" />
 
 </RelativeLayout>

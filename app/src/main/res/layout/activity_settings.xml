@@ -30,7 +30,8 @@
         style="?attr/materialButtonStyle"
         android:backgroundTint="?attr/colorPrimary"
         android:textColor="?attr/colorOnPrimary"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        app:cornerRadius="0dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLanguage"
@@ -40,7 +41,8 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/language"
-        android:textColor="?attr/colorOnPrimary" />
+        android:textColor="?attr/colorOnPrimary"
+        app:cornerRadius="0dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonTheme"
@@ -50,7 +52,8 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/theme"
-        android:textColor="?attr/colorOnPrimary" />
+        android:textColor="?attr/colorOnPrimary"
+        app:cornerRadius="0dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonDeleteData"
@@ -60,7 +63,8 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/delete_data"
-        android:textColor="?attr/colorOnPrimary" />
+        android:textColor="?attr/colorOnPrimary"
+        app:cornerRadius="0dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogout"
@@ -70,7 +74,8 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/logout"
-        android:textColor="?attr/colorOnPrimary" />
+        android:textColor="?attr/colorOnPrimary"
+        app:cornerRadius="0dp" />
 
 </LinearLayout>
 

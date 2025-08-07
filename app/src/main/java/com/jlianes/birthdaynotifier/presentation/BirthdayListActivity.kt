@@ -14,6 +14,12 @@ import android.text.InputType
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.colorResource
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.hbb20.CountryCodePicker
 import com.jlianes.birthdaynotifier.R
@@ -111,8 +117,17 @@ class BirthdayListActivity : BaseActivity() {
             showEditDialog(originalIndex, helper.get(originalIndex))
         }
 
-        binding.buttonAdd.setOnClickListener {
-            showEditDialog(-1, null)
+        binding.buttonAdd.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                FloatingActionButton(
+                    onClick = { showEditDialog(-1, null) },
+                    containerColor = colorResource(R.color.md_theme_light_primary),
+                    contentColor = colorResource(R.color.md_theme_light_onPrimary)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = getString(R.string.add_birthday))
+                }
+            }
         }
     }
 

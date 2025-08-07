@@ -21,18 +21,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.annotation.StringRes
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.android.material.button.MaterialButton
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -454,26 +450,23 @@ private fun FloatingButtonRow(onCheck: () -> Unit, onAdd: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        SquareTextButton(R.string.manual_check, onCheck)
-        SquareTextButton(R.string.add_contact, onAdd)
+        ClassicButton(R.string.manual_check, onCheck)
+        ClassicButton(R.string.add_contact, onAdd)
     }
 }
 
 @Composable
-private fun SquareTextButton(@StringRes textRes: Int, onClick: () -> Unit) {
-    val color = if (isSystemInDarkTheme()) Color.White else MaterialTheme.colorScheme.primary
-    Box(
+private fun ClassicButton(@StringRes textRes: Int, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
         modifier = Modifier
-            .width(120.dp)
-            .height(60.dp)
-            .border(2.dp, color)
-            .clickable { onClick() },
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stringResource(id = textRes),
-            color = color,
-            textAlign = TextAlign.Center
+            .width(160.dp)
+            .height(48.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
+    ) {
+        Text(text = stringResource(id = textRes))
     }
 }

@@ -10,9 +10,11 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.content.Context
 import android.telephony.TelephonyManager
+import android.text.InputType
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import com.google.i18n.phonenumbers.PhoneNumberUtil
+import com.hbb20.CountryCodePicker
 import com.jlianes.birthdaynotifier.R
 import java.util.Calendar
 import java.util.Locale
@@ -171,17 +173,24 @@ class BirthdayListActivity : BaseActivity() {
             isClickable = true
         }
         dateInput.setOnClickListener { showDatePicker(dateInput) }
-        val phoneInput = EditText(this).apply { hint = getString(R.string.hint_phone) }
-        val messageInput = EditText(this).apply { hint = getString(R.string.hint_message) }
-
-        if (obj == null) {
-            phoneInput.setText(defaultDialCode())
+        val ccp = CountryCodePicker(this).apply {
+            setCountryForNameCode(defaultCountryIso())
         }
+        val phoneInput = EditText(this).apply {
+            hint = getString(R.string.hint_phone)
+            inputType = InputType.TYPE_CLASS_PHONE
+        }
+        val phoneLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            addView(ccp, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            addView(phoneInput, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 2f))
+        }
+        val messageInput = EditText(this).apply { hint = getString(R.string.hint_message) }
 
         obj?.let {
             nameInput.setText(it.getString("name"))
             dateInput.setText(it.getString("date"))
-            phoneInput.setText(it.getString("phone"))
+            parseAndSetPhone(it.getString("phone"), ccp, phoneInput)
             messageInput.setText(it.optString("message"))
         }
 
@@ -192,7 +201,7 @@ class BirthdayListActivity : BaseActivity() {
             if (obj == null) addView(importButton)
             addView(nameInput)
             addView(dateInput)
-            addView(phoneInput)
+            addView(phoneLayout)
             addView(messageInput)
         }
 
@@ -200,7 +209,7 @@ class BirthdayListActivity : BaseActivity() {
             importButton.setOnClickListener {
                 contactCallback = { name, phone ->
                     nameInput.setText(name)
-                    phoneInput.setText(phone)
+                    parseAndSetPhone(phone, ccp, phoneInput)
                 }
                 importContactWithPermission()
             }
@@ -213,7 +222,7 @@ class BirthdayListActivity : BaseActivity() {
                 val newObj = JSONObject().apply {
                     put("name", nameInput.text.toString())
                     put("date", dateInput.text.toString())
-                    put("phone", phoneInput.text.toString())
+                    put("phone", ccp.selectedCountryCodeWithPlus + phoneInput.text.toString())
                     put("message", messageInput.text.toString())
                 }
                 helper.save(index, newObj)
@@ -288,11 +297,21 @@ class BirthdayListActivity : BaseActivity() {
         }
     }
 
-    private fun defaultDialCode(): String {
+    private fun defaultCountryIso(): String {
         val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        val iso = listOf(tm.networkCountryIso, tm.simCountryIso, Locale.getDefault().country)
+        return listOf(tm.networkCountryIso, tm.simCountryIso, Locale.getDefault().country)
             .firstOrNull { !it.isNullOrBlank() }?.uppercase(Locale.ROOT) ?: "US"
-        val code = PhoneNumberUtil.getInstance().getCountryCodeForRegion(iso)
-        return "+$code"
+    }
+
+    private fun parseAndSetPhone(phone: String, ccp: CountryCodePicker, phoneInput: EditText) {
+        val util = PhoneNumberUtil.getInstance()
+        try {
+            val parsed = util.parse(phone, defaultCountryIso())
+            ccp.setCountryForPhoneCode(parsed.countryCode)
+            phoneInput.setText(parsed.nationalNumber.toString())
+        } catch (e: Exception) {
+            ccp.setCountryForNameCode(defaultCountryIso())
+            phoneInput.setText(phone)
+        }
     }
 }

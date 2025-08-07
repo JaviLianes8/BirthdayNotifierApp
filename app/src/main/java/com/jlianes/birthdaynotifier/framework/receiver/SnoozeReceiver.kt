@@ -1,11 +1,11 @@
 package com.jlianes.birthdaynotifier.framework.receiver
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 
 /**
@@ -13,10 +13,10 @@ import androidx.core.app.RemoteInput
  */
 class SnoozeReceiver : BroadcastReceiver() {
 
-    @SuppressLint("ScheduleExactAlarm")
     override fun onReceive(context: Context, intent: Intent) {
         val results = RemoteInput.getResultsFromIntent(intent) ?: return
-        val hours = results.getCharSequence(KEY_SNOOZE_HOURS)?.toString()?.toIntOrNull() ?: return
+        val hours = results.getCharSequence(KEY_SNOOZE_HOURS)
+            ?.toString()?.toIntOrNull()?.takeIf { it in 1..4 } ?: return
         val name = intent.getStringExtra(EXTRA_NAME) ?: return
         val message = intent.getStringExtra(EXTRA_MESSAGE) ?: return
         val phone = intent.getStringExtra(EXTRA_PHONE) ?: return
@@ -34,14 +34,12 @@ class SnoozeReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        //val triggerAt = System.currentTimeMillis() + hours * 60 * 60 * 1000
-        val triggerAt = System.currentTimeMillis() + 15 * 1000  // 15 segundos
+        val triggerAt = System.currentTimeMillis() + hours * 60 * 60 * 1000
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAt, pending)
 
-        val notificationManager = androidx.core.app.NotificationManagerCompat.from(context)
-        notificationManager.cancelAll()
+        NotificationManagerCompat.from(context).cancel(name.hashCode())
     }
 
     companion object {

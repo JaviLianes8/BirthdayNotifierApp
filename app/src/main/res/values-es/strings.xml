@@ -62,5 +62,6 @@
     <string name="checking_birthdays">Comprobando…</string>
     <string name="manual_check">Revisión manual</string>
     <string name="add_contact">Añadir contacto</string>
+    <string name="calendar_icon_desc">Icono de calendario</string>
 </resources>
 

@@ -62,5 +62,6 @@
     <string name="checking_birthdays">Checking…</string>
     <string name="manual_check">Manual Check</string>
     <string name="add_contact">Add Contact</string>
+    <string name="calendar_icon_desc">Calendar icon</string>
 </resources>
 

@@ -9,16 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimary">
-
-        <ImageView
-            android:layout_width="@dimen/logo_size"
-            android:layout_height="@dimen/logo_size"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_cake"
-            android:contentDescription="@string/app_name" />
-
-    </com.google.android.material.appbar.MaterialToolbar>
+        android:backgroundTint="?attr/colorPrimary" />
 
     <LinearLayout
         android:id="@+id/filterLayout"
@@ -68,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomBar"
+        android:layout_marginBottom="32dp"
         android:padding="8dp" />
 
     <LinearLayout

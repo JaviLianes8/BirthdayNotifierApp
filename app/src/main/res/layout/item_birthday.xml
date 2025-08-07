@@ -20,7 +20,7 @@
             android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp">
+            android:layout_marginEnd="64dp">
 
             <TextView
                 android:id="@+id/textName"
@@ -63,7 +63,8 @@
         <FrameLayout
             android:layout_width="48dp"
             android:layout_height="match_parent"
-            android:layout_gravity="end|center_vertical">
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="16dp">
 
             <ImageView
                 android:id="@+id/imageCake"

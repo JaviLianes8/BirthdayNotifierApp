@@ -9,7 +9,6 @@ import android.net.Uri
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.RemoteInput
 import com.jlianes.birthdaynotifier.domain.service.BirthdayNotifier
 import com.jlianes.birthdaynotifier.R
 import com.jlianes.birthdaynotifier.framework.receiver.SnoozeReceiver
@@ -71,17 +70,11 @@ class WhatsAppBirthdayNotifier : BirthdayNotifier {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
 
-        val remoteInput = RemoteInput.Builder(SnoozeReceiver.KEY_SNOOZE_HOURS)
-            .setLabel(context.getString(R.string.snooze_label))
-            .setChoices(arrayOf("1", "2", "3", "4"))
-            .setAllowFreeFormInput(false)
-            .build()
-
         val action = NotificationCompat.Action.Builder(
             android.R.drawable.ic_menu_recent_history,
             context.getString(R.string.snooze_action),
             snoozePendingIntent
-        ).addRemoteInput(remoteInput).build()
+        ).build()
 
         val builder = NotificationCompat.Builder(context, "bday_channel")
             .setSmallIcon(android.R.drawable.ic_dialog_info)

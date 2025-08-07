@@ -48,8 +48,7 @@
     <string name="default_message">Joyeux anniversaire, %1$s ! 🎉🥳</string>
     <string name="notification_channel_name">Anniversaires</string>
     <string name="notification_title">Anniversaire de %1$s</string>
-    <string name="snooze_action">Reporter</string>
-    <string name="snooze_label">Heures (1-4)</string>
+    <string name="snooze_action">Reporter 1 heure</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
     <string name="delete_data">Supprimer les données</string>
     <string name="delete_data_confirm">Supprimer toutes les données ?</string>

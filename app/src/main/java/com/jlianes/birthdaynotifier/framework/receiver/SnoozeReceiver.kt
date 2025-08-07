@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.RemoteInput
 
 /**
  * Receiver that schedules a delayed notification when the user selects a snooze option.
@@ -14,12 +13,11 @@ import androidx.core.app.RemoteInput
 class SnoozeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val results = RemoteInput.getResultsFromIntent(intent) ?: return
-        val hours = results.getCharSequence(KEY_SNOOZE_HOURS)
-            ?.toString()?.toIntOrNull()?.takeIf { it in 1..4 } ?: return
         val name = intent.getStringExtra(EXTRA_NAME) ?: return
         val message = intent.getStringExtra(EXTRA_MESSAGE) ?: return
         val phone = intent.getStringExtra(EXTRA_PHONE) ?: return
+
+        val hours = 1
 
         val resendIntent = Intent(context, SnoozedNotificationReceiver::class.java).apply {
             putExtra(EXTRA_NAME, name)
@@ -43,7 +41,6 @@ class SnoozeReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val KEY_SNOOZE_HOURS = "EXTRA_SNOOZE_HOURS"
         const val EXTRA_NAME = "extra_name"
         const val EXTRA_MESSAGE = "extra_message"
         const val EXTRA_PHONE = "extra_phone"

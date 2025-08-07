@@ -48,8 +48,7 @@
     <string name="default_message">Alles Gute zum Geburtstag, %1$s! 🎉🥳</string>
     <string name="notification_channel_name">Geburtstage</string>
     <string name="notification_title">Geburtstag von %1$s</string>
-    <string name="snooze_action">Verschieben</string>
-    <string name="snooze_label">Stunden (1-4)</string>
+    <string name="snooze_action">Verschieben 1 Stunde</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
     <string name="delete_data">Daten löschen</string>
     <string name="delete_data_confirm">Alle Daten löschen?</string>

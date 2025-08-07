@@ -5,7 +5,7 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_primaryContainer">
+    android:background="?attr/colorBackground">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -28,11 +28,11 @@
         android:layout_height="96dp"
         android:text="@string/test_app"
         style="?attr/materialButtonStyle"
-        android:backgroundTint="@color/md_theme_light_primary"
-        android:textColor="@color/md_theme_light_onPrimary"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_marginTop="24dp"
-        app:cornerRadius="16dp"
-        app:rippleColor="@color/md_theme_light_primaryContainer" />
+        app:cornerRadius="0dp"
+        app:rippleColor="?attr/colorPrimaryContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonOpen"
@@ -40,11 +40,11 @@
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/md_theme_light_primary"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="@string/open_json"
-        android:textColor="@color/md_theme_light_onPrimary"
-        app:cornerRadius="16dp"
-        app:rippleColor="@color/md_theme_light_primaryContainer" />
+        android:textColor="?attr/colorOnPrimary"
+        app:cornerRadius="0dp"
+        app:rippleColor="?attr/colorPrimaryContainer" />
 
     <TextView
         android:id="@+id/textStatus"
@@ -52,7 +52,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/md_theme_light_primary"
+        android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
         android:textSize="24sp" />
 

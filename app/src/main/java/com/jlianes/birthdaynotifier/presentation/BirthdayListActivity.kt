@@ -1,180 +1,80 @@
 package com.jlianes.birthdaynotifier.presentation
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.ContactsContract
-import android.telephony.TelephonyManager
-import android.text.InputType
 import android.view.View
-import android.widget.*
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
-import androidx.core.widget.addTextChangedListener
-import androidx.annotation.StringRes
+import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.google.android.material.button.MaterialButton
-import com.google.i18n.phonenumbers.PhoneNumberUtil
-import com.hbb20.CountryCodePicker
 import com.jlianes.birthdaynotifier.R
 import com.jlianes.birthdaynotifier.data.repository.BirthdayRepositoryImpl
-import com.jlianes.birthdaynotifier.databinding.ActivityBirthdayListBinding
 import com.jlianes.birthdaynotifier.domain.usecase.CheckTodaysBirthdaysUseCase
 import com.jlianes.birthdaynotifier.framework.file.BirthdayFileHelper
 import com.jlianes.birthdaynotifier.framework.notification.WhatsAppBirthdayNotifier
 import com.jlianes.birthdaynotifier.framework.receiver.AlarmScheduler
-import java.util.Calendar
-import java.util.Locale
 import org.json.JSONObject
+import java.util.Calendar
 
 /**
- * Activity that displays and manages a list of birthdays.
- *
- * Allows the user to add, edit, or delete birthday entries.
- * All changes are saved locally and synced with Firestore.
+ * Birthday list screen implemented with Jetpack Compose.
  */
 class BirthdayListActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityBirthdayListBinding
-    private lateinit var adapter: BirthdayAdapter
-    private val helper by lazy { BirthdayFileHelper(this) }
-    private var contactCallback: ((String, String) -> Unit)? = null
-    private var displayedIndices: List<Int> = emptyList()
     private val handler = Handler(Looper.getMainLooper())
-    @SuppressLint("SetTextI18n")
-    private val clearStatus = Runnable {
-        binding.textStatus.text = ""
-        binding.textStatus.visibility = View.GONE
-    }
-    private val hideOverlay = Runnable { binding.checkOverlay.visibility = View.GONE }
-    private val contactPicker = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
-        uri ?: return@registerForActivityResult
+    private val helper by lazy { BirthdayFileHelper(this) }
+    private var statusText by mutableStateOf("" as CharSequence)
+    private val clearStatus = Runnable { statusText = "" }
 
-        // The URI returned by the picker points to Contacts.CONTENT_URI which
-        // does not include phone columns. We must first resolve the contact ID
-        // then query the Phone table for the number.
-
-        val idProjection = arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME)
-        var contactId = ""
-        var name = ""
-        contentResolver.query(uri, idProjection, null, null, null)?.use { c ->
-            if (!c.moveToFirst()) return@registerForActivityResult
-            contactId = c.getString(0)
-            name = c.getString(1)
-        } ?: return@registerForActivityResult
-
-        val phoneProjection = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER)
-        val phoneCursor = contentResolver.query(
-            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-            phoneProjection,
-            "${ContactsContract.CommonDataKinds.Phone.CONTACT_ID} = ?",
-            arrayOf(contactId),
-            null
-        )
-        phoneCursor?.use { pc ->
-            if (pc.moveToFirst()) {
-                val phone = pc.getString(0)
-                contactCallback?.invoke(name, phone)
-            }
-        }
-    }
-
-    /**
-     * Initializes the UI and loads the birthday list.
-     */
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityBirthdayListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
         }
         AlarmScheduler.schedule(this)
-
         helper.load()
-        adapter = BirthdayAdapter(this, helper.getAll().toMutableList())
-        binding.listView.adapter = adapter
 
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.sort_options,
-            R.layout.spinner_item
-        ).also { spinAdapter ->
-            spinAdapter.setDropDownViewResource(R.layout.spinner_item)
-            binding.spinnerSort.adapter = spinAdapter
-        }
-
-        binding.spinnerSort.setSelection(0)
-        binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                applyFilters()
+        setContent {
+            MaterialTheme {
+                BirthdayListScreen(
+                    helper = helper,
+                    status = statusText,
+                    onManualCheck = { performManualCheck() },
+                    onStatus = { show ->
+                        statusText = show
+                        handler.removeCallbacks(clearStatus)
+                        handler.postDelayed(clearStatus, 10_000)
+                    },
+                    onOpenSettings = {
+                        startActivity(Intent(this, SettingsActivity::class.java))
+                    },
+                    onOpenUrl = { openUrl(it) }
+                )
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-
-        binding.editFilter.addTextChangedListener {
-            applyFilters()
-        }
-
-        binding.listView.setOnItemClickListener { _, _, pos, _ ->
-            val originalIndex = displayedIndices.getOrNull(pos) ?: pos
-            showEditDialog(originalIndex, helper.get(originalIndex))
-        }
-
-        binding.floatingButtons.setContent {
-            FloatingButtonRow(
-                onCheck = { manualCheck() },
-                onAdd = { showEditDialog(-1, null) }
-            )
-        }
-
-        binding.buttonSettingsIcon.setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
-        binding.buttonLinkedin.setOnClickListener { openUrl("https://www.linkedin.com/in/jlianes/") }
-        binding.buttonCoffee.setOnClickListener { openUrl("https://buymeacoffee.com/jlianesglrs") }
-        binding.buttonRepo.setOnClickListener { openUrl("https://github.com/JaviLianes8/BirthdayNotifierApp") }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun onStop() {
-        super.onStop()
-        handler.removeCallbacks(clearStatus)
-        handler.removeCallbacks(hideOverlay)
-        binding.textStatus.text = ""
-        binding.textStatus.visibility = View.GONE
-        binding.checkOverlay.visibility = View.GONE
-    }
-
-    private fun manualCheck() {
-        binding.checkOverlay.visibility = View.VISIBLE
-        handler.removeCallbacks(hideOverlay)
-        handler.postDelayed(hideOverlay, 3000)
-
+    private fun performManualCheck(): CharSequence {
         val repo = BirthdayRepositoryImpl()
         val today = "%02d-%02d".format(
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
@@ -184,270 +84,311 @@ class BirthdayListActivity : BaseActivity() {
             .filter { it.date.replace("/", "-").trim() == today }
             .map { it.name }
 
-        binding.textStatus.visibility = View.VISIBLE
-        binding.textStatus.text = if (names.isEmpty()) {
+        val result = if (names.isEmpty()) {
             getString(R.string.no_birthdays)
         } else {
-            val listItems = names.joinToString("<br>") { "- <u><big>$it</big></u>" }
+            val listItems = names.joinToString("\n") { "- $it" }
             val resId = if (names.size == 1) R.string.birthday_today else R.string.birthdays_today
-            HtmlCompat.fromHtml(
-                getString(resId, listItems),
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            )
+            getString(resId, listItems)
         }
-
-        handler.removeCallbacks(clearStatus)
-        handler.postDelayed(clearStatus, 10_000)
 
         CheckTodaysBirthdaysUseCase(
             repo,
             WhatsAppBirthdayNotifier()
         ).execute(this)
-    }
 
-
-    /**
-     * Refreshes the birthday list view by reloading all items.
-     */
-    private fun refreshList() {
-        adapter.clear()
-        adapter.addAll(helper.getAll())
-        adapter.notifyDataSetChanged()
-        applyFilters()
-    }
-
-    /**
-     * Filters and sorts birthdays based on the current UI selections.
-     *
-     * Applies the chosen sort order and optional text filter, then updates the
-     * list adapter with the resulting items.
-     */
-    private fun applyFilters() {
-        val baseList = helper.getAll()
-        val indexed = baseList.mapIndexed { idx, obj -> idx to obj }
-        val sorted = when (binding.spinnerSort.selectedItemPosition) {
-            0 -> indexed.sortedBy { sortKey(it.second.getString("date")) }
-            1 -> indexed.sortedByDescending { sortKey(it.second.getString("date")) }
-            2 -> indexed.sortedBy { it.second.getString("name").lowercase() }
-            3 -> indexed.sortedByDescending { it.second.getString("name").lowercase() }
-            else -> indexed
-        }
-
-        val filterText = binding.editFilter.text.toString().lowercase()
-        val filtered = if (filterText.isNotEmpty()) {
-            sorted.filter { it.second.getString("name").lowercase().contains(filterText) }
-        } else {
-            sorted
-        }
-
-        displayedIndices = filtered.map { it.first }
-        adapter.clear()
-        adapter.addAll(filtered.map { it.second })
-        adapter.notifyDataSetChanged()
-    }
-
-    /**
-     * Creates a sortable integer key from a date string.
-     *
-     * @param date Date formatted as "dd-MM" or "dd/MM".
-     * @return Integer representing the date as `month * 100 + day`.
-     */
-    private fun sortKey(date: String): Int {
-        val parts = date.replace("/", "-").split("-")
-        val day = parts.getOrNull(0)?.toIntOrNull() ?: 0
-        val month = parts.getOrNull(1)?.toIntOrNull() ?: 0
-        return month * 100 + day
-    }
-
-    /**
-     * Displays a dialog to add or edit a birthday entry.
-     *
-     * @param index The position of the item in the list, or -1 for new entries.
-     * @param obj The existing birthday JSON object, or null if creating a new one.
-     */
-    private fun showEditDialog(index: Int, obj: JSONObject?) {
-        val nameInput = EditText(this).apply { hint = getString(R.string.hint_name) }
-        val dateInput = EditText(this).apply {
-            hint = getString(R.string.hint_date)
-            isFocusable = false
-            isClickable = true
-        }
-        dateInput.setOnClickListener { showDatePicker(dateInput) }
-        val ccp = CountryCodePicker(this).apply {
-            setCountryForNameCode(defaultCountryIso())
-            val textColor = ContextCompat.getColor(
-                this@BirthdayListActivity,
-                R.color.md_theme_light_onBackground
-            )
-            setContentColor(textColor)
-            setDialogTextColor(textColor)
-        }
-        val phoneInput = EditText(this).apply {
-            hint = getString(R.string.hint_phone)
-            inputType = InputType.TYPE_CLASS_PHONE
-        }
-        val phoneLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            addView(ccp, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-            addView(phoneInput, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 2f))
-        }
-        val messageInput = EditText(this).apply { hint = getString(R.string.hint_message) }
-
-        val textColor = ContextCompat.getColor(this, R.color.md_theme_light_onBackground)
-        listOf(nameInput, dateInput, phoneInput, messageInput).forEach {
-            it.setTextColor(textColor)
-            it.setHintTextColor(textColor)
-        }
-
-        obj?.let {
-            nameInput.setText(it.getString("name"))
-            dateInput.setText(it.getString("date"))
-            parseAndSetPhone(it.getString("phone"), ccp, phoneInput)
-            messageInput.setText(it.optString("message"))
-        }
-
-        val importButton = MaterialButton(this).apply {
-            text = getString(R.string.import_contact)
-            backgroundTintList = ContextCompat.getColorStateList(
-                this@BirthdayListActivity,
-                R.color.md_theme_light_primary
-            )
-            setTextColor(ContextCompat.getColor(this@BirthdayListActivity, R.color.md_theme_light_onPrimary))
-            rippleColor = ContextCompat.getColorStateList(
-                this@BirthdayListActivity,
-                R.color.md_theme_light_primaryContainer
-            )
-        }
-        val dialogLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(50, 40, 50, 10)
-            if (obj == null) addView(importButton)
-            addView(nameInput)
-            addView(dateInput)
-            addView(phoneLayout)
-            addView(messageInput)
-        }
-
-        if (obj == null) {
-            importButton.setOnClickListener {
-                contactCallback = { name, phone ->
-                    nameInput.setText(name)
-                    parseAndSetPhone(phone, ccp, phoneInput)
-                }
-                importContactWithPermission()
-            }
-        }
-
-        AlertDialog.Builder(this)
-            .setTitle(if (obj == null) getString(R.string.add_birthday) else getString(R.string.edit_birthday))
-            .setView(dialogLayout)
-            .setPositiveButton(R.string.save) { _, _ ->
-                val newObj = JSONObject().apply {
-                    put("name", nameInput.text.toString())
-                    put("date", dateInput.text.toString())
-                    put("phone", ccp.selectedCountryCodeWithPlus + phoneInput.text.toString())
-                    put("message", messageInput.text.toString())
-                }
-                helper.save(index, newObj)
-                refreshList()
-            }
-            .setNegativeButton(R.string.delete) { _, _ ->
-                if (index >= 0) {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.confirm_delete)
-                        .setMessage(R.string.are_you_sure)
-                        .setPositiveButton(R.string.yes) { _, _ ->
-                            helper.delete(index)
-                            refreshList()
-                        }
-                        .setNegativeButton(R.string.no, null)
-                        .show()
-                }
-            }
-            .setNeutralButton(R.string.cancel, null)
-            .show()
-    }
-
-    /**
-     * Opens a date picker dialog and writes the selected day and month
-     * to the provided EditText in "dd-MM" format.
-     */
-    @SuppressLint("DefaultLocale", "DiscouragedApi")
-    private fun showDatePicker(target: EditText) {
-        val cal = Calendar.getInstance()
-        val parts = target.text.toString().split("-", "/")
-        if (parts.size >= 2) {
-            parts[0].toIntOrNull()?.let { cal.set(Calendar.DAY_OF_MONTH, it) }
-            parts[1].toIntOrNull()?.let { cal.set(Calendar.MONTH, it - 1) }
-        }
-
-        val dialog = DatePickerDialog(this, { _, _, month, dayOfMonth ->
-            target.setText(String.format("%02d-%02d", dayOfMonth, month + 1))
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))
-
-        dialog.datePicker.findViewById<View>(resources.getIdentifier("year", "id", "android"))?.visibility = View.GONE
-        dialog.show()
-    }
-
-    /**
-     * Handles the result of a permission request to read contacts.
-     * If granted, launches the contact picker. Otherwise, shows a warning toast.
-     */
-    private val permissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                contactPicker.launch(null)
-            } else {
-                Toast.makeText(this, getString(R.string.permission_required), Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    /**
-     * Requests the READ_CONTACTS permission if not already granted.
-     * If permission is granted, launches the contact picker.
-     * If rationale should be shown, shows it before requesting.
-     */
-    private fun importContactWithPermission() {
-        when {
-            checkSelfPermission(android.Manifest.permission.READ_CONTACTS) == android.content.pm.PackageManager.PERMISSION_GRANTED -> {
-                contactPicker.launch(null)
-            }
-            shouldShowRequestPermissionRationale(android.Manifest.permission.READ_CONTACTS) -> {
-                permissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
-            }
-            else -> {
-                permissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
-            }
-        }
-    }
-
-    private fun defaultCountryIso(): String {
-        val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        return listOf(tm.networkCountryIso, tm.simCountryIso, Locale.getDefault().country)
-            .firstOrNull { !it.isNullOrBlank() }?.uppercase(Locale.ROOT) ?: "US"
-    }
-
-    private fun parseAndSetPhone(phone: String, ccp: CountryCodePicker, phoneInput: EditText) {
-        val util = PhoneNumberUtil.getInstance()
-        try {
-            val parsed = util.parse(phone, defaultCountryIso())
-            ccp.setCountryForPhoneCode(parsed.countryCode)
-            phoneInput.setText(parsed.nationalNumber.toString())
-        } catch (e: Exception) {
-            ccp.setCountryForNameCode(defaultCountryIso())
-            phoneInput.setText(phone)
-        }
+        return result
     }
 
     private fun openUrl(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
+
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacks(clearStatus)
+        statusText = ""
+    }
+}
+
+@Composable
+private fun BirthdayListScreen(
+    helper: BirthdayFileHelper,
+    status: CharSequence,
+    onManualCheck: () -> CharSequence,
+    onStatus: (CharSequence) -> Unit,
+    onOpenSettings: () -> Unit,
+    onOpenUrl: (String) -> Unit,
+) {
+    val allBirthdays = remember { mutableStateListOf<JSONObject>().apply { addAll(helper.getAll()) } }
+    var filterText by remember { mutableStateOf("") }
+    var sortOption by remember { mutableStateOf(0) }
+    var editingIndex by remember { mutableStateOf<Int?>(null) }
+
+    val displayed = remember(allBirthdays, filterText, sortOption) {
+        allBirthdays.withIndex()
+            .filter { it.value.getString("name").contains(filterText, ignoreCase = true) }
+            .sortedWith(
+                when (sortOption) {
+                    0 -> compareBy { sortKey(it.value.getString("date")) }
+                    1 -> compareByDescending { sortKey(it.value.getString("date")) }
+                    2 -> compareBy { it.value.getString("name").lowercase() }
+                    else -> compareByDescending { it.value.getString("name").lowercase() }
+                }
+            )
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        TopAppBar(
+            title = { Text(text = stringResource(id = R.string.open_json)) },
+            colors = TopAppBarDefaults.mediumTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
+            )
+        )
+
+        Row(modifier = Modifier.padding(8.dp)) {
+            SortDropdown(sortOption, onOptionSelected = { sortOption = it })
+            Spacer(modifier = Modifier.width(8.dp))
+            OutlinedTextField(
+                value = filterText,
+                onValueChange = { filterText = it },
+                placeholder = { Text(stringResource(id = R.string.filter_name)) },
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        if (status.isNotBlank()) {
+            Text(
+                text = status.toString(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            items(displayed) { (index, obj) ->
+                BirthdayItem(obj) { editingIndex = index }
+            }
+        }
+
+        FloatingButtonRow(
+            onCheck = {
+                onStatus(onManualCheck())
+            },
+            onAdd = { editingIndex = -1 }
+        )
+
+        BottomIconRow(onOpenUrl = onOpenUrl, onOpenSettings = onOpenSettings)
+    }
+
+    editingIndex?.let { idx ->
+        val current = if (idx >= 0) allBirthdays[idx] else null
+        EditBirthdayDialog(
+            obj = current,
+            onDismiss = { editingIndex = null },
+            onSave = { json ->
+                helper.save(idx, json)
+                allBirthdays.clear(); allBirthdays.addAll(helper.getAll())
+                editingIndex = null
+            },
+            onDelete = {
+                if (idx >= 0) {
+                    helper.delete(idx)
+                    allBirthdays.clear(); allBirthdays.addAll(helper.getAll())
+                }
+                editingIndex = null
+            }
+        )
+    }
+}
+
+@Composable
+private fun SortDropdown(selected: Int, onOptionSelected: (Int) -> Unit) {
+    val options = stringArrayResource(id = R.array.sort_options)
+    var expanded by remember { mutableStateOf(false) }
+    Box(modifier = Modifier.wrapContentSize()) {
+        OutlinedTextField(
+            value = options[selected],
+            onValueChange = {},
+            readOnly = true,
+            modifier = Modifier
+                .width(120.dp)
+                .clickable { expanded = true }
+        )
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            options.forEachIndexed { index, text ->
+                DropdownMenuItem(
+                    text = { Text(text) },
+                    onClick = {
+                        onOptionSelected(index)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun BirthdayItem(obj: JSONObject, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable(onClick = onClick)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = obj.getString("name"), style = MaterialTheme.typography.titleMedium)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_calendar),
+                    contentDescription = stringResource(id = R.string.calendar_icon_desc),
+                    modifier = Modifier.size(16.dp)
+                )
+                Text(
+                    text = obj.getString("date"),
+                    modifier = Modifier.padding(start = 4.dp),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            val msg = obj.optString("message")
+            if (msg.isNotBlank()) {
+                Text(text = msg, style = MaterialTheme.typography.bodySmall)
+            }
+        }
+    }
+}
+
+@Composable
+private fun EditBirthdayDialog(
+    obj: JSONObject?,
+    onDismiss: () -> Unit,
+    onSave: (JSONObject) -> Unit,
+    onDelete: () -> Unit
+) {
+    var name by remember { mutableStateOf(obj?.getString("name") ?: "") }
+    var date by remember { mutableStateOf(obj?.getString("date") ?: "") }
+    var phone by remember { mutableStateOf(obj?.getString("phone") ?: "") }
+    var message by remember { mutableStateOf(obj?.optString("message") ?: "") }
+    val context = LocalContext.current
+
+    val datePicker = remember {
+        val cal = Calendar.getInstance()
+        DatePickerDialog(
+            context,
+            { _, _, month, dayOfMonth ->
+                date = String.format("%02d-%02d", dayOfMonth, month + 1)
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        ).apply {
+            datePicker.findViewById<View>(
+                context.resources.getIdentifier("year", "id", "android")
+            )?.visibility = View.GONE
+        }
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = stringResource(if (obj == null) R.string.add_birthday else R.string.edit_birthday))
+        },
+        text = {
+            Column {
+                OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text(stringResource(R.string.hint_name)) })
+                OutlinedTextField(
+                    value = date,
+                    onValueChange = {},
+                    label = { Text(stringResource(R.string.hint_date)) },
+                    readOnly = true,
+                    modifier = Modifier.clickable { datePicker.show() }
+                )
+                OutlinedTextField(value = phone, onValueChange = { phone = it }, label = { Text(stringResource(R.string.hint_phone)) })
+                OutlinedTextField(value = message, onValueChange = { message = it }, label = { Text(stringResource(R.string.hint_message)) })
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                val json = JSONObject().apply {
+                    put("name", name)
+                    put("date", date)
+                    put("phone", phone)
+                    put("message", message)
+                }
+                onSave(json)
+            }) {
+                Text(text = stringResource(id = R.string.save))
+            }
+        },
+        dismissButton = {
+            Row {
+                if (obj != null) {
+                    TextButton(onClick = onDelete) {
+                        Text(text = stringResource(id = R.string.delete))
+                    }
+                }
+                TextButton(onClick = onDismiss) {
+                    Text(text = stringResource(id = R.string.cancel))
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun BottomIconRow(onOpenUrl: (String) -> Unit, onOpenSettings: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        IconButton(onClick = { onOpenUrl("https://www.linkedin.com/in/jlianes/") }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_linkedin),
+                contentDescription = stringResource(id = R.string.linkedin)
+            )
+        }
+        IconButton(onClick = { onOpenUrl("https://buymeacoffee.com/jlianesglrs") }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_buymeacoffee),
+                contentDescription = stringResource(id = R.string.buy_me_coffee)
+            )
+        }
+        IconButton(onClick = { onOpenUrl("https://github.com/JaviLianes8/BirthdayNotifierApp") }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_github),
+                contentDescription = stringResource(id = R.string.repo)
+            )
+        }
+        IconButton(onClick = onOpenSettings) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_settings),
+                contentDescription = stringResource(id = R.string.settings)
+            )
+        }
+    }
+}
+
+private fun sortKey(date: String): Int {
+    val parts = date.replace("/", "-").split("-")
+    val day = parts.getOrNull(0)?.toIntOrNull() ?: 0
+    val month = parts.getOrNull(1)?.toIntOrNull() ?: 0
+    return month * 100 + day
 }
 
 @Composable
 private fun FloatingButtonRow(onCheck: () -> Unit, onAdd: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         ClassicButton(R.string.manual_check, onCheck)
@@ -456,7 +397,7 @@ private fun FloatingButtonRow(onCheck: () -> Unit, onAdd: () -> Unit) {
 }
 
 @Composable
-private fun ClassicButton(@StringRes textRes: Int, onClick: () -> Unit) {
+private fun ClassicButton(@androidx.annotation.StringRes textRes: Int, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier

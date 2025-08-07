@@ -48,6 +48,8 @@
     <string name="default_message">Tanti auguri, %1$s! 🎉🥳</string>
     <string name="notification_channel_name">Compleanni</string>
     <string name="notification_title">Compleanno di %1$s</string>
+    <string name="snooze_action">Posticipa</string>
+    <string name="snooze_label">Ore (1-4)</string>
     <string name="default_web_client_id">793109226456-n35uqu21dd5s3i3ggn57807tvlkrgio9.apps.googleusercontent.com</string>
     <string name="delete_data">Elimina dati</string>
     <string name="delete_data_confirm">Eliminare tutti i dati?</string>

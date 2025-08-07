@@ -8,10 +8,14 @@ import android.view.View
 import android.widget.*
 import android.net.Uri
 import android.provider.ContactsContract
+import android.content.Context
+import android.telephony.TelephonyManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.jlianes.birthdaynotifier.R
 import java.util.Calendar
+import java.util.Locale
 import com.jlianes.birthdaynotifier.presentation.BaseActivity
 import com.jlianes.birthdaynotifier.framework.file.BirthdayFileHelper
 import com.jlianes.birthdaynotifier.databinding.ActivityBirthdayListBinding
@@ -170,6 +174,10 @@ class BirthdayListActivity : BaseActivity() {
         val phoneInput = EditText(this).apply { hint = getString(R.string.hint_phone) }
         val messageInput = EditText(this).apply { hint = getString(R.string.hint_message) }
 
+        if (obj == null) {
+            phoneInput.setText(defaultDialCode())
+        }
+
         obj?.let {
             nameInput.setText(it.getString("name"))
             dateInput.setText(it.getString("date"))
@@ -278,5 +286,13 @@ class BirthdayListActivity : BaseActivity() {
                 permissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
             }
         }
+    }
+
+    private fun defaultDialCode(): String {
+        val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        val iso = listOf(tm.networkCountryIso, tm.simCountryIso, Locale.getDefault().country)
+            .firstOrNull { !it.isNullOrBlank() }?.uppercase(Locale.ROOT) ?: "US"
+        val code = PhoneNumberUtil.getInstance().getCountryCodeForRegion(iso)
+        return "+$code"
     }
 }

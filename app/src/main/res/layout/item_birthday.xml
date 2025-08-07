@@ -11,16 +11,18 @@
     app:cardCornerRadius="0dp"
     app:cardBackgroundColor="?attr/colorSurface">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:orientation="vertical"
             android:padding="16dp"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="64dp">
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/textName"
@@ -61,10 +63,11 @@
         </LinearLayout>
 
         <FrameLayout
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="16dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/imageCake"
@@ -83,9 +86,9 @@
                 android:textSize="14sp"
                 android:textColor="?attr/colorPrimary"
                 android:visibility="gone"
-                android:gravity="center"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:gravity="center" />
         </FrameLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

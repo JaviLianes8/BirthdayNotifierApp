@@ -15,6 +15,7 @@ import android.provider.ContactsContract
 import android.telephony.TelephonyManager
 import android.text.InputType
 import android.view.View
+import android.view.HapticFeedbackConstants
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -139,9 +140,17 @@ class BirthdayListActivity : BaseActivity() {
             applyFilters()
         }
 
-        binding.listView.setOnItemClickListener { _, _, pos, _ ->
-            val originalIndex = displayedIndices.getOrNull(pos) ?: pos
-            showEditDialog(originalIndex, helper.get(originalIndex))
+        binding.listView.setOnItemClickListener { _, view, pos, _ ->
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            view.animate()
+                .scaleX(0.95f)
+                .scaleY(0.95f)
+                .setDuration(100)
+                .withEndAction {
+                    view.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+                    val originalIndex = displayedIndices.getOrNull(pos) ?: pos
+                    showEditDialog(originalIndex, helper.get(originalIndex))
+                }.start()
         }
 
         binding.floatingButtons.setContent {

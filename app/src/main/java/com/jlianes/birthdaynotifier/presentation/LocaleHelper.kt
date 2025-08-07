@@ -34,12 +34,7 @@ object LocaleHelper {
         Locale.setDefault(locale)
 
         val config = Configuration(context.resources.configuration)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            config.setLocales(LocaleList(locale))
-        } else {
-            @Suppress("DEPRECATION")
-            config.setLocale(locale)
-        }
+        config.setLocales(LocaleList(locale))
         return context.createConfigurationContext(config)
     }
 

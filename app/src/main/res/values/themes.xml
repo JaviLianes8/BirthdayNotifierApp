@@ -10,5 +10,6 @@
         <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
         <item name="android:colorBackground">@color/md_theme_light_background</item>
         <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="android:colorControlHighlight">@color/md_theme_light_primaryContainer</item>
     </style>
 </resources>

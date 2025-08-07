@@ -20,8 +20,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.hbb20.CountryCodePicker
+import com.google.android.material.button.MaterialButton
 import com.jlianes.birthdaynotifier.R
 import java.util.Calendar
 import java.util.Locale
@@ -120,10 +129,19 @@ class BirthdayListActivity : BaseActivity() {
         binding.buttonAdd.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
+                val interaction = remember { MutableInteractionSource() }
+                val pressed by interaction.collectIsPressedAsState()
+                val scale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "fabScale")
+                val container by animateColorAsState(
+                    targetValue = if (pressed) colorResource(R.color.md_theme_light_primaryContainer) else colorResource(R.color.md_theme_light_primary),
+                    label = "fabColor"
+                )
                 FloatingActionButton(
                     onClick = { showEditDialog(-1, null) },
-                    containerColor = colorResource(R.color.md_theme_light_primary),
-                    contentColor = colorResource(R.color.md_theme_light_onPrimary)
+                    containerColor = container,
+                    contentColor = colorResource(R.color.md_theme_light_onPrimary),
+                    interactionSource = interaction,
+                    modifier = Modifier.scale(scale)
                 ) {
                     Icon(Icons.Default.Add, contentDescription = getString(R.string.add_birthday))
                 }
@@ -218,6 +236,12 @@ class BirthdayListActivity : BaseActivity() {
         }
         val messageInput = EditText(this).apply { hint = getString(R.string.hint_message) }
 
+        val textColor = ContextCompat.getColor(this, R.color.md_theme_light_onBackground)
+        listOf(nameInput, dateInput, phoneInput, messageInput).forEach {
+            it.setTextColor(textColor)
+            it.setHintTextColor(textColor)
+        }
+
         obj?.let {
             nameInput.setText(it.getString("name"))
             dateInput.setText(it.getString("date"))
@@ -225,7 +249,18 @@ class BirthdayListActivity : BaseActivity() {
             messageInput.setText(it.optString("message"))
         }
 
-        val importButton = Button(this).apply { text = getString(R.string.import_contact) }
+        val importButton = MaterialButton(this).apply {
+            text = getString(R.string.import_contact)
+            backgroundTintList = ContextCompat.getColorStateList(
+                this@BirthdayListActivity,
+                R.color.md_theme_light_primary
+            )
+            setTextColor(ContextCompat.getColor(this@BirthdayListActivity, R.color.md_theme_light_onPrimary))
+            rippleColor = ContextCompat.getColorStateList(
+                this@BirthdayListActivity,
+                R.color.md_theme_light_primaryContainer
+            )
+        }
         val dialogLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(50, 40, 50, 10)

@@ -31,7 +31,8 @@
         android:backgroundTint="?attr/colorPrimary"
         android:textColor="?attr/colorOnPrimary"
         android:layout_marginTop="24dp"
-        app:cornerRadius="0dp" />
+        app:cornerRadius="16dp"
+        app:rippleColor="@color/md_theme_light_primaryContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLanguage"
@@ -42,7 +43,8 @@
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/language"
         android:textColor="?attr/colorOnPrimary"
-        app:cornerRadius="0dp" />
+        app:cornerRadius="16dp"
+        app:rippleColor="@color/md_theme_light_primaryContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonTheme"
@@ -53,7 +55,8 @@
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/theme"
         android:textColor="?attr/colorOnPrimary"
-        app:cornerRadius="0dp" />
+        app:cornerRadius="16dp"
+        app:rippleColor="@color/md_theme_light_primaryContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonDeleteData"
@@ -64,7 +67,8 @@
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/delete_data"
         android:textColor="?attr/colorOnPrimary"
-        app:cornerRadius="0dp" />
+        app:cornerRadius="16dp"
+        app:rippleColor="@color/md_theme_light_primaryContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogout"
@@ -75,7 +79,8 @@
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/logout"
         android:textColor="?attr/colorOnPrimary"
-        app:cornerRadius="0dp" />
+        app:cornerRadius="16dp"
+        app:rippleColor="@color/md_theme_light_primaryContainer" />
 
 </LinearLayout>
 

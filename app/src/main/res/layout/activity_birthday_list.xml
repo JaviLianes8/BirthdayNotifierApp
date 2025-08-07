@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/filter_name"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black" />
+            android:textColor="@color/md_theme_light_onBackground"
+            android:textColorHint="@color/md_theme_light_onBackground" />
     </LinearLayout>
 
     <ListView
@@ -49,7 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/filterLayout"
-        android:layout_above="@id/buttonAdd" />
+        android:layout_above="@id/buttonAdd"
+        android:listSelector="?attr/selectableItemBackground" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/buttonAdd"

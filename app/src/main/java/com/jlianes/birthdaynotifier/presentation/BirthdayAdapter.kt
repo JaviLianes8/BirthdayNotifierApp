@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.TextView
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ImageSpan
+import androidx.core.content.ContextCompat
 import java.util.Calendar
 import com.jlianes.birthdaynotifier.R
 import org.json.JSONObject
@@ -56,21 +59,19 @@ class BirthdayAdapter(context: Context, items: MutableList<JSONObject>) :
         val date = obj.getString("date")
         view.findViewById<TextView>(R.id.textDate).text = date
 
-        val cake = view.findViewById<ImageView>(R.id.imageCake)
-        val soon = view.findViewById<TextView>(R.id.textSoon)
+        val indicator = view.findViewById<TextView>(R.id.textIndicator)
         val key = sortKey(date)
         when {
             key == todayKey -> {
-                cake.visibility = View.VISIBLE
-                soon.visibility = View.GONE
+                indicator.visibility = View.VISIBLE
+                indicator.text = centeredCakeSpan("")
             }
             key == nextKey && nextKey != -1 -> {
-                cake.visibility = View.GONE
-                soon.visibility = View.VISIBLE
+                indicator.visibility = View.VISIBLE
+                indicator.text = centeredCakeSpan(context.getString(R.string.soon))
             }
             else -> {
-                cake.visibility = View.GONE
-                soon.visibility = View.GONE
+                indicator.visibility = View.GONE
             }
         }
 
@@ -87,5 +88,22 @@ class BirthdayAdapter(context: Context, items: MutableList<JSONObject>) :
         val day = parts.getOrNull(0)?.toIntOrNull() ?: 0
         val month = parts.getOrNull(1)?.toIntOrNull() ?: 0
         return month * 100 + day
+    }
+
+    private fun centeredCakeSpan(text: String): SpannableStringBuilder {
+        val baseText = if (text.isBlank()) " " else text
+        val sb = SpannableStringBuilder(baseText)
+        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_cake)
+        drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        val span = drawable?.let { ImageSpan(it, ImageSpan.ALIGN_BOTTOM) }
+        return if (text.isBlank()) {
+            span?.let { sb.setSpan(it, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE) }
+            sb
+        } else {
+            val mid = baseText.length / 2
+            sb.insert(mid, " ")
+            span?.let { sb.setSpan(it, mid, mid + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE) }
+            sb
+        }
     }
 }

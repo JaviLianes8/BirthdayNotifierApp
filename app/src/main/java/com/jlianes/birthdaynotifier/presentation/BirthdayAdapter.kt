@@ -30,7 +30,6 @@ class BirthdayAdapter(context: Context, items: MutableList<JSONObject>) :
     private val todayKey = Calendar.getInstance().let {
         sortKey("%02d-%02d".format(it.get(Calendar.DAY_OF_MONTH), it.get(Calendar.MONTH) + 1))
     }
-    private var nextKey: Int = -1
 
     /**
      * Computes the number of days from today until the next occurrence of a given
@@ -64,13 +63,6 @@ class BirthdayAdapter(context: Context, items: MutableList<JSONObject>) :
         return (diffMillis / (1000 * 60 * 60 * 24)).toInt()
     }
 
-    fun refreshIndicators(allItems: List<JSONObject>) {
-        val keys = allItems.mapNotNull { obj ->
-            obj.optString("date").takeIf { it.isNotBlank() }?.let { d -> sortKey(d) }
-        }
-        nextKey = keys.filter { it > todayKey }.minOrNull() ?: keys.minOrNull() ?: -1
-    }
-
     /**
      * Returns the view for a specific item in the list.
      *
@@ -91,12 +83,14 @@ class BirthdayAdapter(context: Context, items: MutableList<JSONObject>) :
         val cake = view.findViewById<ImageView>(R.id.imageCake)
         val soon = view.findViewById<TextView>(R.id.textSoon)
         val key = sortKey(date)
+        val days = daysUntil(date)
+
         when {
             key == todayKey -> {
                 cake.visibility = View.VISIBLE
                 soon.visibility = View.GONE
             }
-            key == nextKey && nextKey != -1 && daysUntil(date) <= 30 -> {
+            days in 1..30 -> {
                 cake.visibility = View.GONE
                 soon.visibility = View.VISIBLE
             }

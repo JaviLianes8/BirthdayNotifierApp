@@ -96,7 +96,7 @@ class BirthdayAdapter(context: Context, items: MutableList<JSONObject>) :
                 cake.visibility = View.VISIBLE
                 soon.visibility = View.GONE
             }
-            key == nextKey && nextKey != -1 && daysUntil(date) >= 30 -> {
+            key == nextKey && nextKey != -1 && daysUntil(date) <= 30 -> {
                 cake.visibility = View.GONE
                 soon.visibility = View.VISIBLE
             }

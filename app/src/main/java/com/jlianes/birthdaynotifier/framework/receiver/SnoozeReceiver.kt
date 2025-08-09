@@ -11,7 +11,10 @@ import androidx.core.app.NotificationManagerCompat
  * Receiver that schedules a delayed notification when the user selects a snooze option.
  */
 class SnoozeReceiver : BroadcastReceiver() {
-
+    /**
+     * Handles the snooze action by scheduling a new notification in one hour
+     * and cancelling the current one.
+     */
     override fun onReceive(context: Context, intent: Intent) {
         val name = intent.getStringExtra(EXTRA_NAME) ?: return
         val message = intent.getStringExtra(EXTRA_MESSAGE) ?: return

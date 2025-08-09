@@ -1,36 +1,46 @@
-# BirthdayNotifierApp
+# Birthday Notifier App
 
-Birthday Notifier is a simple Kotlin Android application used to send WhatsApp birthday greetings. It stores birthday data in Firebase Firestore and allows editing the list from the phone. The app schedules a daily alarm to check birthdays and can also be triggered manually.
+Birthday Notifier is an Android application written in Kotlin that reminds you of your friends' and family's birthdays and sends them a WhatsApp greeting automatically.
 
-## Features
+## Highlights
 
-- Google Sign-In using Firebase Authentication.
-- Birthdays stored in Firestore for the logged user.
-- Daily check via `AlarmManager` and `BroadcastReceiver` at a user configurable time.
-- Alarm automatically rescheduled after reboot so notifications work even if the device restarts.
-- Sends a notification that opens WhatsApp with a pre‑filled message.
-- Notification includes a snooze action to postpone reminders for 1–4 hours.
-- Simple editor to add, edit or delete birthday entries.
-- Personalized greeting per contact.
-- Option to import name and phone from your device contacts when adding a birthday.
-- Manual trigger button for testing birthday notifications.
+- **Firebase Auth & Firestore** – birthdays are stored per‑user in Firestore and synced across devices.
+- **Daily background check** – an `AlarmManager` trigger runs every day and after reboots to look for birthdays.
+- **WhatsApp integration** – notifications open WhatsApp with a prefilled message and allow snoozing for later.
+- **Multi language & theme** – the UI supports several languages and light/dark/system themes.
+- **Contact import** – quickly add entries from the device contacts database.
 
-## Building
+## Project structure
 
-The project is a standard Gradle Android application. To build you need the Android SDK and a valid `google-services.json` for your Firebase project.
+The code follows a simplified Clean Architecture with these layers:
 
-1. Install Android Studio or the command line SDK.
-2. Create a `local.properties` file in the `BirthdayNotifierApp` directory with:
-   ```
-   sdk.dir=/path/to/Android/sdk
-   ```
-3. Place your `google-services.json` file under `BirthdayNotifierApp/app/`.
-4. Run:
-   ```
-   ./gradlew assembleDebug
-   ```
+- **domain** – use cases, models and repository interfaces.
+- **data** – repository implementations.
+- **framework** – platform specific helpers (Firestore, files, notifications, receivers).
+- **presentation** – activities, adapters and UI helpers.
 
-## Running
+Kotlin coroutines are used for Firestore I/O and the UI mixes classic views with a small amount of Jetpack Compose.
 
-After installing the debug APK on a device, sign in with Google. Use the **Test** button to send notifications immediately or open the birthday list to manage your entries. The app will automatically run each day at the configured time (9 AM by default) to send WhatsApp messages to matching birthdays. The time can be changed from the Settings screen.
+## Build & run
+
+Prerequisites:
+
+1. Android Studio Bumblebee+ or command line tools.
+2. A Firebase project with a valid `google-services.json` placed under `app/`.
+
+Steps:
+
+```bash
+./gradlew assembleDebug
+```
+
+Install the resulting APK on a device, sign in with Google and set your notification time and language from **Settings**.
+
+## Contributing
+
+Pull requests and suggestions are welcome. Feel free to open an issue if you spot a bug or have an improvement in mind.
+
+## License
+
+This project is released under the MIT License. See [privacy.html](privacy.html) for the privacy policy.
 

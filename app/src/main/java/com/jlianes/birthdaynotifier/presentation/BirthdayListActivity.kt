@@ -167,6 +167,7 @@ class BirthdayListActivity : BaseActivity() {
         binding.buttonLinkedin.setOnClickListener { openUrl("https://www.linkedin.com/in/jlianes/") }
         binding.buttonCoffee.setOnClickListener { openUrl("https://buymeacoffee.com/jlianesglrs") }
         binding.buttonRepo.setOnClickListener { openUrl("https://github.com/JaviLianes8/BirthdayNotifierApp") }
+        applyFilters()
     }
 
     @SuppressLint("SetTextI18n")
@@ -253,6 +254,107 @@ class BirthdayListActivity : BaseActivity() {
         adapter.clear()
         adapter.addAll(filtered.map { it.second })
         adapter.notifyDataSetChanged()
+        scrollToUpcoming(filtered.map { it.second })
+    }
+
+    /**
+     * Scrolls the list to the most relevant upcoming birthday.
+     *
+     * Priority:
+     * 1. Birthdays happening today.
+     * 2. Birthdays marked as "soon" (within the next natural month).
+     * 3. The next upcoming birthday in the future.
+     *
+     * @param items List of birthday objects currently displayed.
+     */
+    private fun scrollToUpcoming(items: List<JSONObject>) {
+        val todayIndex = items.indexOfFirst { daysUntil(it.getString("date")) == 0 }
+        val soonIndex = items.indexOfFirst {
+            val days = daysUntil(it.getString("date"))
+            days > 0 && isWithinOneNaturalMonth(it.getString("date"))
+        }
+        val nextIndex = items.withIndex()
+            .filter { daysUntil(it.value.getString("date")) > 0 }
+            .minByOrNull { daysUntil(it.value.getString("date")) }
+            ?.index ?: -1
+
+        val target = when {
+            todayIndex >= 0 -> todayIndex
+            soonIndex >= 0 -> soonIndex
+            nextIndex >= 0 -> nextIndex
+            else -> -1
+        }
+
+        if (target >= 0) {
+            binding.listView.post { binding.listView.setSelection(target) }
+        }
+    }
+
+    /**
+     * Computes the number of whole days from today (00:00) until the next occurrence
+     * of a given date (in format "dd-mm" or "dd/mm"). If the date this year already
+     * passed, it calculates against the same day in the next year.
+     *
+     * @param date Birthday string in "dd-mm" or "dd/mm".
+     * @return Number of days until next occurrence, or Int.MAX_VALUE on parse error.
+     */
+    private fun daysUntil(date: String): Int {
+        val parts = date.replace("/", "-").split("-")
+        val day = parts.getOrNull(0)?.toIntOrNull() ?: return Int.MAX_VALUE
+        val month = parts.getOrNull(1)?.toIntOrNull() ?: return Int.MAX_VALUE
+
+        val now = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val target = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            set(Calendar.MONTH, month - 1)
+            set(Calendar.DAY_OF_MONTH, day)
+            if (before(now)) add(Calendar.YEAR, 1)
+        }
+
+        val diffMillis = target.timeInMillis - now.timeInMillis
+        return (diffMillis / (1000 * 60 * 60 * 24)).toInt()
+    }
+
+    /**
+     * Checks whether a birthday falls within the next natural month: strictly after
+     * today and on or before the same calendar day next month.
+     *
+     * @param date Birthday string in "dd-mm" or "dd/mm".
+     * @return true if the next occurrence is within the next natural month; false otherwise.
+     */
+    private fun isWithinOneNaturalMonth(date: String): Boolean {
+        val parts = date.replace("/", "-").split("-")
+        val day = parts.getOrNull(0)?.toIntOrNull() ?: return false
+        val month = parts.getOrNull(1)?.toIntOrNull() ?: return false
+
+        val now = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        val limit = (now.clone() as Calendar).apply { add(Calendar.MONTH, 1) }
+
+        val target = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            set(Calendar.MONTH, month - 1)
+            set(Calendar.DAY_OF_MONTH, day)
+            if (before(now)) add(Calendar.YEAR, 1)
+        }
+
+        return target.after(now) && !target.after(limit)
     }
 
     /**

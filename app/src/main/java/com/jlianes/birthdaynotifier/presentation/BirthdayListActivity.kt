@@ -180,6 +180,12 @@ class BirthdayListActivity : BaseActivity() {
         binding.checkOverlay.visibility = View.GONE
     }
 
+    /**
+     * Performs a manual check for today's birthdays and triggers notifications.
+     *
+     * Updates the status banner with the result and calls the use case to
+     * send WhatsApp messages to any matching contacts.
+     */
     private fun manualCheck() {
         binding.checkOverlay.visibility = View.VISIBLE
         handler.removeCallbacks(hideOverlay)
@@ -532,12 +538,21 @@ class BirthdayListActivity : BaseActivity() {
         }
     }
 
+    /**
+     * Determines the most appropriate ISO country code to use when parsing
+     * phone numbers. It tries the network country, SIM country and finally
+     * the device locale, defaulting to US if none are available.
+     */
     private fun defaultCountryIso(): String {
         val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         return listOf(tm.networkCountryIso, tm.simCountryIso, Locale.getDefault().country)
             .firstOrNull { !it.isNullOrBlank() }?.uppercase(Locale.ROOT) ?: "US"
     }
 
+    /**
+     * Parses a phone number and updates the country picker and input field
+     * with the result. Falls back to the raw value if parsing fails.
+     */
     private fun parseAndSetPhone(phone: String, ccp: CountryCodePicker, phoneInput: EditText) {
         val util = PhoneNumberUtil.getInstance()
         try {
@@ -550,6 +565,7 @@ class BirthdayListActivity : BaseActivity() {
         }
     }
 
+    /** Opens the given URL in an external browser. */
     private fun openUrl(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }

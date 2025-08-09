@@ -9,7 +9,9 @@ import com.jlianes.birthdaynotifier.framework.notification.WhatsAppBirthdayNotif
  * Receiver invoked after a snooze delay to show the original birthday notification again.
  */
 class SnoozedNotificationReceiver : BroadcastReceiver() {
-
+    /**
+     * Re-dispatches the original birthday notification after the snooze period.
+     */
     override fun onReceive(context: Context, intent: Intent) {
         val name = intent.getStringExtra(SnoozeReceiver.EXTRA_NAME) ?: return
         val message = intent.getStringExtra(SnoozeReceiver.EXTRA_MESSAGE) ?: return

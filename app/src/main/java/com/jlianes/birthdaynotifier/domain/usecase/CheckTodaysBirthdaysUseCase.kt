@@ -38,17 +38,7 @@ class CheckTodaysBirthdaysUseCase(
                 val msg = it.message.ifBlank { context.getString(R.string.default_message, it.name) }
                 notifier.notify(context, it.name, msg, it.phone)
             }
-
         Log.d("BirthdayTest", "Today is $today")
-
-        val list = repo.getAll(context)
-        Log.d("BirthdayTest", "Found ${list.size} birthdays")
-
-        list.filter { it.date == today }.forEach {
-            Log.d("BirthdayTest", "Sending to ${it.name}")
-            val msg = it.message.ifBlank { context.getString(R.string.default_message, it.name) }
-            notifier.notify(context, it.name, msg, it.phone)
-        }
     }
 
 }

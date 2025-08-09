@@ -33,6 +33,9 @@ object LocaleHelper {
         Locale.setDefault(locale)
 
         val config = Configuration(context.resources.configuration)
+        // Ensure both locale and locale list are set so that all resources
+        // (including those expecting a single locale) resolve correctly.
+        config.setLocale(locale)
         config.setLocales(LocaleList(locale))
         return context.createConfigurationContext(config)
     }
@@ -45,6 +48,8 @@ object LocaleHelper {
      */
     fun setLocale(context: Context, code: String) {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        prefs.edit().putString("language", code).apply()
+        // Use commit to persist the preference synchronously before a potential
+        // app restart, avoiding races where the new language might not be saved.
+        prefs.edit().putString("language", code).commit()
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lembrete de Aniversário</string>
+    <string name="app_name">⏰ Aniversários</string>
     <string name="test_app">Verificar aniversários</string>
     <string name="open_json">Alterar aniversários</string>
     <string name="settings">Configurações</string>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Geburtstagserinnerung</string>
+    <string name="app_name">⏰ Geburtstage</string>
     <string name="test_app">Geburtstage prüfen</string>
     <string name="open_json">Geburtstage ändern</string>
     <string name="settings">Einstellungen</string>

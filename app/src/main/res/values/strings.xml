@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Birthday Notifier</string>
+    <string name="app_name">⏰ Birthdays</string>
     <string name="test_app">Check birthdays</string>
     <string name="open_json">Change birthdays</string>
     <string name="settings">Settings</string>

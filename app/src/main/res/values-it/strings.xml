@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Promemoria Compleanni</string>
+    <string name="app_name">⏰ Compleanni</string>
     <string name="test_app">Controlla compleanni</string>
     <string name="open_json">Modifica compleanni</string>
     <string name="settings">Impostazioni</string>

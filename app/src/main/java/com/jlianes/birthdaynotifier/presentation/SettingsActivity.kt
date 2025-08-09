@@ -4,7 +4,7 @@ import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
+import android.content.res.Configuration
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
@@ -18,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import androidx.core.view.doOnPreDraw
 
 /**
  * Activity that allows configuring app settings like the notification time
@@ -36,33 +35,15 @@ class SettingsActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        listOf(
-            binding.buttonSetTime,
-            binding.buttonLanguage,
-            binding.buttonTheme,
-            binding.buttonDeleteData,
-            binding.buttonLogout
-        ).forEach { btn ->
-            btn.doOnPreDraw {
-                val h = it.measuredHeight
-                it.minimumHeight = h
-                (it.layoutParams as ViewGroup.LayoutParams).height = h
-                it.requestLayout()
-            }
-        }
-
-        (binding.buttonSetTime.layoutParams as ViewGroup.MarginLayoutParams).apply {
-            topMargin = resources.getDimensionPixelSize(R.dimen.initial_drop)
-            binding.buttonSetTime.layoutParams = this
-        }
-        binding.buttonSetTime.minHeight = resources.getDimensionPixelSize(R.dimen.fixed_button_height)
-        binding.buttonSetTime.maxHeight = resources.getDimensionPixelSize(R.dimen.fixed_button_height)
-
         binding.buttonSetTime.setOnClickListener { showTimePicker() }
         binding.buttonLanguage.setOnClickListener { showLanguageDialog() }
         binding.buttonTheme.setOnClickListener { showThemeDialog() }
         binding.buttonDeleteData.setOnClickListener { confirmDeleteData() }
         binding.buttonLogout.setOnClickListener { performLogout() }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
     }
 
     private fun performLogout() {
@@ -105,7 +86,6 @@ class SettingsActivity : BaseActivity() {
             .setSingleChoiceItems(languages, checked) { dialog, which ->
                 LocaleHelper.setLocale(this, codes[which])
                 dialog.dismiss()
-                recreate()
             }
             .show()
     }
@@ -131,7 +111,6 @@ class SettingsActivity : BaseActivity() {
                 }
                 AppCompatDelegate.setDefaultNightMode(mode)
                 dialog.dismiss()
-                recreate()
             }
             .show()
     }

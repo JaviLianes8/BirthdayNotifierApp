@@ -2,7 +2,6 @@ package com.jlianes.birthdaynotifier.presentation
 
 import android.content.Context
 import android.content.res.Configuration
-import android.os.Build
 import android.os.LocaleList
 import java.util.Locale
 
@@ -18,8 +17,7 @@ object LocaleHelper {
      */
     fun getLanguage(context: Context): String {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val saved = prefs.getString("language", null)
-        return saved ?: Locale.getDefault().language
+        return prefs.getString("language", "system") ?: "system"
     }
 
     /**
@@ -29,8 +27,9 @@ object LocaleHelper {
      * @return Context A new context with the locale applied.
      */
     fun applyBaseContext(context: Context): Context {
-        val code = getLanguage(context)
-        val locale = Locale(code)
+        val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val code = prefs.getString("language", "system")
+        val locale = if (code == "system") Locale.getDefault() else Locale(code!!)
         Locale.setDefault(locale)
 
         val config = Configuration(context.resources.configuration)

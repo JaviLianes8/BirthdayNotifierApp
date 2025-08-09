@@ -1,9 +1,12 @@
 package com.jlianes.birthdaynotifier.presentation
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.os.Build
 import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import java.util.Locale
 
 /**
@@ -47,5 +50,22 @@ object LocaleHelper {
     fun setLocale(context: Context, code: String) {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
         prefs.edit().putString("language", code).apply()
+
+        // Update application-wide locales for proper label rendering
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(code))
+
+        // Force launcher to reload the app label with the new language
+        val pm = context.packageManager
+        val component = ComponentName(context, LoginActivity::class.java)
+        pm.setComponentEnabledSetting(
+            component,
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP
+        )
+        pm.setComponentEnabledSetting(
+            component,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
     }
 }

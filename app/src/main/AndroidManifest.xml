@@ -10,8 +10,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_cake_main"
-        android:roundIcon="@drawable/ic_cake_main"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BirthdayNotifier">

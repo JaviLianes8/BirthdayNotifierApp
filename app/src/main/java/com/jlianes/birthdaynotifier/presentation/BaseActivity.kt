@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 
 /**
  * Base activity that applies the persisted locale to the context and
@@ -33,6 +34,12 @@ open class BaseActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+
+        // Apply the persisted language to the whole application so that
+        // external resources like the launcher label use the selected locale.
+        val lang = LocaleHelper.getLanguage(this)
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(lang))
+
         val mode = when (prefs.getString("theme", "system")) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES

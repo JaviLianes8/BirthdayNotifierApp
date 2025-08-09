@@ -11,5 +11,9 @@
 
     <color name="md_theme_light_background">#121212</color>
     <color name="md_theme_light_onBackground">#FFFFFF</color>
+
+    <!-- Launcher icon colors -->
+    <color name="ic_launcher_foreground">#FFFFFF</color>
+    <color name="ic_launcher_background">#121212</color>
 </resources>
 

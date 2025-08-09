@@ -3,6 +3,8 @@
 **/build/
 !gradle/wrapper/gradle-wrapper.properties
 !gradle/wrapper/gradle-wrapper.jar
+!gradlew
+!gradlew.bat
 
 # === Android Studio / IntelliJ ===
 .idea/
@@ -58,8 +60,8 @@ test-output/
 .idea/modules.xml
 .idea/workspace.xml
 
-# === VSCode (por si usas también) ===
+# === VSCode ===
 .vscode/
 
-# === Firebase Emulator (por si se usa) ===
+# === Firebase Emulator ===
 .firebase/

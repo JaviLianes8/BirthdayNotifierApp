@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
@@ -17,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import androidx.core.view.doOnPreDraw
 
 /**
  * Activity that allows configuring app settings like the notification time
@@ -33,6 +35,28 @@ class SettingsActivity : BaseActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        listOf(
+            binding.buttonSetTime,
+            binding.buttonLanguage,
+            binding.buttonTheme,
+            binding.buttonDeleteData,
+            binding.buttonLogout
+        ).forEach { btn ->
+            btn.doOnPreDraw {
+                val h = it.measuredHeight
+                it.minimumHeight = h
+                (it.layoutParams as ViewGroup.LayoutParams).height = h
+                it.requestLayout()
+            }
+        }
+
+        (binding.buttonSetTime.layoutParams as ViewGroup.MarginLayoutParams).apply {
+            topMargin = resources.getDimensionPixelSize(R.dimen.initial_drop)
+            binding.buttonSetTime.layoutParams = this
+        }
+        binding.buttonSetTime.minHeight = resources.getDimensionPixelSize(R.dimen.fixed_button_height)
+        binding.buttonSetTime.maxHeight = resources.getDimensionPixelSize(R.dimen.fixed_button_height)
 
         binding.buttonSetTime.setOnClickListener { showTimePicker() }
         binding.buttonLanguage.setOnClickListener { showLanguageDialog() }

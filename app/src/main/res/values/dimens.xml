@@ -1,3 +1,5 @@
 <resources>
     <dimen name="logo_size">40dp</dimen>
+    <dimen name="initial_drop">24dp</dimen>
+    <dimen name="fixed_button_height">96dp</dimen>
 </resources>

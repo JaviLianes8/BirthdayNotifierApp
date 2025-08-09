@@ -20,7 +20,9 @@
         <activity android:name=".presentation.BirthdayListActivity" />
 
         <!-- Settings screen -->
-        <activity android:name=".presentation.SettingsActivity" />
+        <activity
+            android:name=".presentation.SettingsActivity"
+            android:configChanges="locale|layoutDirection|uiMode|screenSize" />
 
         <!-- Login screen -->
         <activity android:name=".presentation.LoginActivity"

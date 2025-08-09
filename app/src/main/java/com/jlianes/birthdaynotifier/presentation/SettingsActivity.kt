@@ -2,7 +2,9 @@ package com.jlianes.birthdaynotifier.presentation
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
@@ -80,6 +82,7 @@ class SettingsActivity : BaseActivity() {
             .setTitle(R.string.language)
             .setSingleChoiceItems(languages, checked) { dialog, which ->
                 LocaleHelper.setLocale(this, codes[which])
+                updateLauncherIcon()
                 dialog.dismiss()
                 recreate()
             }
@@ -106,10 +109,30 @@ class SettingsActivity : BaseActivity() {
                     else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 }
                 AppCompatDelegate.setDefaultNightMode(mode)
+                updateLauncherIcon()
                 dialog.dismiss()
                 recreate()
             }
             .show()
+    }
+
+    /**
+     * Forces the launcher to reload the app's icon and label so that
+     * theme and language changes are reflected outside the app.
+     */
+    private fun updateLauncherIcon() {
+        val pm = packageManager
+        val component = ComponentName(this, LoginActivity::class.java)
+        pm.setComponentEnabledSetting(
+            component,
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP
+        )
+        pm.setComponentEnabledSetting(
+            component,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
     }
 
     private fun confirmDeleteData() {

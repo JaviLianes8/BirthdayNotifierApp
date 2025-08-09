@@ -20,13 +20,19 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 /**
- * Activity that allows configuring app settings like the notification time
- * and logging out of the current user.
+ * Activity that allows configuring app settings like notification time, language,
+ * theme, data deletion and logout.
+ *
+ * Se añade un reinicio controlado de la app tras cambiar idioma o tema para
+ * que los recursos se apliquen sin que varíe el tamaño de los botones.
  */
 class SettingsActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
 
+    /**
+     * Inflates the view, sets toolbar, and wires click listeners.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,10 +48,16 @@ class SettingsActivity : BaseActivity() {
         binding.buttonLogout.setOnClickListener { performLogout() }
     }
 
+    /**
+     * Default pass-through; kept to respect current behavior.
+     */
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
     }
 
+    /**
+     * Signs out from Firebase + Google and navigates back to LoginActivity.
+     */
     private fun performLogout() {
         FirebaseAuth.getInstance().signOut()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -59,6 +71,10 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    /**
+     * Shows a time picker and persists the chosen hour/minute.
+     * Reschedules the daily alarm accordingly.
+     */
     private fun showTimePicker() {
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val hour = prefs.getInt("hour", 9)
@@ -69,6 +85,9 @@ class SettingsActivity : BaseActivity() {
         }, hour, minute, true).show()
     }
 
+    /**
+     * Language selector. Applies locale and reinicia la app para refrescar recursos.
+     */
     private fun showLanguageDialog() {
         val languages = arrayOf(
             getString(R.string.english),
@@ -86,10 +105,15 @@ class SettingsActivity : BaseActivity() {
             .setSingleChoiceItems(languages, checked) { dialog, which ->
                 LocaleHelper.setLocale(this, codes[which])
                 dialog.dismiss()
+                restartApp()
             }
             .show()
     }
 
+    /**
+     * Theme selector. Applies AppCompatDelegate mode y reinicia la app
+     * para que se apliquen los cambios visuales en todo el task.
+     */
     private fun showThemeDialog() {
         val themes = arrayOf(
             getString(R.string.light),
@@ -111,10 +135,14 @@ class SettingsActivity : BaseActivity() {
                 }
                 AppCompatDelegate.setDefaultNightMode(mode)
                 dialog.dismiss()
+                restartApp()
             }
             .show()
     }
 
+    /**
+     * Asks the user before starting the "type phrase to confirm" flow.
+     */
     private fun confirmDeleteData() {
         AlertDialog.Builder(this)
             .setTitle(R.string.delete_data)
@@ -124,6 +152,9 @@ class SettingsActivity : BaseActivity() {
             .show()
     }
 
+    /**
+     * Requests the confirmation phrase; if correct, clears cloud JSON and local settings.
+     */
     private fun requestDeletePhrase() {
         val phrase = getString(R.string.delete_data_phrase)
         val input = EditText(this)
@@ -150,5 +181,16 @@ class SettingsActivity : BaseActivity() {
             .setNegativeButton(R.string.cancel, null)
             .show()
     }
-}
 
+    /**
+     * Restarts the whole task so new locale/theme take effect across the app.
+     * Keeps logic minimal and avoids side effects.
+     */
+    private fun restartApp() {
+        val intent = packageManager.getLaunchIntentForPackage(packageName)?.apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(intent)
+        finishAffinity()
+    }
+}

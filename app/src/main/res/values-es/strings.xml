@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Recordatorio Cumpleaños</string>
+    <string name="app_name">⏰ Cumpleaños</string>
     <string name="test_app">Revisar cumpleaños</string>
     <string name="open_json">Cambiar cumpleaños</string>
     <string name="settings">Ajustes</string>

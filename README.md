@@ -7,7 +7,7 @@ Birthday Notifier is an Android application written in Kotlin that reminds you o
 - **Firebase Auth & Firestore** – birthdays are stored per‑user in Firestore and synced across devices.
 - **Daily background check** – an `AlarmManager` trigger runs every day and after reboots to look for birthdays.
 - **WhatsApp integration** – notifications open WhatsApp with a prefilled message and allow snoozing for later.
-- **Multi language & theme** – the UI supports several languages and light/dark/system themes.
+- **Multi language & theme** – the UI supports several languages, can follow the system language, and offers light/dark/system themes.
 - **Contact import** – quickly add entries from the device contacts database.
 
 ## Project structure

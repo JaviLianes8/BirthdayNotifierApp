@@ -23,8 +23,6 @@ import kotlinx.coroutines.launch
  * Activity that allows configuring app settings like notification time, language,
  * theme, data deletion and logout.
  *
- * Se añade un reinicio controlado de la app tras cambiar idioma o tema para
- * que los recursos se apliquen sin que varíe el tamaño de los botones.
  */
 class SettingsActivity : BaseActivity() {
 
@@ -86,7 +84,7 @@ class SettingsActivity : BaseActivity() {
     }
 
     /**
-     * Language selector. Applies locale and reinicia la app para refrescar recursos.
+     * Language selector. Applies locale and reboot the app
      */
     private fun showLanguageDialog() {
         val languages = arrayOf(
@@ -113,8 +111,7 @@ class SettingsActivity : BaseActivity() {
     }
 
     /**
-     * Theme selector. Applies AppCompatDelegate mode y reinicia la app
-     * para que se apliquen los cambios visuales en todo el task.
+     * Theme selector. Applies AppCompatDelegate mode
      */
     private fun showThemeDialog() {
         val themes = arrayOf(

@@ -118,11 +118,11 @@ class SettingsActivity : BaseActivity() {
      */
     private fun showThemeDialog() {
         val themes = arrayOf(
+            getString(R.string.system_default),
             getString(R.string.light),
-            getString(R.string.dark),
-            getString(R.string.system_default)
+            getString(R.string.dark)
         )
-        val codes = arrayOf("light", "dark", "system")
+        val codes = arrayOf("system", "light", "dark")
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val current = prefs.getString("theme", "system")
         val checked = codes.indexOf(current).let { if (it >= 0) it else 2 }
